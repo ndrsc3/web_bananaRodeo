@@ -1,0 +1,102 @@
+/* Header Layout */
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: var(--header-background);
+    z-index: 1000;
+    box-shadow: 0 12px 12px hsla(var(--white-hsl), 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2vw var(--site-padding);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo a {
+    color: var(--header-text);
+    transition: color 0.3s ease;
+}
+
+/* Navigation */
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: var(--header-text);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--header-nav-hover);
+}
+
+/* Dropdown */
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--header-background);
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    width: 30px;
+    height: 20px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .nav-list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--header-background);
+        padding: 1rem;
+    }
+    
+    .nav-list.active {
+        display: block;
+    }
+} 

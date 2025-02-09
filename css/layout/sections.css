@@ -1,0 +1,107 @@
+/* Base Section Styles */
+.section {
+    position: relative;
+    padding: calc(var(--site-padding) * 2) 0;
+}
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    overflow: hidden;
+    margin-top: var(--header-height);
+}
+
+/* Video Background */
+.video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+/* Content Section */
+.content-section {
+    position: relative;
+    background: var(--section-background);
+}
+
+.content-section.light {
+    --section-text: var(--primary-color);
+    --section-background: var(--secondary-color);
+    color: var(--section-text);
+}
+
+/* Section Divider */
+.section-divider {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+}
+
+.divider-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    fill: var(--section-background);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--site-padding);
+}
+
+/* Content Block */
+.content-block {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 500px;
+    }
+
+    .section {
+        padding: calc(var(--site-padding) * 1.5) 0;
+    }
+
+    .section-divider {
+        top: -50px;
+        height: 50px;
+    }
+} 

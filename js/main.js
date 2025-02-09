@@ -19,4 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    
+    function checkReveal() {
+        revealElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (elementTop < windowHeight * 0.85) {
+                element.classList.add('revealed');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', checkReveal);
+    checkReveal(); // Initial check
 }); 

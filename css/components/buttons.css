@@ -1,0 +1,49 @@
+/* Button Base */
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button Variants */
+.button-primary {
+    background: var(--light-accent);
+    color: var(--primary-color);
+}
+
+.button-secondary {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/* Button Hover Effects */
+.button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.button:hover::after {
+    width: 300%;
+    height: 300%;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .button {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.9rem;
+    }
+} 
