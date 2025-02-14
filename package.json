@@ -1,0 +1,20 @@
+{
+  "name": "website_bananarodeo",
+  "version": "1.0.0",
+  "description": "A website",
+  "main": "dist/js/main.js",
+  "scripts": {
+    "build": "tsc && npm run copy-static",
+    "copy-static": "cp -r index.html css assets dist/",
+    "vercel-build": "npm run build",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
