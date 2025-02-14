@@ -1,11 +1,11 @@
 {
-  "name": "website_bananarodeo",
+  "name": "banana.rodeo",
   "version": "1.0.0",
   "description": "A website",
   "main": "dist/js/main.js",
   "scripts": {
     "build": "tsc && npm run copy-static",
-    "copy-static": "cp -r index.html css assets dist/",
+    "copy-static": "mkdir -p dist && cp -r index.html pages css assets dist/ && cp -r pages/* dist/",
     "vercel-build": "npm run build",
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
