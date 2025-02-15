@@ -1,10 +1,10 @@
 :root {
     /* Colors */
     --primary-color: #000000;
-    --secondary-color: #ffffff;
+    --secondary-color: hsl(50, 78%, 69%, 1);  /* Header/footer color */
     --light-accent: #FFE66D;  /* Yellow accent color */
     --dark-accent: #4A4A4A;   /* Dark gray for text */
-    --background-light: #F8F8F8;  /* Light background */
+    --background-light: hsl(194, 44%, 41%, 1);  /* Updated main section background */
     
     /* HSL Colors for Overlays */
     --white-hsl: 0, 0%, 100%;
@@ -17,8 +17,8 @@
     --header-nav-hover: var(--light-accent);
     
     /* Section Colors */
-    --section-text: var(--primary-color);
-    --section-background: var(--secondary-color);
+    --section-text: var(--secondary-color);  /* Updated for better contrast on dark background */
+    --section-background: var(--background-light);
     --section-light-background: var(--background-light);
     
     /* Typography */

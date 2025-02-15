@@ -47,21 +47,4 @@ document.addEventListener('DOMContentLoaded', (): void => {
             }
         });
     });
-
-    // Scroll reveal
-    const revealElements: NodeListOf<HTMLElement> = document.querySelectorAll('.reveal-on-scroll');
-    
-    function checkReveal(): void {
-        revealElements.forEach((element: HTMLElement) => {
-            const elementTop: number = element.getBoundingClientRect().top;
-            const windowHeight: number = window.innerHeight;
-            
-            if (elementTop < windowHeight * 0.85) {
-                element.classList.add('revealed');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', checkReveal);
-    checkReveal(); // Initial check
 }); 

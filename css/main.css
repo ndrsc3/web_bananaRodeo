@@ -18,6 +18,9 @@
 @import 'animations/transitions.css';
 @import 'animations/effects.css';
 
+/* Import Web 1.0 Styles */
+@import 'web1.css';
+
 /* Import Utilities */
 @import 'utils/helpers.css';
 @import 'utils/responsive.css'; 

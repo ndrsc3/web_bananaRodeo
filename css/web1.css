@@ -1,0 +1,168 @@
+/* Web 1.0 Styling Elements */
+
+/* Classic Link Styles */
+a:link {
+    color: #0000EE;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #551A8B;
+}
+
+a:hover {
+    color: #FF0000;
+    text-decoration: none;
+}
+
+/* Web 1.0 Section Layouts */
+.web1-section {
+    background: var(--secondary-color);
+    padding: calc(1.2vw + 60px) 0 20px;
+    color: var(--primary-color);
+    font-family: "Courier New", Courier, monospace;
+    line-height: 1.5;
+}
+
+.web1-content {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--section-background);
+    border: 2px solid #000000;
+    box-shadow: 10px 10px 0 #000000;
+    border-collapse: collapse;
+    color: #FFFFFF;
+}
+
+.web1-content td {
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .web1-content {
+        width: 95%;
+        box-shadow: 5px 5px 0 #000000;
+    }
+    
+    .web1-content td {
+        padding: 15px;
+    }
+}
+
+/* Classic Border Styles */
+.web1-border {
+    border: 2px solid #000000;
+    padding: 10px;
+    background: var(--section-background);
+    box-shadow: 10px 10px 0 #000000;
+    color: #FFFFFF;
+}
+
+/* "Best Viewed" Banner */
+.best-viewed-banner {
+    background: #FFFF00;
+    border: 2px dashed #FF0000;
+    padding: 10px;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    margin: 10px 0;
+    animation: blink 1s step-end infinite;
+}
+
+/* Under Construction Section */
+.under-construction {
+    text-align: center;
+    padding: 20px;
+    border: 3px double #000000;
+    background: repeating-linear-gradient(
+        45deg,
+        #FFFF00,
+        #FFFF00 10px,
+        #000000 10px,
+        #000000 20px
+    );
+}
+
+.under-construction-text {
+    background: #FFFFFF;
+    padding: 10px;
+    display: inline-block;
+    border: 1px solid #000000;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+}
+
+/* Marquee-style Text */
+.web1-marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: marquee 20s linear infinite;
+}
+
+/* Blink Animation */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+/* Table-based Layout Helper */
+.web1-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid #000000;
+}
+
+.web1-table td {
+    border: 1px solid #000000;
+    padding: 10px;
+    background: var(--section-background);
+    color: #FFFFFF;
+}
+
+/* Classic Button Style */
+.web1-button {
+    background: #C0C0C0;
+    border-width: 2px;
+    border-style: outset;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    padding: 2px 10px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.web1-button:active {
+    border-style: inset;
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+}
+
+/* Text Effects */
+.web1-rainbow-text {
+    background: linear-gradient(to right, 
+        #FF0000, #FF7F00, #FFFF00, #00FF00, 
+        #0000FF, #4B0082, #8B00FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+/* Classic Divider */
+.web1-divider {
+    height: 10px;
+    background: repeating-linear-gradient(
+        90deg,
+        #000000,
+        #000000 5px,
+        #FFFFFF 5px,
+        #FFFFFF 10px
+    );
+    margin: 20px 0;
+} 

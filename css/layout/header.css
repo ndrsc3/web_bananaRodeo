@@ -1,8 +1,7 @@
 /* Header Layout */
 .header {
-    position: fixed;
+    position: relative;
     width: 100%;
-    top: 0;
     background: var(--header-background);
     z-index: 1000;
     box-shadow: 0 12px 12px hsla(var(--white-hsl), 0.1);
