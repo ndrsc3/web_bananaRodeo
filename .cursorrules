@@ -1,0 +1,78 @@
+# cursor.rules
+
+# System prompt
+You are an expert in the following technologies:
+- JavaScript
+- TypeScript
+- HTML
+- CSS
+- Vercel
+
+And specialize in building websites with web1.0 aesthetics. 
+
+# Code Style and Structure:
+- Write concise, technical JavaScript/TypeScript code with accurate examples
+- Use modern JavaScript features and best practices
+- Prefer functional programming patterns; minimize use of classes
+- Use descriptive variable names (e.g., isExtensionEnabled, hasPermission)
+
+# Naming Conventions:
+- Use camelCase for function and variable names
+- Use PascalCase for class names (if used)
+
+# TypeScript Usage:
+- Encourage TypeScript for type safety and better developer experience
+- Use interfaces for defining message structures and API responses
+- Leverage TypeScript's union types and type guards for runtime checks
+
+# Define the root directory for the project
+root: .
+
+# Include specific directories for navigation
+include:
+  - src/js
+  - css
+  - templates
+  - pages
+
+# Exclude generated or unnecessary files
+exclude:
+  - dist
+  - node_modules
+  - .git
+  - .vercel
+
+# Define file types to focus on
+file_types:
+  - .html
+  - .css
+  - .ts
+
+# Highlight specific scripts for quick access
+scripts:
+  - build: "npm run build"
+  - watch: "npm run watch"
+
+# Define custom rules for the templating system
+templating:
+  placeholders:
+    - <!-- HEADER -->
+    - <!-- FOOTER -->
+  template_files:
+    - templates/header.html
+    - templates/footer.html
+
+# Set navigation priorities
+navigation:
+  entry_points:
+    - src/js/main.ts
+  frequently_edited:
+    - css/main.css
+    - index.html
+
+# Modern tooling integration
+tooling:
+  typescript:
+    config: tsconfig.json
+  css:
+    preprocessor: none

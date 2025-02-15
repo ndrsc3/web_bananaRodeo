@@ -1,118 +1,82 @@
 # Banana Rodeo
 
-A webstie
+A website for The Banana Rodeo Science Fair
 
-![What's Your Purpose Screenshot](screenshot.png)
+![Banana Rodeo](screenshot.png)
 
 ## 🌟 Features
 
 - **Feature 1**: 
 - **Feature 2**:
 
-
 ## 🛠️ Technology Stack
 
 - **Frontend**: Vanilla JavaScript, CSS3, HTML5
-- **Backend**: Node.js
 - **Deployment**: Vercel
-- **Database**: Vercel KV Storage
 
-## 🚀 Getting Started
-
-### Prerequisites
-1. [GitHub Account](https://github.com)
-2. [Vercel Account](https://vercel.com)
-3. [Node.js](https://nodejs.org) (v18 or higher)
-
-### Local Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/ndrsc3/web_bananarodeo.git
-cd web_bananarodeo
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-3. Create a `.env` file:
-```
-KV_URL=your_kv_url_here
-KV_REST_API_URL=your_kv_rest_api_url_here
-KV_REST_API_TOKEN=your_kv_rest_api_token_here
-KV_REST_API_READ_ONLY_TOKEN=your_kv_read_only_token_here
-```
-
-4. Start the development server:
-```bash
-vercel dev
-```
-
-4. Visit http://localhost:3000 in your browser
-
-### Deploying to Vercel
-
-1. **Prepare Your Repository**
-   - Push your code to GitHub
-   - Make sure your repository is public or you have a Vercel Pro account
-
-2. **Set Up Vercel KV**
-   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
-   - Create a new project
-   - Go to Storage tab
-   - Click "Create Database" and select KV
-   - Follow the setup wizard
-   - Copy the provided environment variables
-
-3. **Deploy the Project**
-   - Click "Import Project" in Vercel Dashboard
-   - Select your GitHub repository
-   - Configure project:
-     - Framework Preset: Other
-     - Build Command: `npm run build`
-     - Output Directory: `public`
-   - Add Environment Variables:
-     - Copy all KV environment variables from step 2
-   - Click "Deploy"
-
-4. **Verify Deployment**
-   - Wait for deployment to complete
-   - Click on the deployment URL
-   - Test the application functionality
 
 ## 🔍 Code Structure
 
 ```
-├── api/                # Backend API endpoints
-│   ├── check-username.js
-│   └── ws.js          # WebSocket handler
-├── app.js             # Main application logic
-├── styles.css         # Global styles
-└── index.html         # Entry point
+website_bananaRodeo/
+├── index.html              # Home page
+├── pages/                  # All other pages
+│   ├── about.html
+│   ├── bananifesto.html
+│   ├── contact.html
+│   ├── merch.html
+│   ├── events/
+│   │   ├── index.html     # Main events page
+│   │   ├── science-fair.html
+│   │   └── competitions.html
+│   └── get-involved/
+│       ├── index.html     # Main get-involved page
+│       ├── volunteer.html
+│       ├── how-to-art.html
+│       ├── sponsors.html
+│       └── vendors.html
+├── css/                    # Your existing CSS structure
+├── assets/                 # Your images, videos, etc.
+├── src/                    # TypeScript source files
+│   └── js/
+│       └── main.ts
+├── dist/                   # Compiled files (generated)
+├── package.json
+└── vercel.json
+└── sitemap.xml             # Sitemap for better indexing
+└── robots.txt              # Robots.txt for better indexing
 ```
 
-## 🎯 Key Features Explained
+## 📦 Templating System
+1. Template Files:
+- `templates/header.html` contains the shared header
+- `templates/footer.html` contains the shared footer
 
-### Streak Tracking
-The app maintains streak counts for each user, encouraging consistent daily participation. A fire emoji (🔥) appears next to active streaks, adding a fun visual element.
+2. Page Structure:
+- Pages use <!-- HEADER --> and <!-- FOOTER --> placeholders
+- The templating script replaces these with the actual content
 
-### Offline Support
-Built with offline-first functionality, the app stores squat records locally when offline and syncs them when connection is restored.
+3. Build Process:
+- `tsc` compiles all TypeScript files, including our templating script
+- `node dist/js/build.js` runs our compiled templating script
+- `npm run copy-static` copies the static assets
 
-## 🤝 Contributing
+4. Development:
+- Edit shared components in the templates directory
+- Use the placeholders in your HTML files
+- Run the build command to generate the final files
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+To create a new page:
+1. Create a new HTML file in the pages directory
+2. Include the <!-- HEADER --> and <!-- FOOTER --> placeholders
+3. Add your page-specific content
+4. Run the build command
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The templating system will:
+   - Process all HTML files in the project
+   - Replace the placeholders with the shared components
+   - Maintain the directory structure in the dist folder
+   - Keep all assets and paths working correctly
 
 ## 👤 Author
 
@@ -124,14 +88,8 @@ Niko Millias
 
 - Inspired by my friends
 - Thanks to all contributors and early adopters
-- Built during my journey to maintain a daily squat habit
-
-## 📈 Future Plans
-
-- [ ] User Account / Auth
-- [ ] Implement incentivization (Smart Contract Integration)
-- [ ] Add Share Button
-- [ ] Custom URL
+- Thank you web1.0 for the inspiration
 
 ---
-Made with ❤️ for the squat community
+
+Made with ❤️ for The Great Big Banana in The Sky
