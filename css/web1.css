@@ -39,6 +39,15 @@ a:hover {
     padding: 20px;
 }
 
+.web1-content p {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+}
+
+.web1-content p strong {
+    font-size: 1.25rem;
+}
+
 @media (max-width: 768px) {
     .web1-content {
         width: 95%;
@@ -156,13 +165,28 @@ a:hover {
 
 /* Classic Divider */
 .web1-divider {
-    height: 10px;
-    background: repeating-linear-gradient(
+    height: 8px;
+    background: linear-gradient(
         90deg,
-        #000000,
-        #000000 5px,
-        #FFFFFF 5px,
-        #FFFFFF 10px
+        #FFD700,
+        #FFE135,
+        #FFD700,
+        #FFE135
     );
+    background-size: 200% 100%;
     margin: 20px 0;
+    animation: shimmer 2s linear infinite, shake 0.5s infinite;
+    border-top: 2px solid #FFD700;
+    border-bottom: 2px solid #FFE135;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
 } 
