@@ -6,19 +6,25 @@ interface TemplateComponents {
     footer: string;
 }
 
+// Get the source directory for templates
+const getSourceDir = () => {
+    const buildDir = path.join(__dirname, '../../../../..');
+    return path.join(buildDir, 'packages/client/public');
+};
+
 // Read template components
 const components: TemplateComponents = {
-    header: fs.readFileSync(path.join(__dirname, '../../../../templates/header.html'), 'utf8'),
-    footer: fs.readFileSync(path.join(__dirname, '../../../../templates/footer.html'), 'utf8')
+    header: fs.readFileSync(path.join(getSourceDir(), 'templates/header.html'), 'utf8'),
+    footer: fs.readFileSync(path.join(getSourceDir(), 'templates/footer.html'), 'utf8')
 };
 
 // Process all HTML files
 function processTemplates(): void {
     // Process index.html
-    processFile(path.join(__dirname, '../../../../index.html'), 'index.html');
+    processFile(path.join(getSourceDir(), 'index.html'), 'index.html');
     
     // Process pages directory
-    const pagesDir = path.join(__dirname, '../../../../pages');
+    const pagesDir = path.join(getSourceDir(), 'pages');
     processDirectory(pagesDir);
 }
 

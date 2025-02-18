@@ -2,59 +2,76 @@ import templates from './core/templates';
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Get workspace root directory
+const getWorkspaceRoot = () => path.join(__dirname, '../../../../');
+
 // Ensure output directories exist
-const staticDir = path.join(__dirname, '../../../.vercel/output/static');
+const staticDir = path.join(getWorkspaceRoot(), '.vercel/output/static');
 if (!fs.existsSync(staticDir)) {
     fs.mkdirSync(staticDir, { recursive: true });
 }
 
 // Copy static assets
 const copyAssets = () => {
-    const assets = [
-        { src: 'css', dest: 'css' },
-        { src: 'assets', dest: 'assets' },
-        { src: 'pages', dest: 'pages' },
-        { src: 'index.html', dest: 'index.html' },
-        { src: 'robots.txt', dest: 'robots.txt' },
-        { src: 'sitemap.xml', dest: 'sitemap.xml' }
-    ];
+    const publicDir = path.join(getWorkspaceRoot(), 'packages/client/public');
+    const excludeDirs = ['js']; // Directories to exclude from copying
 
-    assets.forEach(({ src, dest }) => {
-        const srcPath = path.join(__dirname, '../../../', src);
-        const destPath = path.join(staticDir, dest);
-        
-        if (fs.existsSync(srcPath)) {
-            if (fs.statSync(srcPath).isDirectory()) {
-                if (!fs.existsSync(destPath)) {
-                    fs.mkdirSync(destPath, { recursive: true });
-                }
-                fs.cpSync(srcPath, destPath, { recursive: true });
-            } else {
-                fs.copyFileSync(srcPath, destPath);
+    // Copy all contents from public directory to static directory
+    if (fs.existsSync(publicDir)) {
+        const files = fs.readdirSync(publicDir);
+        files.forEach(file => {
+            const srcPath = path.join(publicDir, file);
+            const destPath = path.join(staticDir, file);
+            
+            // Skip excluded directories
+            if (excludeDirs.includes(file)) {
+                return;
             }
-            console.log(`Copied ${src} to ${dest}`);
-        }
-    });
+
+            try {
+                if (fs.statSync(srcPath).isDirectory()) {
+                    if (!fs.existsSync(destPath)) {
+                        fs.mkdirSync(destPath, { recursive: true });
+                    }
+                    fs.cpSync(srcPath, destPath, { recursive: true });
+                } else {
+                    fs.copyFileSync(srcPath, destPath);
+                }
+            } catch (error) {
+                console.error(`Error copying ${file}:`, error);
+            }
+        });
+    } else {
+        console.error('Public directory not found:', publicDir);
+    }
 };
 
 // Process HTML files
 const processHtmlFiles = () => {
     const processFile = (filePath: string) => {
-        const content = fs.readFileSync(filePath, 'utf-8');
-        const processed = templates.processTemplate(content);
-        fs.writeFileSync(filePath, processed);
+        try {
+            const content = fs.readFileSync(filePath, 'utf-8');
+            const processed = templates.processTemplate(content);
+            fs.writeFileSync(filePath, processed);
+        } catch (error) {
+            console.error(`Error processing ${filePath}:`, error);
+        }
     };
 
     const walkDir = (dir: string) => {
-        const files = fs.readdirSync(dir);
-        files.forEach(file => {
-            const filePath = path.join(dir, file);
-            if (fs.statSync(filePath).isDirectory()) {
-                walkDir(filePath);
-            } else if (file.endsWith('.html')) {
-                processFile(filePath);
-            }
-        });
+        try {
+            const files = fs.readdirSync(dir);
+            files.forEach(file => {
+                const filePath = path.join(dir, file);
+                if (fs.statSync(filePath).isDirectory()) {
+                    walkDir(filePath);
+                } else if (file.endsWith('.html')) {
+                    processFile(filePath);
+                }
+            });
+        } catch (error) {
+            console.error(`Error walking directory ${dir}:`, error);
+        }
     };
 
     walkDir(staticDir);

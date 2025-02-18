@@ -11,10 +11,10 @@
   ],
   "scripts": {
     "clean": "rimraf .vercel/output && npm run clean --workspaces",
-    "build:client": "tsc -p packages/client/tsconfig.json --outDir .vercel/output/static",
+    "build:client": "tsc -p packages/client/tsconfig.json",
     "build:server": "tsc -p packages/server/tsconfig.json --outDir .vercel/output/api",
     "build:shared": "tsc -p packages/shared/tsconfig.json --outDir .vercel/output/shared",
-    "build:static": "node .vercel/output/static/build.js",
+    "build:static": "node .vercel/output/static/js/build.js",
     "build": "npm run clean && npm run build:shared && npm run build:client && npm run build:server && npm run build:static",
     "watch": "tsc -b --watch"
   },

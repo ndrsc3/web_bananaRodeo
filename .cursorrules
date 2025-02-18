@@ -40,7 +40,6 @@ exclude:
   - dist
   - node_modules
   - .git
-  - .vercel
 
 # Define file types to focus on
 file_types:
