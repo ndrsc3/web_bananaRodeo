@@ -82,14 +82,14 @@ function processFile(filePath: string, relativePath: string): void {
 
 export interface TemplatesModule {
     buildTemplates: () => void;
-    processTemplate: (content: string) => string;
+    processTemplate: (content: string, isDev?: boolean) => string;
 }
 
 const templates: TemplatesModule = {
     buildTemplates: function(): void {
         processTemplates();
     },
-    processTemplate: function(content: string): string {
+    processTemplate: function(content: string, isDev = false): string {
         content = content.replace(/^(\s*)<!-- HEADER -->/m, (match, indent) => {
             const headerContent = indentContent(components.header, indent.length);
             return `${indent}<header class="header">\n${headerContent}\n${indent}</header>`;

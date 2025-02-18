@@ -12,7 +12,7 @@ if (!fs.existsSync(staticDir)) {
 }
 
 // Copy static assets
-const copyAssets = () => {
+const copyAssets = (isDev = false) => {
     const publicDir = path.join(getWorkspaceRoot(), 'packages/client/public');
     const excludeDirs = ['js']; // Directories to exclude from copying
 
@@ -35,7 +35,12 @@ const copyAssets = () => {
                     }
                     fs.cpSync(srcPath, destPath, { recursive: true });
                 } else {
-                    fs.copyFileSync(srcPath, destPath);
+                    // In dev mode, only copy if file has changed
+                    if (!isDev || !fs.existsSync(destPath) || 
+                        fs.statSync(srcPath).mtime > fs.statSync(destPath).mtime) {
+                        fs.copyFileSync(srcPath, destPath);
+                        if (isDev) console.log(`Updated: ${file}`);
+                    }
                 }
             } catch (error) {
                 console.error(`Error copying ${file}:`, error);
@@ -47,12 +52,13 @@ const copyAssets = () => {
 };
 
 // Process HTML files
-const processHtmlFiles = () => {
+const processHtmlFiles = (isDev = false) => {
     const processFile = (filePath: string) => {
         try {
             const content = fs.readFileSync(filePath, 'utf-8');
-            const processed = templates.processTemplate(content);
+            const processed = templates.processTemplate(content, isDev);
             fs.writeFileSync(filePath, processed);
+            if (isDev) console.log(`Processed: ${path.basename(filePath)}`);
         } catch (error) {
             console.error(`Error processing ${filePath}:`, error);
         }
@@ -79,22 +85,29 @@ const processHtmlFiles = () => {
 
 // Build process
 async function build() {
+    const isDev = process.env.NODE_ENV === 'development';
+    
     try {
-        console.log('Starting build process...');
+        if (!isDev) console.log('Starting build process...');
         
         // Copy static assets
-        console.log('Copying static assets...');
-        copyAssets();
+        if (!isDev) console.log('Copying static assets...');
+        copyAssets(isDev);
         
         // Process templates
-        console.log('Processing HTML templates...');
-        processHtmlFiles();
+        if (!isDev) console.log('Processing HTML templates...');
+        processHtmlFiles(isDev);
         
-        console.log('Build completed successfully!');
+        if (!isDev) console.log('Build completed successfully!');
     } catch (error) {
         console.error('Build failed:', error);
         process.exit(1);
     }
 }
 
-build(); 
+// If running directly (not imported as a module)
+if (require.main === module) {
+    build();
+}
+
+export { build }; 

@@ -14,9 +14,12 @@
     "build:client": "tsc -p packages/client/tsconfig.json",
     "build:server": "tsc -p packages/server/tsconfig.json --outDir .vercel/output/api",
     "build:shared": "tsc -p packages/shared/tsconfig.json --outDir .vercel/output/shared",
-    "build:static": "node .vercel/output/static/js/build.js",
+    "build:static": "cross-env NODE_ENV=production node .vercel/output/static/js/build.js",
     "build": "npm run clean && npm run build:shared && npm run build:client && npm run build:server && npm run build:static",
-    "watch": "tsc -b --watch"
+    "watch:ts": "tsc -b --watch",
+    "watch:static": "cross-env NODE_ENV=development nodemon --watch packages/client/public -e css,jpg,png,gif,svg,ico,html --exec \"node .vercel/output/static/js/build.js\"",
+    "watch": "concurrently \"npm run watch:ts\" \"npm run watch:static\"",
+    "vercel-dev": "cross-env NODE_ENV=development vercel dev"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,9 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@vercel/node": "^5.1.7",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.3",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
   },
