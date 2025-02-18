@@ -2,6 +2,9 @@
   "name": "@banana-rodeo/server",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist",

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A website",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "workspaces": [
     "packages/*"
   ],
