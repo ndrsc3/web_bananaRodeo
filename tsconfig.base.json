@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "sourceMap": true,
+    "composite": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "paths": {
+      "@banana-rodeo/shared": ["./packages/shared/src"],
+      "@banana-rodeo/shared/*": ["./packages/shared/src/*"]
+    }
+  },
+  "exclude": ["node_modules", ".vercel", "dist"]
+} 

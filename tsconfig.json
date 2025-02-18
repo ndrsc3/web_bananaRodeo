@@ -26,10 +26,14 @@
 
     /* Modules */
     "module": "CommonJS",
-    "rootDir": "./src",
     "moduleResolution": "node",
-    // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
-    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@types/*": ["types/*"],
+      "@src/*": ["src/*"],
+      "@server/*": ["server/*"]
+    },
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
@@ -108,6 +112,12 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", "server/**/*", "types/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "files": [],
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/client" },
+    { "path": "packages/server" }
+  ]
 }

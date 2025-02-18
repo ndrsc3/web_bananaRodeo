@@ -1,21 +1,30 @@
 {
-  "name": "banana.rodeo",
+  "name": "banana-rodeo",
   "version": "1.0.0",
   "description": "A website",
-  "main": "dist/js/main.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "clean": "rm -rf dist/*",
-    "copy-assets": "cp -r css assets dist/",
-    "build": "npm run clean && tsc && npm run copy-assets && node dist/js/build.js",
-    "vercel-build": "npm run build",
-    "watch": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf .vercel/output && npm run clean --workspaces",
+    "build:client": "tsc -p packages/client/tsconfig.json --outDir .vercel/output/static",
+    "build:server": "tsc -p packages/server/tsconfig.json --outDir .vercel/output/api",
+    "build:shared": "tsc -p packages/shared/tsconfig.json --outDir .vercel/output/shared",
+    "build:static": "node .vercel/output/static/build.js",
+    "build": "npm run clean && npm run build:shared && npm run build:client && npm run build:server && npm run build:static",
+    "watch": "tsc -b --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@vercel/node": "^5.1.7",
+    "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@vercel/kv": "^0.2.4"
   }
 }

@@ -1,8 +1,101 @@
-# Banana Rodeo
+# Banana Rodeo Website
 
-A website for The Banana Rodeo Science Fair
+A web1.0-inspired website built with modern technologies.
 
-![Banana Rodeo](screenshot.png)
+## Project Structure
+
+This is a monorepo project organized into the following packages:
+
+```
+packages/
+├── client/           # Frontend package
+│   ├── src/
+│   │   ├── features/  # Feature-based components
+│   │   ├── core/      # Core utilities
+│   │   └── templates/ # HTML templates
+│   └── ...
+├── server/           # Backend package
+│   ├── src/
+│   │   ├── routes/    # API routes
+│   │   └── services/  # Business logic
+│   └── ...
+└── shared/           # Shared package
+    ├── src/
+    │   ├── types/     # Shared TypeScript types
+    │   └── constants/ # Shared constants
+    └── ...
+```
+
+## Build System
+
+The build process is orchestrated through npm workspaces and outputs to the `.vercel/output` directory:
+
+- **Static Assets**: `.vercel/output/static/`
+- **Server Functions**: `.vercel/output/functions/`
+
+### Build Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Build all packages
+npm run build
+
+# Clean build artifacts
+npm run clean
+
+# Watch mode for development
+npm run watch
+```
+
+## Template System
+
+
+### Template Structure
+```
+templates/
+├── header.html
+└── footer.html
+```
+
+### Usage
+Templates can be included in any HTML file using special comments:
+
+```html
+<!-- HEADER -->
+<main>
+  Your content here
+</main>
+<!-- FOOTER -->
+```
+
+The build process will replace these comments with the actual template content, properly indented.
+
+## Development
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create `.env.local` with required environment variables
+4. Run in watch mode: `npm run watch`
+
+## Deployment
+
+The project is configured for deployment on Vercel:
+
+1. Frontend is served as static files
+2. Backend runs as serverless functions
+3. Data is stored in Vercel KV
+
+Required environment variables:
+- `VERCEL_KV_URL`
+- `VERCEL_KV_REST_API_URL`
+- `VERCEL_KV_REST_API_TOKEN`
+- `VERCEL_KV_REST_API_READ_ONLY_TOKEN`
+
+## License
+
+ISC
 
 ## 🌟 Features
 

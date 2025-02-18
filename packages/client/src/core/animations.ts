@@ -1,4 +1,3 @@
-// Animation utility
 export const initializeAnimations = (): void => {
     const animatedElements: NodeListOf<HTMLElement> = document.querySelectorAll('[data-animation]');
     

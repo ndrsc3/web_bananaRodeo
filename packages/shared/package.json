@@ -1,0 +1,8 @@
+{
+  "name": "@banana-rodeo/shared",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf dist"
+  }
+} 

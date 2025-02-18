@@ -1,8 +1,10 @@
-import { initializeAnimations } from './utils/animations';
-import { lazyLoadImages } from './utils/imageLoader';
+import { initializeHitCounters } from './features/hit-counter';
+import { initializeAnimations } from './core/animations';
+import { lazyLoadImages } from './core/image-loader';
 
 document.addEventListener('DOMContentLoaded', (): void => {
-    // Initialize utilities
+    // Initialize features
+    initializeHitCounters();
     initializeAnimations();
     lazyLoadImages();
 

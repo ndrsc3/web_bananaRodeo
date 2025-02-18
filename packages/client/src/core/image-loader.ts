@@ -1,4 +1,3 @@
-// Image loading utility
 export const lazyLoadImages = (): void => {
     const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('[data-src]');
     

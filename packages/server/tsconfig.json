@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../.vercel/output/functions",
+    "rootDir": "./src",
+    "target": "ES2022",
+    "module": "ES2022",
+    "composite": true,
+    "tsBuildInfoFile": "../../.vercel/output/server.tsbuildinfo"
+  },
+  "references": [
+    { "path": "../shared" }
+  ],
+  "include": ["src/**/*"]
+} 
