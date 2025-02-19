@@ -1,3 +1,0 @@
-Fonts to acquire:
-1. Typekit fonts from use.typekit.net (need to check specific font families used in the site)
-   - Source: "//use.typekit.net/ik/9LQf5t_U5TEUk6sPOlB8oKfGtPiQ5jA_d6-54XA4Fa3fe7SgfFHN4UJLFRbh52jhWDjhwR6hFe4qFAsKFcmcwAbuFDyywD4cFsGMJys0ZWSlSagTSc8XOAFzdcs8d1F8ZfJF-A4lOWgCZW6ldAN0dkGHfJO8MyMMeM96MKGHfJV8MyMMeMj6MKGHfJQ8MyMMeMS6MKGHfOkaMyMgeMb6MKGHfwHaMyMgeMt6MKGHfOhaMyMgeMt6MKGHfw5aMyMgegI6MTMgNOexC6j.js" 

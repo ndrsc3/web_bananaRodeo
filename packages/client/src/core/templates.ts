@@ -12,11 +12,11 @@ const getSourceDir = () => {
     return path.join(buildDir, 'packages/client/public');
 };
 
-// Read template components
-const components: TemplateComponents = {
+// Read template files fresh each time
+const getTemplates = (): TemplateComponents => ({
     header: fs.readFileSync(path.join(getSourceDir(), 'templates/header.html'), 'utf8'),
     footer: fs.readFileSync(path.join(getSourceDir(), 'templates/footer.html'), 'utf8')
-};
+});
 
 // Process all HTML files
 function processTemplates(): void {
@@ -58,13 +58,14 @@ function processFile(filePath: string, relativePath: string): void {
     let content = fs.readFileSync(filePath, 'utf8');
     
     // Replace template placeholders with properly indented content
+    const templates = getTemplates();
     content = content.replace(/^(\s*)<!-- HEADER -->/m, (match, indent) => {
-        const headerContent = indentContent(components.header, indent.length);
+        const headerContent = indentContent(templates.header, indent.length);
         return `${indent}<header class="header">\n${headerContent}\n${indent}</header>`;
     });
     
     content = content.replace(/^(\s*)<!-- FOOTER -->/m, (match, indent) => {
-        return `${indent}${indentContent(components.footer, indent.length)}`;
+        return `${indent}${indentContent(templates.footer, indent.length)}`;
     });
     
     // Write processed file to dist
@@ -90,6 +91,7 @@ const templates: TemplatesModule = {
         processTemplates();
     },
     processTemplate: function(content: string, isDev = false): string {
+        const components = getTemplates();
         content = content.replace(/^(\s*)<!-- HEADER -->/m, (match, indent) => {
             const headerContent = indentContent(components.header, indent.length);
             return `${indent}<header class="header">\n${headerContent}\n${indent}</header>`;
