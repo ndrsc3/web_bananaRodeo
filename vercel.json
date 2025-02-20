@@ -1,20 +1,20 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": ".vercel/output/static",
+  "outputDirectory": "packages/client/dist",
   "functions": {
-    "api/**/*.ts": {
+    "api/routes/**/*.js": {
       "runtime": "@vercel/node@3.0.0"
     }
   },
   "routes": [
     {
-      "src": "/api/hit-counter",
-      "dest": "/api/hit-counter"
+      "src": "/api/hit-counter(.*)",
+      "dest": "/api/routes/hit-counter$1"
     },
     {
-      "src": "/api/kv",
-      "dest": "/api/kv"
+      "src": "/api/kv(.*)",
+      "dest": "/api/routes/kv$1"
     },
     {
       "handle": "filesystem"

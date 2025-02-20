@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist"
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "watch": "tsc --watch"
   }
 } 

@@ -1,10 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../.vercel/output/static/js",
+    "outDir": "./dist/js",
     "rootDir": "./src",
     "composite": true,
-    "tsBuildInfoFile": "../../.vercel/output/client.tsbuildinfo"
+    "tsBuildInfoFile": "./dist/client.tsbuildinfo"
   },
   "references": [
     { "path": "../shared" }

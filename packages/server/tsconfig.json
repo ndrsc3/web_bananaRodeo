@@ -1,12 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../.vercel/output/functions",
+    "outDir": "../../api",
     "rootDir": "./src",
     "target": "ES2022",
     "module": "ES2022",
     "composite": true,
-    "tsBuildInfoFile": "../../.vercel/output/server.tsbuildinfo"
+    "tsBuildInfoFile": "../../api/server.tsbuildinfo"
   },
   "references": [
     { "path": "../shared" }

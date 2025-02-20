@@ -10,15 +10,18 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "rimraf .vercel/output && npm run clean --workspaces",
-    "build:client": "tsc -p packages/client/tsconfig.json",
-    "build:server": "tsc -p packages/server/tsconfig.json --outDir .vercel/output/api",
-    "build:shared": "tsc -p packages/shared/tsconfig.json --outDir .vercel/output/shared",
-    "build:static": "cross-env NODE_ENV=production node .vercel/output/static/js/build.js",
+    "clean": "npm run clean --workspaces",
     "build": "npm run clean && npm run build:shared && npm run build:client && npm run build:server && npm run build:static",
+
+    "build:client": "tsc -p packages/client/tsconfig.json",
+    "build:server": "tsc -p packages/server/tsconfig.json",
+    "build:shared": "tsc -p packages/shared/tsconfig.json",
+    "build:static": "cross-env NODE_ENV=production node packages/client/dist/js/build.js",
+
     "watch:ts": "tsc -b --watch",
-    "watch:static": "cross-env NODE_ENV=development nodemon --watch packages/client/public -e css,jpg,png,gif,svg,ico,html --exec \"node .vercel/output/static/js/build.js\"",
+    "watch:static": "cross-env NODE_ENV=development nodemon --watch packages/client/public -e css,jpg,png,gif,svg,ico,html --exec \"node packages/client/dist/js/build.js\"",
     "watch": "concurrently \"npm run watch:ts\" \"npm run watch:static\"",
+    
     "vercel-dev": "cross-env NODE_ENV=development vercel dev"
   },
   "keywords": [],

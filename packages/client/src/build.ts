@@ -3,10 +3,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 // Get workspace root directory
-const getWorkspaceRoot = () => path.join(__dirname, '../../../../');
+const getWorkspaceRoot = () => {
+    const currentDir = __dirname;
+    // Go up four levels: dist/js -> dist -> client -> packages -> root
+    const rootDir = path.resolve(currentDir, '../../../..');
+    return rootDir;
+};
 
 // Ensure output directories exist
-const staticDir = path.join(getWorkspaceRoot(), '.vercel/output/static');
+const staticDir = path.join(getWorkspaceRoot(), 'packages/client/dist');
 if (!fs.existsSync(staticDir)) {
     fs.mkdirSync(staticDir, { recursive: true });
 }
@@ -15,7 +20,7 @@ if (!fs.existsSync(staticDir)) {
 const copyAssets = (isDev = false) => {
     const publicDir = path.join(getWorkspaceRoot(), 'packages/client/public');
     const excludeDirs = ['js']; // Directories to exclude from copying
-
+    
     // Copy all contents from public directory to static directory
     if (fs.existsSync(publicDir)) {
         const files = fs.readdirSync(publicDir);
@@ -55,10 +60,25 @@ const copyAssets = (isDev = false) => {
 const processHtmlFiles = (isDev = false) => {
     const processFile = (filePath: string) => {
         try {
+            // Read from source directory
             const content = fs.readFileSync(filePath, 'utf-8');
-            const processed = templates.processTemplate(content, isDev);
-            fs.writeFileSync(filePath, processed);
-            if (isDev) console.log(`Processed: ${path.basename(filePath)}`);
+            const processed = templates.processTemplate(content, getWorkspaceRoot(), isDev);
+            
+            // Get the relative path from the public directory
+            const publicDir = path.join(getWorkspaceRoot(), 'packages/client/public');
+            const relativePath = path.relative(publicDir, filePath);
+            
+            // Write to output directory
+            const outputPath = path.join(staticDir, relativePath);
+            const outputDir = path.dirname(outputPath);
+            
+            // Ensure output directory exists
+            if (!fs.existsSync(outputDir)) {
+                fs.mkdirSync(outputDir, { recursive: true });
+            }
+            
+            fs.writeFileSync(outputPath, processed);
+            if (isDev) console.log(`Processed: ${relativePath}`);
         } catch (error) {
             console.error(`Error processing ${filePath}:`, error);
         }
@@ -80,7 +100,7 @@ const processHtmlFiles = (isDev = false) => {
         }
     };
 
-    walkDir(staticDir);
+    walkDir(path.join(getWorkspaceRoot(), 'packages/client/public'));
 };
 
 // Build process

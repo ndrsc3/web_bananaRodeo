@@ -6,45 +6,14 @@ interface TemplateComponents {
     footer: string;
 }
 
-// Get the source directory for templates
-const getSourceDir = () => {
-    const buildDir = path.join(__dirname, '../../../../..');
-    return path.join(buildDir, 'packages/client/public');
-};
-
 // Read template files fresh each time
-const getTemplates = (): TemplateComponents => ({
-    header: fs.readFileSync(path.join(getSourceDir(), 'templates/header.html'), 'utf8'),
-    footer: fs.readFileSync(path.join(getSourceDir(), 'templates/footer.html'), 'utf8')
-});
-
-// Process all HTML files
-function processTemplates(): void {
-    // Process index.html
-    processFile(path.join(getSourceDir(), 'index.html'), 'index.html');
-    
-    // Process pages directory
-    const pagesDir = path.join(getSourceDir(), 'pages');
-    processDirectory(pagesDir);
-}
-
-function processDirectory(dir: string): void {
-    fs.readdirSync(dir).forEach((file: string) => {
-        const fullPath = path.join(dir, file);
-        if (fs.statSync(fullPath).isDirectory()) {
-            // Create the same directory structure in dist
-            const relativePath = path.relative(path.join(__dirname, '../../../..'), fullPath);
-            const distPath = path.join(__dirname, '../../../../.vercel/output/static', relativePath);
-            if (!fs.existsSync(distPath)) {
-                fs.mkdirSync(distPath, { recursive: true });
-            }
-            processDirectory(fullPath);
-        } else if (path.extname(file) === '.html') {
-            const relativePath = path.relative(path.join(__dirname, '../../../..'), fullPath);
-            processFile(fullPath, relativePath);
-        }
-    });
-}
+const getTemplates = (workspaceRoot: string): TemplateComponents => {
+    const templatesDir = path.join(workspaceRoot, 'packages/client/public/templates');
+    return {
+        header: fs.readFileSync(path.join(templatesDir, 'header.html'), 'utf8'),
+        footer: fs.readFileSync(path.join(templatesDir, 'footer.html'), 'utf8')
+    };
+};
 
 function indentContent(content: string, indentLevel: number): string {
     const indent = ' '.repeat(indentLevel);
@@ -53,45 +22,13 @@ function indentContent(content: string, indentLevel: number): string {
     ).join('\n');
 }
 
-function processFile(filePath: string, relativePath: string): void {
-    console.log(`Processing ${relativePath}...`);
-    let content = fs.readFileSync(filePath, 'utf8');
-    
-    // Replace template placeholders with properly indented content
-    const templates = getTemplates();
-    content = content.replace(/^(\s*)<!-- HEADER -->/m, (match, indent) => {
-        const headerContent = indentContent(templates.header, indent.length);
-        return `${indent}<header class="header">\n${headerContent}\n${indent}</header>`;
-    });
-    
-    content = content.replace(/^(\s*)<!-- FOOTER -->/m, (match, indent) => {
-        return `${indent}${indentContent(templates.footer, indent.length)}`;
-    });
-    
-    // Write processed file to dist
-    const distPath = path.join(__dirname, '../../../../.vercel/output/static', relativePath);
-    const distDir = path.dirname(distPath);
-    
-    // Ensure directory exists
-    if (!fs.existsSync(distDir)) {
-        fs.mkdirSync(distDir, { recursive: true });
-    }
-    
-    fs.writeFileSync(distPath, content);
-    console.log(`Created ${relativePath}`);
-}
-
 export interface TemplatesModule {
-    buildTemplates: () => void;
-    processTemplate: (content: string, isDev?: boolean) => string;
+    processTemplate: (content: string, workspaceRoot: string, isDev?: boolean) => string;
 }
 
 const templates: TemplatesModule = {
-    buildTemplates: function(): void {
-        processTemplates();
-    },
-    processTemplate: function(content: string, isDev = false): string {
-        const components = getTemplates();
+    processTemplate: function(content: string, workspaceRoot: string, isDev = false): string {
+        const components = getTemplates(workspaceRoot);
         content = content.replace(/^(\s*)<!-- HEADER -->/m, (match, indent) => {
             const headerContent = indentContent(components.header, indent.length);
             return `${indent}<header class="header">\n${headerContent}\n${indent}</header>`;
