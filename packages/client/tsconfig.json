@@ -4,7 +4,9 @@
     "outDir": "./dist/js",
     "rootDir": "./src",
     "composite": true,
-    "tsBuildInfoFile": "./dist/client.tsbuildinfo"
+    "tsBuildInfoFile": "./dist/client.tsbuildinfo",
+    "module": "ES2020",
+    "moduleResolution": "bundler"
   },
   "references": [
     { "path": "../shared" }

@@ -1,10 +1,11 @@
-import templates from './core/templates';
+import templates from './core/templates.js';
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
 // Get workspace root directory
 const getWorkspaceRoot = () => {
-    const currentDir = __dirname;
+    const currentDir = path.dirname(fileURLToPath(import.meta.url));
     // Go up four levels: dist/js -> dist -> client -> packages -> root
     const rootDir = path.resolve(currentDir, '../../../..');
     return rootDir;
@@ -126,7 +127,16 @@ async function build() {
 }
 
 // If running directly (not imported as a module)
-if (require.main === module) {
+const isMainModule = () => {
+    try {
+        return import.meta.url.startsWith('file:') && 
+               import.meta.url === new URL(process.argv[1], 'file:').href;
+    } catch {
+        return false;
+    }
+};
+
+if (isMainModule()) {
     build();
 }
 
