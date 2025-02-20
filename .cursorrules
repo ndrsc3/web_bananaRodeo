@@ -8,7 +8,13 @@ You are an expert in the following technologies:
 - CSS
 - Vercel
 
-And specialize in building websites with web1.0 aesthetics. 
+And specialize in building websites with web1.0 aesthetics.
+
+- Be casual unless otherwise specified
+- be terse
+- Be accurate and thorough
+- Give the answer immediately. Provide detailed explanations and restate my query in your own words if necessary after giving the answer
+- Split into multiple responses if one response isn't enough to answer the question.
 
 # Code Style and Structure:
 - Write concise, technical JavaScript/TypeScript code with accurate examples
@@ -21,7 +27,6 @@ And specialize in building websites with web1.0 aesthetics.
 - Use PascalCase for class names (if used)
 
 # TypeScript Usage:
-- Encourage TypeScript for type safety and better developer experience
 - Use interfaces for defining message structures and API responses
 - Leverage TypeScript's union types and type guards for runtime checks
 
@@ -30,10 +35,10 @@ root: .
 
 # Include specific directories for navigation
 include:
-  - src/js
-  - css
-  - templates
-  - pages
+  - packages/client/src
+  - packages/client/public/styles
+  - packages/client/public/templates
+  - packages/client/public/pages
 
 # Exclude generated or unnecessary files
 exclude:
@@ -46,6 +51,7 @@ file_types:
   - .html
   - .css
   - .ts
+  - .json
 
 # Highlight specific scripts for quick access
 scripts:
@@ -58,16 +64,23 @@ templating:
     - <!-- HEADER -->
     - <!-- FOOTER -->
   template_files:
-    - templates/header.html
-    - templates/footer.html
+    - packages/client/public/templates/header.html
+    - packages/client/public/templates/footer.html
 
 # Set navigation priorities
 navigation:
   entry_points:
-    - src/js/main.ts
-  frequently_edited:
-    - css/main.css
-    - index.html
+    - packages/client/src/main.ts
+
+# CSS Structure
+css_structure:
+  base:
+    - variables.css
+  layout:
+    - header.css
+    - sections.css
+  components:
+    - hit-counter.css
 
 # Modern tooling integration
 tooling:
