@@ -1,3 +1,19 @@
+// Types and constants for Banana Rodeo website
+// This is a simplified version of the shared package, keeping everything in one place
+
+// API Routes
+export const API_ROUTES = {
+    KV: {
+        BASE: '/api/kv',
+        ACTIONS: {
+            INIT: 'init',
+            GET_HITS: 'getHits',
+            INCREMENT_HITS: 'incrementHits'
+        }
+    }
+} as const;
+
+// KV Store Types
 export interface KVStore {
     pages: PageStore;
     auth: AuthConfig;
@@ -44,6 +60,7 @@ export interface GuestbookSettings {
     entriesPerPage: number;
 }
 
+// API Response Type
 export interface APIResponse<T> {
     success: boolean;
     data?: T;

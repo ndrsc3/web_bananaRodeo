@@ -1,15 +1,29 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist/js",
-    "rootDir": "./src",
-    "composite": true,
-    "tsBuildInfoFile": "./dist/client.tsbuildinfo",
+    "target": "ES2020",
     "module": "ES2020",
-    "moduleResolution": "bundler"
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    
+    // Output
+    "outDir": "./dist/src",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/src/client.tsbuildinfo",
+    
+    // Type Checking
+    "strict": true,
+    "skipLibCheck": true,
+    
+    // Interop
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    
+    // Build
+    "composite": true,
+    "declaration": true,
+    "sourceMap": true
   },
-  "references": [
-    { "path": "../shared" }
-  ],
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 } 

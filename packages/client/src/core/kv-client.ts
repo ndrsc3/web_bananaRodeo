@@ -1,4 +1,4 @@
-import { PageData, APIResponse, API_ROUTES } from '@banana-rodeo/shared';
+import { PageData, APIResponse, API_ROUTES } from '../types.js';
 
 const { KV } = API_ROUTES;
 

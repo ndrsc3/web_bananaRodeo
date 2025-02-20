@@ -1,4 +1,4 @@
-import { APIResponse, API_ROUTES } from '@banana-rodeo/shared';
+import { APIResponse, API_ROUTES } from '@banana-rodeo/client/dist/src/types';
 import { initializeKV, getPageData, incrementPageHits } from '../../services/kv';
 
 const { ACTIONS } = API_ROUTES.KV;

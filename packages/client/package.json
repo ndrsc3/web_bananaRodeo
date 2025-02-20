@@ -2,14 +2,11 @@
   "name": "@banana-rodeo/client",
   "version": "1.0.0",
   "private": true,
+  "types": "./dist/src/types.d.ts",
   "scripts": {
     "build": "tsc && node dist/build.js",
-    "build:dev": "NODE_ENV=development tsc && NODE_ENV=development node dist/build.js",
     "clean": "rimraf dist",
     "watch": "tsc --watch"
-  },
-  "dependencies": {
-    "@banana-rodeo/shared": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^5.3.3",

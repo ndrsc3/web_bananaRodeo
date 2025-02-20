@@ -1,5 +1,5 @@
 import { kv } from '@vercel/kv';
-import type { KVStore, PageData, APIResponse } from '@banana-rodeo/shared';
+import type { PageData, APIResponse } from '@banana-rodeo/client/dist/src/types';
 
 export async function initializeKV(): Promise<APIResponse<boolean>> {
   try {

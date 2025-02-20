@@ -17,6 +17,16 @@
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/styles/main.css">
     <meta name="robots" content="index, follow">
+
+    <!-- Import map for module resolution -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@banana-rodeo/shared": "/packages/shared/dist/index.js",
+        "@banana-rodeo/shared/": "/packages/shared/dist/"
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -97,7 +107,7 @@
 
     <!-- FOOTER -->
 
-    <script src="/js/main.js" type="module"></script>
+    <script src="/src/main.js" type="module"></script>
     
   </body>
 </html>
