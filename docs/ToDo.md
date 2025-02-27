@@ -2,6 +2,12 @@
 
 
 Implementation
+Phase 0: CSS & Styling
+- [ ] Basic Styling
+- [ ] Web 1.0 Styling
+- [ ] Webamp Styling
+
+
 Phase 1:
 - Basic Vercel KV setup
     - Create Vercel KV database

@@ -94,6 +94,7 @@ The project uses a simple HTML templating system for sharing common components a
 1. Templates are stored in `packages/client/public/templates/`:
    - `header.html`: Site header
    - `footer.html`: Site footer
+   - 
 
 2. Include templates in any HTML file using comments:
 ```html
@@ -108,6 +109,13 @@ The project uses a simple HTML templating system for sharing common components a
    - Templates are automatically processed
    - Comments are replaced with actual content
    - Proper indentation is maintained
+
+4. To Add a template
+   - Create a new template in `packages/client/public/templates/`
+   - Update `templates.ts`
+      - Add `NEW_TEMPLATE` to the `TemplateComponents` interface
+      - Add marquee file reading to `getTemplates()`
+      - Add a new replacement pattern for <!-- NEW_TEMPLATE --> 
 
 ## Development
 

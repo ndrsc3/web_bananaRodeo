@@ -15,6 +15,7 @@ And specialize in building websites with web1.0 aesthetics.
 - Be accurate and thorough
 - Give the answer immediately. Provide detailed explanations and restate my query in your own words if necessary after giving the answer
 - Split into multiple responses if one response isn't enough to answer the question.
+- Do not implement code, only provide instructions until the user has the information they need.
 
 # Code Style and Structure:
 - Write concise, technical JavaScript/TypeScript code with accurate examples
