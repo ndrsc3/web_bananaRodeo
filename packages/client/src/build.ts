@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 // Get workspace root directory
 const getWorkspaceRoot = () => {
     const currentDir = path.dirname(fileURLToPath(import.meta.url));
+
     // Go up four levels: dist/js -> dist -> client -> packages -> root
     const rootDir = path.resolve(currentDir, '../../../..');
     return rootDir;
@@ -109,7 +110,7 @@ async function build() {
     const isDev = process.env.NODE_ENV === 'development';
     
     try {
-        if (!isDev) console.log('Starting build process...');
+        console.log('Starting build process...');
         
         // Copy static assets
         if (!isDev) console.log('Copying static assets...');

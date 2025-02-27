@@ -3,7 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "packages/client/dist",
   "functions": {
-    "api/routes/**/*.js": {
+    "api/**/*.js": {
       "runtime": "@vercel/node@3.0.0"
     }
   },
