@@ -57,14 +57,3 @@
     from { transform: translateX(0); }
     to { transform: translateX(calc(-50% - 1rem)); }
 }
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .marquee-content {
-        animation: none;
-    }
-    
-    .marquee-wrapper {
-        justify-content: center;
-    }
-} 

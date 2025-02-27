@@ -1,3 +1,134 @@
+/* =============== EFFECTS ================= */
+
+/* 
+Documentation:
+1. .sparkle - Add to elements that should sparkle and disappear
+2. .rainbow-cycle - Add to text for cycling rainbow colors
+3. .scan-line - Add to containers for a CRT monitor effect
+4. .bounce - Simple up-down bounce animation
+5. .glitch - Adds a glitch/distortion effect
+6. .typewriter - Makes text appear character by character
+7. .rotate-star - Rotates any element (great for ★ symbols)
+8. .wave - Creates a gentle waving motion
+9. .flip - Flips elements like old number counters
+10. .spotlight - Creates a moving highlight effect
+11. .marquee - Creates a scrolling text effect
+12. .fade-in - Fades in elements
+13. .fade-in-up - Fades in elements from the bottom
+14. .shimmer - Adds a shimmering effect
+15. .shake - Shakes elements
+16. .sparkle - Creates a sparkle effect
+
+Some notes for implementation:
+- For .scan-line, you'll need to add a gradient background
+- For .spotlight, you'll want to add a gradient overlay
+- .sparkle elements should be created dynamically via JavaScript for cursor following
+- .typewriter works best with monospace fonts
+- .glitch might need additional styling for text-shadow effects
+
+*/
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 1s var(--animation-timing);
+}
+
+.fade-in-up {
+    animation: fadeInUp var(--animation-duration) var(--animation-timing);
+}
+
+.marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: marquee 10s linear infinite;
+}
+
+.shimmer {
+    animation: shimmer 2s linear infinite;
+}
+
+.shake {
+    animation: shake 0.5s infinite;
+    width: 99%;
+}
+
+.sparkle {
+    animation: sparkle 2s linear;
+    pointer-events: none;
+}
+
+.rainbow-cycle {
+    animation: rainbowCycle 3s linear infinite;
+}
+
+.scan-line {
+    position: relative;
+    overflow: hidden;
+    animation: scanLine 2s linear infinite;
+}
+
+.bounce {
+    animation: bounce 0.5s ease infinite;
+}
+
+.glitch {
+    animation: glitch 0.3s ease infinite;
+    width: 99%;
+    position: relative;
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-top 1s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch::after {
+    animation: glitch-bottom 1.5s infinite linear alternate-reverse;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 3s steps(40, end);
+}
+
+.rotate-star {
+    display: inline-block;
+    animation: rotate 2s linear infinite;
+}
+
+.wave {
+    animation: wave 1s ease-in-out infinite;
+}
+
+.flip {
+    animation: flip 0.6s ease-in-out;
+    transform-origin: bottom;
+}
+
+.spotlight {
+    position: relative;
+    animation: spotlight 3s ease-in-out infinite;
+}
+
+/* =============== ANIMATIONS ================= */
+
 /* Fade In Up */
 @keyframes fadeInUp {
     from {
@@ -22,11 +153,137 @@
     to { transform: rotate(360deg); }
 }
 
-/* Animation Classes */
-.fade-in {
-    animation: fadeIn 1s var(--animation-timing);
+/* Blink Animation */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
-.fade-in-up {
-    animation: fadeInUp var(--animation-duration) var(--animation-timing);
-} 
+/* Marquee Animation */
+@keyframes marquee {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+/* Sparkle Effect */
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    33% { transform: scale(1); opacity: 1; }
+    66% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Rainbow Cycle */
+@keyframes rainbowCycle {
+    0% { color: #ff0000; }
+    16% { color: #ff8000; }
+    32% { color: #ffff00; }
+    48% { color: #00ff00; }
+    64% { color: #0000ff; }
+    80% { color: #4b0082; }
+    100% { color: #ff0000; }
+}
+
+/* Scan Line */
+@keyframes scanLine {
+    0% { background-position: 0 -100%; }
+    100% { background-position: 0 200%; }
+}
+
+/* Bounce */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Glitch */
+@keyframes glitch {
+    0% { 
+        transform: translate(0);
+        opacity: 1;
+    }
+    20% { 
+        transform: translate(-2px, 2px);
+        opacity: 0.9;
+    }
+    40% { 
+        transform: translate(-2px, -2px);
+        opacity: 0.8;
+    }
+    60% { 
+        transform: translate(2px, 2px);
+        opacity: 0.9;
+    }
+    80% { 
+        transform: translate(2px, -2px);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glitch-top {
+    0% {
+        transform: translate(0);
+    }
+    30% {
+        transform: translate(5px, -5px);
+    }
+    60% {
+        transform: translate(-7px, 4px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes glitch-bottom {
+    0% {
+        transform: translate(0);
+    }
+    50% {
+        transform: translate(-4px, 6px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+/* Typewriter */
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Wave */
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+/* Flip */
+@keyframes flip {
+    0% { transform: rotateX(0); }
+    100% { transform: rotateX(360deg); }
+}
+
+/* Spotlight */
+@keyframes spotlight {
+    0%, 100% { background-position: -100% 0; }
+    50% { background-position: 200% 0; }
+}

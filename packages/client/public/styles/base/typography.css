@@ -30,3 +30,18 @@ p {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
     line-height: 1.8;
 } 
+
+/* Classic Link Styles */
+a:link {
+    color: #0000EE;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #551A8B;
+}
+
+a:hover {
+    color: #FF0000;
+    text-decoration: none;
+}

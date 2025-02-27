@@ -15,9 +15,12 @@
     --header-background: var(--secondary-color);
     --header-text: var(--primary-color);
     --header-nav-hover: var(--light-accent);
+    --footer-background: var(--secondary-color);
+    --footer-text: var(--primary-color);
+    --footer-nav-hover: var(--light-accent);
     
     /* Section Colors */
-    --section-text: var(--secondary-color);  /* Updated for better contrast on dark background */
+    --section-text: var(--secondary-color);
     --section-background: var(--background-light);
     --section-light-background: var(--background-light);
     

@@ -3,7 +3,6 @@
     position: relative;
     width: 100%;
     background: var(--header-background);
-    z-index: 1000;
     border: 2px outset #666;
 }
 
@@ -11,19 +10,6 @@
     padding: 0.5rem;
     max-width: var(--max-width);
     margin: 0 auto;
-}
-
-/* Navigation Label */
-.nav-label {
-    text-align: center;
-    padding: 5px 0;
-    background: var(--background-light);
-    color: #fff;
-}
-
-.construction-badge {
-    text-align: center;
-    margin-bottom: 5px;
 }
 
 /* Logo */
@@ -43,6 +29,12 @@
     text-decoration: underline;
 }
 
+.beveled {
+    border: 2px outset #666;
+    background: var(--header-background);
+    padding: 4px 8px;
+}
+
 /* Navigation */
 .nav-table {
     border-collapse: collapse;
@@ -59,12 +51,6 @@
     font-weight: bold;
 }
 
-.web1-beveled {
-    border: 2px outset #666;
-    background: var(--header-background);
-    padding: 4px 8px;
-}
-
 .nav-link {
     color: var(--header-text);
     font-weight: 500;
@@ -72,49 +58,7 @@
     display: inline-block;
 }
 
-.nav-link:hover {
-    text-decoration: underline;
-}
-
-/* Dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--header-background);
-    width: 100%;
-    border: 2px outset #666;
-    padding: 2px;
-    text-align: center;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-link {
-    display: block;
-    padding: 4px 8px;
-    color: #FFFFFF;
-    text-decoration: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dropdown-link:hover {
-    text-decoration: underline;
-    background: #000080;
-    border: 1px inset #666;
-}
+/* ============= Badges ============= */
 
 /* New Badge */
 .new-badge {
@@ -126,7 +70,39 @@
     image-rendering: pixelated;
 }
 
-/* Mobile Menu Button - Keeping for responsiveness but styled to match */
+.construction-badge {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+/* ============= ANIMATIONS ============= */
+
+.dancing-bananas-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+    background: var(--header-background);
+    border-top: 2px outset #666;
+    border-bottom: 2px outset #666;
+}
+
+.dancing-banana {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    animation: dance 0.5s steps(4) infinite;
+}
+
+@keyframes dance {
+    from { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    to { transform: translateY(0); }
+}
+
+/* ============= MOBILE OPTIONS ============= */
+
+/*TODO:: Mobile menu button? */
 .mobile-menu-btn {
     display: none;
     width: 30px;
@@ -143,15 +119,11 @@
         display: block;
     }
     
-    .nav-table {
-        display: none;
-    }
-    
     .nav-table.active {
         display: table;
     }
 
-    .nav-item, .dropdown-content {
+    .nav-item{
         width: 100%;
         display: block;
         position: static;
