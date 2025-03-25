@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf ../../api",
+    "clean": "rimraf dist",
     "watch": "tsc --watch"
   },
   "dependencies": {
