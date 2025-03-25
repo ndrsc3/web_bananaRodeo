@@ -1,6 +1,6 @@
 /* Marquee Container */
 .marquee-section {
-    background: var(--secondary-color);
+    /* background: var(--secondary-color); */
     overflow: hidden;
     padding: 1rem 0;
 }
