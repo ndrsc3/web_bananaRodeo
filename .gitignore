@@ -7,7 +7,6 @@ node_modules/
 .vercel/
 packages/*/dist/
 dist/
-api/
 
 # TypeScript
 *.tsbuildinfo
