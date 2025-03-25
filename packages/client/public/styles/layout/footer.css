@@ -48,37 +48,9 @@
     }
 }
 
-.page-stats {
-    font-family: "Digital-7", "VT323", "Courier New", monospace;
-    background: #000000;
-    color: #00FF00;
-    padding: 5px 10px;
-    border: 2px inset #00FF00;
-    display: inline-block;
-    text-shadow: 0 0 2px #00FF00;
-    letter-spacing: 2px;
-    position: relative;
-    margin: 5px 0;
-}
-
-.page-stats::before {
-    content: "Visitors:";
-    display: block;
-    font-family: "MS Sans Serif", Arial, sans-serif;
-    font-size: 12px;
-    color: #000000;
-    margin-bottom: 5px;
-    text-shadow: none;
-    letter-spacing: normal;
-}
-
 /* Blink animation for counter updates */
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0.3; }
     100% { opacity: 1; }
 }
-
-.page-stats.blink {
-    animation: blink 0.5s ease-in-out;
-} 
