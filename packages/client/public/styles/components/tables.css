@@ -1,0 +1,46 @@
+/* Competition Table Styles */
+.table-container {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.table-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    background: #000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    border: 3px solid #00ff00;
+}
+
+.table-matrix th,
+.table-matrix td {
+    border: 2px solid #00ff00;
+    padding: 15px;
+    text-align: left;
+}
+
+.table-matrix th {
+    background: #003300;
+    color: #00ff00;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.c   tr:hover {
+    background: #001100;
+}
+
+.table-image-matrix {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #00ff00;
+    image-rendering: pixelated;
+}
+
+.table-matrix h3 {
+    margin: 0;
+    color: #00ff00;
+    text-shadow: 2px 2px #003300;
+}

@@ -1,0 +1,52 @@
+/* Windows 98 Desktop Style */
+.win98-desktop {
+    background: #008080;
+    padding: 2rem;
+    border: 2px solid #c0c0c0;
+    position: relative;
+}
+
+.win98-taskbar {
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    padding: 4px;
+    position: relative;
+    margin-top: 1rem;
+}
+
+.win98-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.win98-icon {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #000000;
+    cursor: pointer;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.win98-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.win98-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 5px;
+    image-rendering: pixelated;
+}
+
+.win98-icon span {
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    display: block;
+}

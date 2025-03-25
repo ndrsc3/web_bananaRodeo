@@ -48,6 +48,15 @@
     text-align: center;
 }
 
+.section-content-base td {
+    padding: 20px;
+}
+
+.section-content-base p {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
 /* Themed Section Content Classes */
 .section-content-graph {
     background-color: #dbe5e1;
@@ -111,15 +120,74 @@
     color: #FFFFFF;
 }
 
-.section-content-base td {
-    padding: 20px;
+/* Retro Blog Section Content */
+.section-content-blog {
+    background-color: GhostWhite;
+    border: 6px double #000;
+    padding: 25px;
+    margin: 20px auto;
+    width: 75%;
+    font-family: 'Courier New', monospace;
+    color: #000;
+    position: relative;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-.section-content-base p {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+.section-content-blog h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
+.section-content-blog p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.section-content-blog img {
+    border-style: ridge;
+    margin: 10px;
+    image-rendering: pixelated;
+}
+
+/* Retro Library Section Content */
+.section-content-library {
+    background: black;
+    border: 10px solid #FE0;
+    box-shadow: 8px 8px black;
+    margin: 20px auto;
+    padding: 25px;
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    width: 72%;
+}
+
+.section-content-library h2 {
+    font-size: 22pt;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FE0;
+    text-transform: uppercase;
+}
+
+.section-content-library p {
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.section-content-library img {
+    width: 100%;
+    max-width: 555px;
+    margin-bottom: 20px;
+    border: 2px solid #FE0;
+}
+
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
     .section-content-base .section-content-graph{
         width: 95%;
@@ -134,4 +202,90 @@
     .section-content-base td {
         padding: 15px;
     }
+
+    .section-content-blog {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .section-content-library {
+        width: 90%;
+        padding: 15px;
+        border-width: 5px;
+    }
 }
+
+/* Partner Grid Layout */
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.partner-card {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s;
+    box-shadow: 5px 5px 0 #000000;
+}
+
+.partner-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 #000000;
+}
+
+.partner-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23999999' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.partner-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.3));
+}
+
+.construction-gif {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 2;
+}
+
+.star-divider {
+    text-align: center;
+    font-size: 24px;
+    color: #FFD700;
+    margin: 1rem 0;
+    text-shadow: 2px 2px 0 #000000;
+}
+
+@media (max-width: 768px) {
+    .partner-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .partner-logo {
+        width: 120px;
+        height: 120px;
+    }
+}
+

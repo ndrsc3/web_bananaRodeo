@@ -14,6 +14,7 @@
 @import 'components/cards.css';
 @import 'components/marquee.css';
 @import 'components/images.css';
+@import 'components/tables.css';
 
 /* Import Animations */
 @import 'animations/transitions.css';
@@ -21,6 +22,10 @@
 
 /* Import Web 1.0 Styles */
 @import 'web1.css';
+@import 'web1/bbs.css';
+@import 'web1/guestbook.css';
+@import 'web1/win98.css';
 
 /* Import Utilities */
 @import 'utils/helpers.css';
+
