@@ -30,8 +30,7 @@ export interface PageData {
     lastUpdated?: string;
     settings?: {
         showHitCounter: boolean;
-        counterPosition?: 'header' | 'footer';
-    };
+    }
 }
 
 export interface AuthConfig {

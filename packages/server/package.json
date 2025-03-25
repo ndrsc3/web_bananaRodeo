@@ -11,7 +11,7 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "@banana-rodeo/client": "1.0.0",
+    "@banana-rodeo/shared": "1.0.0",
     "@vercel/kv": "^0.2.4"
   },
   "devDependencies": {

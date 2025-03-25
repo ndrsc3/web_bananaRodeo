@@ -1,52 +1,24 @@
-import { initializePageStats } from './features/page-stats.js';
-import { initializeAnimations } from './core/animations.js';
-import { lazyLoadImages } from './core/image-loader.js';
+import { CursorEffect, Web1Asset } from '@banana-rodeo/shared';
 
-document.addEventListener('DOMContentLoaded', (): void => {
-    // Initialize features
-    initializePageStats();
-    initializeAnimations();
-    lazyLoadImages();
+// Dynamic imports for better performance
+const loadCursorEffects = async () => {
+    const { initializeCursorEffects } = await import('./features/cursor-effects');
+    initializeCursorEffects();
+};
 
-    // Mobile menu toggle
-    const mobileMenuBtn: HTMLElement | null = document.querySelector('.mobile-menu-btn');
-    const navList: HTMLElement | null = document.querySelector('.nav-list');
+const loadHitCounter = async () => {
+    const { initializeHitCounter } = await import('./features/hit-counter');
+    initializeHitCounter();
+};
 
-    if (mobileMenuBtn && navList) {
-        // Toggle mobile menu
-        mobileMenuBtn.addEventListener('click', function(this: HTMLElement) {
-            mobileMenuBtn.classList.toggle('active');
-            navList.classList.toggle('active');
-        });
+const loadWebamp = async () => {
+    const { initializeWebamp } = await import('./features/webamp');
+    initializeWebamp();
+};
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (!mobileMenuBtn.contains(target) && !navList.contains(target)) {
-                mobileMenuBtn.classList.remove('active');
-                navList.classList.remove('active');
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', (): void => {
-            if (window.innerWidth > 768) {
-                mobileMenuBtn.classList.remove('active');
-                navList.classList.remove('active');
-            }
-        });
-    }
-
-    // Handle dropdown menus on mobile
-    const dropdowns: NodeListOf<HTMLElement> = document.querySelectorAll('.dropdown');
-    
-    dropdowns.forEach((dropdown: HTMLElement) => {
-        dropdown.addEventListener('click', function(this: HTMLElement, e: Event) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                const dropdownContent = this.querySelector('.dropdown-content');
-                dropdownContent?.classList.toggle('show');
-            }
-        });
-    });
+// Initialize features
+document.addEventListener('DOMContentLoaded', () => {
+    loadCursorEffects();
+    loadHitCounter();
+    loadWebamp();
 }); 

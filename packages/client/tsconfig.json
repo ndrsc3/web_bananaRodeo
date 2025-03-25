@@ -6,9 +6,8 @@
     "moduleResolution": "bundler",
     
     // Output
-    "outDir": "./dist/src",
-    "rootDir": "./src",
-    "tsBuildInfoFile": "./dist/src/client.tsbuildinfo",
+    "outDir": "./dist",
+    "rootDir": ".",
     
     // Type Checking
     "strict": true,
@@ -20,13 +19,22 @@
     "resolveJsonModule": true,
     
     // Build
-    "composite": true,
-    "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    
+    // Path aliases
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.json"
+    "src/**/*.d.ts",
+    "src/**/*.json",
+    "vite.config.ts"
   ],
   "exclude": [
     "node_modules",
