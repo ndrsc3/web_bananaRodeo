@@ -5,89 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <title>Banana Rodeo</title>
+    <title>🚧 UNDER CONSTRUCTION 🚧 - Banana Rodeo</title>
     
     <!-- Meta Tags -->
     <meta property="og:site_name" content="Banana Rodeo">
-    <meta property="og:title" content="Banana Rodeo">
-    <meta property="og:url" content="https://banana.rodeo">
+    <meta property="og:title" content="Under Construction - Banana Rodeo">
+    <meta property="og:url" content="https://banana.rodeo/under-construction">
     <meta property="og:type" content="website">
     <meta property="og:image" content="/assets/icons/banana-rodeo-pin.01.png">
     
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/page-stats.css">
-    <meta name="robots" content="noindex, nofollow">
+    <style>
+      .construction-zone {
+        background: repeating-linear-gradient(
+          45deg,
+          #ffd700,
+          #ffd700 10px,
+          #000000 10px,
+          #000000 20px
+        );
+        padding: 20px;
+        margin: 20px 0;
+        border: 5px solid #ff6b6b;
+        animation: borderBlink 1s infinite;
+      }
+
+      @keyframes borderBlink {
+        0% { border-color: #ff6b6b; }
+        50% { border-color: #ffeb3b; }
+        100% { border-color: #ff6b6b; }
+      }
+
+      .banana-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      .banana {
+        position: absolute;
+        font-size: 2rem;
+        animation: fall linear infinite;
+        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+        will-change: transform;
+        transform-origin: center;
+      }
+
+      .banana.small {
+        font-size: 1.5rem;
+      }
+
+      .banana.medium {
+        font-size: 2.5rem;
+      }
+
+      .banana.large {
+        font-size: 3.5rem;
+      }
+
+      @keyframes fall {
+        0% { transform: translateY(-100vh) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(720deg); }
+      }
+
+      .blink-text {
+        animation: blink 0.5s infinite;
+      }
+
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+      .banana-counter {
+        font-family: "Comic Sans MS", cursive;
+        font-size: 1.5rem;
+        color: #ff6b6b;
+        text-shadow: 2px 2px #000;
+      }
+
+      .construction-content {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 800px;
+      }
+
+      .marquee-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 3px dashed #000;
+      }
+
+      .password-form {
+        background: #000;
+        color: #0f0;
+        font-family: monospace;
+        padding: 20px;
+        border: 2px solid #0f0;
+        max-width: 400px;
+        margin: 20px auto;
+        text-align: center;
+      }
+
+      .password-form input[type="password"] {
+        background: #000;
+        color: #0f0;
+        border: 1px solid #0f0;
+        padding: 5px;
+        font-family: monospace;
+        width: 200px;
+        margin: 10px 0;
+      }
+
+      .password-form button {
+        background: #0f0;
+        color: #000;
+        border: none;
+        padding: 5px 15px;
+        font-family: monospace;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .password-form button:hover {
+        background: #000;
+        color: #0f0;
+        border: 1px solid #0f0;
+      }
+
+      .error-message {
+        color: #f00;
+        margin-top: 10px;
+        font-family: monospace;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+    </style>
 </head>
 
-<body class="page-background-color2">
-    <!-- HEADER -->
+<body>
+    <!-- MAKE IT RAIN! -->
+    <div class="banana-rain" id="bananaRain"></div>
 
-    <!-- Hero Section -->
-    <section class="section-basic-trans">
-        <h1 class="glitch" align="center">It's Just a Science Fair!</h1>
-    </section>
+    <section class="content-section">
+        <div class="content-wrapper">
+            <div class="construction-zone">
+                <div class="marquee-container">
+                    <marquee scrollamount="10" style="font-size: 2rem;">
+                        🍌 WELCOME TO THE BANANA ZONE 🍌 UNDER CONSTRUCTION 🚧 WATCH YOUR STEP! 🍌
+                    </marquee>
+                </div>
+                
+                <div class="construction-content">
+                    <h1 class="section-title blink-text" style="font-size: 3rem;text-align: center;">🚧 RESTRICTED AREA 🚧</h1>
+                    
+                    <div class="description" style="text-align: center;">
+                      <p style="font-size: 1.5rem;">We Need More Bananas!</p>
+                      <marquee direction="up" height="100px" scrollamount="2" style="text-align: center;">
+                          <p>Loading creativity...</p>
+                          <p>Peeling back the layers...</p>
+                          <p>Monkey business in progress...</p>
+                      </marquee>                        
+                        <div class="password-form">
+                            <form id="passwordForm" onsubmit="return false;">
+                                <label for="password">ENTER PASSWORD:</label><br>
+                                <input type="password" id="password" name="password" required><br>
+                                <button type="submit" onclick="submitPassword()">SUBMIT</button>
+                                <div id="errorMessage" class="error-message" style="display: none;">
+                                    ACCESS DENIED
+                                </div>
+                            </form>
+                        </div>
 
-    <!-- Poster Section -->
-    <section class="section-basic-trans">
-        <table class="image-container">
-            <tr>
-                <td>
-                    <img src="/assets/images/2025-Poster-Blur-1.jpg" alt="Banana Rodeo 2025 Event Poster" class="content-image center">
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <!-- Content Section -->
-    <section class="section-basic-trans">
-        <table class="section-content-base section-content-blue">
-            <tr>
-                <td>
-                    <h1 class="section-title" align="center">What is this?</h1>
-                    <p class="highlight-text" align="center">It's not just a pool party, it's a party with a purpose.</p>
-                    <div class="web1-divider"></div>
-                    <div class="description">
-                        <p>The Banana Rodeo is a community-driven, 
-                            absurdist banana-themed pool party fostering joy & connection, 
-                            through silly educational activities centered around the Humble Banana.</p>
-
-                        <p><strong>We cultivate a safe space for creative expression, knowledge sharing, and celebrating our uniqueness.</strong></p>
-
-                        <p>The Banana Rodeo includes [Link:cowboy cosplay], 
-                            <a href="/pages/competitions.html">ridiculous rodeo competitions</a> 
-                            (judged by a distinguished [Bananel] of Clowns),
-                            and a <a href="/pages/science-fair.html">science fair</a> 
-                            focused on sustainability (serious and absurd submissions encouraged).</p>
-                        <p>We've organized a whole day of activities including such competitions as Banana Riding, 
-                            Barrel Racing, and the Best Banana Dish.</p>
+                        <div class="banana-counter">
+                            <p>Bananas collected: <span id="bananaCount">0</span> 🍌</p>
+                        </div>
                         
-                        <p>Intermixed throughout the day there will be side adventures, activities and art curated by our own community.</p>
+                        <img src="/assets/images/under-construction.gif" alt="Under Construction" style="margin: 20px auto;">
                     </div>
-                    <div class="web1-divider"></div>
-                    <p class="highlight-text">It's about to get buckin' bananas.</p>
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <div style="text-align: center;">
-        <a href="/pages/science-fair.html">
-            <img src="/assets/images/puppybear.png" alt="Puppy Bear Science Fair" class="content-image" style="width: 5%;">
-        </a>
-    </div>
-
-    <!-- CHAT-MARQUEE -->
-
-    <section class="section-basic-trans">
-        <div class="marquee">
-            <a href="https://signal.group/#CjQKICDwsl2r5YU6Mxfj2DoP-zGr-6_Z5iYoxqnMexQ2xdkHEhBW0J6CDjyP8XuNBMrmbE3z">JOIN OUR SIGNAL CHAT</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-
     <script src="/src/main.js" type="module"></script>
-    
+    <script type="module">
+        import { setAuthenticated } from '/src/auth.js';
+
+        // Create falling bananas
+        function createBanana() {
+            const banana = document.createElement('div');
+            banana.className = 'banana';
+            
+            // Randomly select banana size
+            const sizes = ['small', 'medium', 'large'];
+            const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+            banana.classList.add(randomSize);
+            
+            banana.textContent = '🍌';
+            banana.style.left = Math.random() * 100 + 'vw';
+            
+            // Adjust animation duration based on size (larger bananas fall slower)
+            let baseDuration = Math.random() * 4 + 4; // 4-8 seconds base
+            switch(randomSize) {
+                case 'small':
+                    baseDuration *= 0.8; // 20% faster
+                    break;
+                case 'large':
+                    baseDuration *= 1.2; // 20% slower
+                    break;
+            }
+            banana.style.animationDuration = baseDuration + 's';
+            
+            document.getElementById('bananaRain').appendChild(banana);
+            
+            // Remove banana after animation
+            banana.addEventListener('animationend', () => {
+                banana.remove();
+                updateBananaCount();
+            });
+        }
+
+        // Update banana counter
+        let bananaCount = 0;
+        function updateBananaCount() {
+            bananaCount++;
+            document.getElementById('bananaCount').textContent = bananaCount;
+        }
+
+        // Create bananas less frequently (every 800ms instead of 500ms)
+        setInterval(createBanana, 800);
+
+        // Password handling
+        window.submitPassword = async () => {
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password })
+                });
+
+                if (response.ok) {
+                    // Set auth state
+                    setAuthenticated(true);
+                    
+                    // Get redirect URL from query params or default to home
+                    const params = new URLSearchParams(window.location.search);
+                    const redirectUrl = params.get('redirect') || '/pages/home.html';
+                    
+                    // Redirect to the target page
+                    window.location.href = decodeURIComponent(redirectUrl);
+                } else {
+                    errorMessage.style.display = 'block';
+                    document.getElementById('password').value = '';
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                errorMessage.style.display = 'block';
+            }
+        };
+
+        // Handle form submission with Enter key
+        document.getElementById('passwordForm').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                submitPassword();
+            }
+        });
+    </script>
   </body>
-</html>
+</html> 

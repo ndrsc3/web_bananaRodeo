@@ -10,10 +10,6 @@
   },
   "routes": [
     {
-      "src": "/debug-path/(.*)",
-      "dest": "/api/debug-path?path=$1"
-    },
-    {
       "src": "/src/(.*)\\.ts$",
       "dest": "/api/serve-ts?path=$1"
     },
@@ -23,10 +19,6 @@
     },
     {
       "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
   ]
 } 

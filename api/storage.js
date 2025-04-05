@@ -30,7 +30,7 @@ async function initPage(pageUrl) {
       await kv.set(key, pageData);
       log('Page initialized with data:', { pageUrl, data: pageData });
     } else {
-      log('Found existing page data:', { pageUrl, data: pageData });
+      // log('Found existing page data:', { pageUrl, data: pageData });
     }
     
     return pageData;
@@ -51,7 +51,6 @@ export async function incrementHitCount(pageUrl) {
     
     // Clean the pageUrl
     const cleanPath = pageUrl.startsWith('/') ? pageUrl : `/${pageUrl}`;
-    log('Incrementing hits for path:', cleanPath);
     
     // Get or create page data
     const pageData = await initPage(cleanPath);
@@ -65,15 +64,7 @@ export async function incrementHitCount(pageUrl) {
       lastUpdated: new Date().toISOString()
     };
     
-    log('Updating count:', { 
-      path: cleanPath, 
-      key,
-      oldCount: pageData.hits, 
-      newCount: newHits 
-    });
-    
     await kv.set(key, updatedData);
-    log('Hit count updated successfully');
     
     return newHits;
   } catch (error) {
