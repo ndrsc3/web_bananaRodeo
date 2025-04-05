@@ -14,7 +14,7 @@
     
     // Emit
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./dist",
     
     // Type Checking
@@ -37,6 +37,5 @@
   "files": [],
   "references": [
     { "path": "./packages/client" },
-    { "path": "./packages/server" }
   ]
 }

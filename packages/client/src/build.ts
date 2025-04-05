@@ -1,4 +1,4 @@
-import templates from './core/templates.js';
+import templates from './templates.js';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';

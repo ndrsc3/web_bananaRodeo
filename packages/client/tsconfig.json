@@ -8,6 +8,7 @@
     // Output
     "outDir": "./dist/src",
     "rootDir": "./src",
+    "sourceRoot": "../../src",
     "tsBuildInfoFile": "./dist/src/client.tsbuildinfo",
     
     // Type Checking

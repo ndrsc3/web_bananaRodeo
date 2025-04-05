@@ -15,6 +15,14 @@
     overflow: hidden;
 }
 
+.guestbook-entry-title-bar {
+    padding: 0.5rem;
+}
+
+.guestbook-entry-title {
+
+}
+
 .guestbook-entry::before {
     content: '';
     position: absolute;
@@ -33,9 +41,9 @@
 
 .guestbook-entry-content {
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
 }
 
 .guestbook-logo {
@@ -84,4 +92,250 @@
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+/* Guestbook Container */
+.guestbook-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+/* Web 1.0 Decorations */
+.web1-decorations {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 2px dashed #FF00FF;
+    background: #FFFF99;
+}
+
+.construction-gif {
+    margin: 0.5rem;
+    image-rendering: pixelated;
+}
+
+marquee {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 1.2rem;
+    color: #FF0000;
+    text-shadow: 1px 1px 0 #FFFF00;
+    margin: 1rem 0;
+}
+
+/* Form Styles */
+.guestbook-form-container {
+    margin-bottom: 3rem;
+}
+
+.guestbook-form table {
+    background: #C0C0C0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.guestbook-form td {
+    padding: 8px;
+    background: #EFEFEF;
+}
+
+.guestbook-form label {
+    font-family: "Comic Sans MS", cursive;
+    font-weight: bold;
+    color: #000080;
+}
+
+.required {
+    color: #FF0000;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+/* Entry Display */
+.guestbook-entries-container {
+    margin-top: 3rem;
+}
+
+.guestbook-entry {
+    margin-bottom: 1.5rem;
+    border: 2px solid #000080;
+    box-shadow: 3px 3px 0 #000080;
+}
+
+.guestbook-entry-content {
+    padding: 1rem;
+    background: #FFFFFF;
+}
+
+.guestbook-mood {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: #E6E6FA;
+    border: 1px dashed #9370DB;
+    display: inline-block;
+}
+
+.guestbook-links {
+    font-size: 0.9rem;
+    padding: 0.25rem;
+    background: #F0F8FF;
+    border: 1px solid #B0C4DE;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.guestbook-links a,
+.guestbook-location {
+    white-space: nowrap;
+    color: #0000EE;
+}
+
+.guestbook-links a:hover {
+    text-decoration: underline;
+    background: #E6E6FA;
+}
+
+.guestbook-message {
+    padding: 0.75rem;
+    background: #FFFFFF;
+    border: 1px solid #DCDCDC;
+    font-family: "Comic Sans MS", cursive;
+}
+
+.banana-memory,
+.message {
+    background: #FFFAF0;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #FFE4B5;
+}
+
+.banana-memory p,
+.message p {
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
+.banana-memory strong,
+.message strong {
+    color: #8B4513;
+    display: block;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dashed #DEB887;
+    padding-bottom: 0.25rem;
+}
+
+/* Load More Button */
+.load-more-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* Loading Overlay */
+.submit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.submit-overlay .win98-window {
+    min-width: 300px;
+    background: #C0C0C0;
+}
+
+/* Retro form validation message style */
+.guestbook-entry-form input:invalid,
+.guestbook-entry-form textarea:invalid {
+    border-color: #FF0000;
+    background: #FFE1E1;
+}
+
+/* Fun animation for the submit button */
+.win98-button:hover {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .guestbook-container {
+        margin: 1rem;
+        padding: 0.5rem;
+    }
+
+    .guestbook-form td {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    .guestbook-form td[align="right"] {
+        text-align: left;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+/* Form Validation Styles */
+.validation-error {
+    margin-top: 0.5rem;
+}
+
+.win98-error {
+    background: #FFFFCC;
+    border: 2px solid #FF0000;
+    padding: 0.5rem;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #FF0000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: shake 0.4s linear;
+}
+
+.error-icon {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+}
+
+.has-error {
+    border-color: #FF0000 !important;
+    background-color: #FFE1E1 !important;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Character Counter */
+.char-counter {
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 0.8rem;
+    color: #666666;
+    text-align: right;
+    margin-top: 0.25rem;
+}
+
+.char-counter.near-limit {
+    color: #FF6600;
+}
+
+.char-counter.at-limit {
+    color: #FF0000;
+    font-weight: bold;
 }

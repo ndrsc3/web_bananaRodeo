@@ -1,66 +1,42 @@
-// Types and constants for Banana Rodeo website
-// This is a simplified version of the shared package, keeping everything in one place
+// Types for Banana Rodeo website
 
-// API Routes
-export const API_ROUTES = {
-    KV: {
-        BASE: '/api/kv',
-        ACTIONS: {
-            INIT: 'init',
-            GET_HITS: 'getHits',
-            INCREMENT_HITS: 'incrementHits'
-        }
-    }
-} as const;
-
-// KV Store Types
-export interface KVStore {
-    pages: PageStore;
-    auth: AuthConfig;
-    guestbook: GuestbookStore;
-}
-
-export interface PageStore {
-    [pageUrl: string]: PageData;
-}
-
+/**
+ * Represents the page data including hit counter and content update tracking
+ */
 export interface PageData {
+    /** Whether the page has a hit counter enabled */
     hasHitCounter: boolean;
-    hits?: number;
-    lastUpdated?: string;
-    settings?: {
-        showHitCounter: boolean;
-        counterPosition?: 'header' | 'footer';
-    };
+    /** Number of times the page has been visited */
+    hits: number;
+    /** ISO timestamp of when the page content was last updated */
+    lastUpdated: string;
 }
 
-export interface AuthConfig {
-    password: string;
-    protectedPages: string[];
-}
-
-export interface GuestbookStore {
-    entries: GuestbookEntry[];
-    settings: GuestbookSettings;
-}
-
+/**
+ * Represents a single guestbook entry
+ */
 export interface GuestbookEntry {
+    /** Unique identifier for the entry */
     id: string;
+    /** Name of the person signing the guestbook */
     name: string;
-    message: string;
-    timestamp: string;
-    website?: string;
+    /** Optional email address */
     email?: string;
-    avatar?: string;
+    /** Optional website/homepage URL */
+    website?: string;
+    /** Optional location */
+    location?: string;
+    /** The main guestbook message */
+    message: string;
+    /** A favorite banana-related memory */
+    bananaMemory: string;
+    /** Selected mood from preset options */
+    mood: string;
+    /** Unix timestamp of when the entry was created */
+    timestamp: number;
 }
 
-export interface GuestbookSettings {
-    allowHtml: boolean;
-    moderationEnabled: boolean;
-    entriesPerPage: number;
-}
-
-// API Response Type
+// API Response Type - matches backend response format
 export interface APIResponse<T> {
     success: boolean;
     data?: T;

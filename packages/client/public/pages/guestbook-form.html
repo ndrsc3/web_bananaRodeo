@@ -1,0 +1,73 @@
+<!-- Guestbook Sign Form -->
+<div class="guestbook-form win98-window">
+    <div class="win98-title-bar">
+        <div class="win98-title">Sign Our Guestbook!</div>
+    </div>
+    <div class="win98-window-content">
+        <form id="guestbookForm" class="guestbook-entry-form">
+            <table width="100%" cellspacing="0" cellpadding="4" border="1">
+                <tr>
+                    <td width="30%" align="right"><label for="name">Your Name:</label> <span class="required">*</span></td>
+                    <td><input type="text" id="name" name="name" class="win98-input" required></td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="email">Email Address:</label></td>
+                    <td><input type="email" id="email" name="email" class="win98-input"></td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="website">Homepage URL:</label></td>
+                    <td><input type="url" id="website" name="website" class="win98-input" placeholder="http://"></td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="location">Location:</label></td>
+                    <td><input type="text" id="location" name="location" class="win98-input"></td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="mood">Current Mood:</label> <span class="required">*</span></td>
+                    <td>
+                        <select id="mood" name="mood" class="win98-select" required>
+                            <option value="">Select your mood...</option>
+                            <option value="happy">🍌 Going Bananas!</option>
+                            <option value="cool">😎 Top Banana</option>
+                            <option value="silly">🤪 Monkey Business</option>
+                            <option value="tired">😴 Banana Split</option>
+                            <option value="excited">🤠 Rodeo Ready!</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="bananaMemory">Favorite Banana Memory:</label> <span class="required">*</span></td>
+                    <td>
+                        <textarea id="bananaMemory" name="bananaMemory" class="win98-textarea" rows="3" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="message">Your Message:</label> <span class="required">*</span></td>
+                    <td>
+                        <textarea id="message" name="message" class="win98-textarea" rows="5" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <button type="submit" class="win98-button">
+                            💫 Sign Guestbook! 💫
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<!-- Loading overlay -->
+<div id="submitOverlay" class="submit-overlay" style="display: none;">
+    <div class="win98-window">
+        <div class="win98-title-bar">
+            <div class="win98-title">Saving your entry...</div>
+        </div>
+        <div class="win98-window-content" style="text-align: center;">
+            <img src="/images/banana-dance.gif" alt="Loading..." style="margin: 1rem;">
+            <p>Please wait while we add your message to our guestbook...</p>
+        </div>
+    </div>
+</div> 

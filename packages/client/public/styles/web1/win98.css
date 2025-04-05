@@ -50,3 +50,63 @@
     font-size: 12px;
     display: block;
 }
+
+/* Windows 98 Hit Counter */
+.win98-hit-counter {
+    display: inline-flex;
+    align-items: center;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 4px 8px;
+    font-family: "Digital-7", "VT323", "Courier New", monospace;
+    font-size: 12px;
+    color: #000000;
+}
+
+.win98-hit-counter::before {
+    content: "Visitors:";
+    margin-right: 8px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+}
+
+.win98-hit-counter-display {
+    background: #000000;
+    color: #00ff00;
+    padding: 2px 6px;
+    border: 1px solid #808080;
+    letter-spacing: 1px;
+    text-shadow: 0 0 2px #00ff00;
+}
+
+/* Windows 98 Button */
+.win98-button {
+    display: inline-block;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 6px 8px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.win98-button:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 7px 7px 5px 9px;
+}
+
+.win98-button:focus {
+    outline: 1px dotted #000000;
+    outline-offset: -4px;
+}
+
+.win98-button:disabled {
+    color: #808080;
+    text-shadow: 1px 1px #ffffff;
+    cursor: default;
+}
