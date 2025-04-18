@@ -29,7 +29,12 @@ p {
 .description {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
     line-height: 1.8;
+    font-weight: 500;  /* Makes regular text semi-bold */
 } 
+
+.description strong {
+    font-weight: 700;  /* Keeps bold text distinctly bolder */
+}
 
 /* Classic Link Styles */
 a:link {
