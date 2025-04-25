@@ -3,41 +3,45 @@
 
 Implementation
 Phase 0: CSS & Styling
-- [ ] Basic Styling
-- [ ] Web 1.0 Styling
+- [X] Basic Styling
+- [X] Web 1.0 Styling
 - [ ] Webamp Styling
 
+Build System
+- [ ] Proper Intellisense for HTML/CSS
+- [ ] Linting System for styling
+- [ ] Proper MonoRepo Deployment to Vercel - https://carlosroso.com/how-to-deploy-a-monorepo-in-vercel/
 
 Phase 1:
 - Basic Vercel KV setup
-    - Create Vercel KV database
-    - Set up TypeScript interfaces
-    - Create API utilities for KV interactions
-    - Test connection and basic operations
+    - [X] Create Vercel KV database
+    - [X] Set up TypeScript interfaces
+    - [X] Create API utilities for KV interactions
+    - [X] Test connection and basic operations
 - Hit counter implementation
-    Create KV structure for hit counting
-    - Implement API endpoint for incrementing/fetching counts
-    - Create client-side counter display component
-    - Add retro-style counter animation
+    - [X] Create KV structure for hit counting
+    - [X] Implement API endpoint for incrementing/fetching counts
+    - [X] Create client-side counter display component
+    - [X] Add retro-style counter animation
 - Simple password protection
-    - Create password storage in KV
-    - Implement authentication API
-    - Create retro password prompt UI
-    - Set up protected route handling
+    - [X] Create password storage in KV
+    - [X] Implement authentication API
+    - [X] Create retro password prompt UI
+    - [ ] Set up protected route handling
 - Basic guestbook functionality
-    - Create KV structure for guestbook entries
-    - Implement API endpoint for adding entries
-    - Create client-side guestbook display component
+    - [X] Create KV structure for guestbook entries
+    - [X] Implement API endpoint for adding entries
+    - [X] Create client-side guestbook display component
 Phase 2:
-    Webamp integration
-    Sound event system
-    Enhanced guestbook features
-    Retro animations
+    - [ ] Webamp integration
+    - [ ] Sound event system
+    - [ ] Enhanced guestbook features
+    - [ ] Retro animations
 Phase 3:
-    Additional web1.0 decorations
-    More interactive elements
-    Extended Webamp integration
-    Enhanced visual effects
+    - [ ] Additional web1.0 decorations
+    - [ ] More interactive elements
+    - [ ] Extended Webamp integration
+    - [ ] Enhanced visual effects
 
 
 
@@ -47,7 +51,6 @@ Phase 3:
 - [ ] Add a favicon
 
 ## UI / Design
-
 - [ ] Find Header Style Inspiration
 - [ ] Add more "brutalist design" elements
 - [ ] More Geometric patterns and borders
@@ -56,14 +59,11 @@ Phase 3:
 ## Features
 - [ ] Explore Web1.0 Features
 - [ ] Explore interactive elements that were common in the web 1.0 era
-- [ ] Auto UpdatingHit Counters
+- [X] Auto UpdatingHit Counters
 - [ ] Pop-Up Window for Guestbook Entries
 - [ ] Winamp Media Player embedding
-- [ ] Password Protect the website
-        - Prompt: 
 - [ ] Countdown Timer until the Event
 - [ ] Last Updated Timestamp
-
 
 # Web 1.0
 - [X] Sitemap.xml for better indexing
