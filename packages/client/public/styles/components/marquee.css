@@ -19,9 +19,7 @@
 
 /* Marquee Content */
 .marquee-content {
-    display: flex;
-    animation: marquee 20s linear infinite;
-    will-change: transform;
+
 }
 
 /* Add this to create duplicate for seamless scroll */
@@ -50,10 +48,4 @@
     font-size: 1.5rem;
     display: inline-block;
     transform: translateY(-2px);
-}
-
-/* Marquee Animation */
-@keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-50% - 1rem)); }
 }

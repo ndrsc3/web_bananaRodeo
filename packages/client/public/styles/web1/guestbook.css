@@ -110,11 +110,6 @@
     background: #FFFF99;
 }
 
-.construction-gif {
-    margin: 0.5rem;
-    image-rendering: pixelated;
-}
-
 marquee {
     font-family: "Comic Sans MS", cursive;
     font-size: 1.2rem;

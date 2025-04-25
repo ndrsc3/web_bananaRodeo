@@ -20,34 +20,6 @@ p {
     margin-bottom: 1rem;
 }
 
-.highlight-text {
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    font-weight: 500;
-    color: var(--light-accent);
-}
-
-.description {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    font-weight: 500;  /* Makes regular text semi-bold */
-} 
-
-.description strong {
-    font-weight: 700;  /* Keeps bold text distinctly bolder */
-}
-
-.description ul,
-.description ol {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-.description li {
-    margin-bottom: 0.5rem;
-}
-
 /* Classic Link Styles */
 a:link {
     color: #0000EE;
@@ -61,4 +33,66 @@ a:visited {
 a:hover {
     color: #FF0000;
     text-decoration: none;
+}
+
+
+/* Highlight Text */
+.highlight-text {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 500;
+    color: var(--light-accent);
+}
+
+/* Basic Description Text */
+.description {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    font-weight: 500;  /* Makes regular text semi-bold */
+} 
+
+.description strong {
+    font-weight: 700;  /* Keeps bold text distinctly bolder */
+    animation: rainbowCycle 10s linear infinite;
+}
+
+.description ul,
+.description ol {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.description li {
+    margin-bottom: 0.5rem;
+}
+
+
+/* Notebook/Engineering Paper Style */
+.description-notebook {
+    font-family: 'Architects Daughter', 'Comic Sans MS', cursive;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    font-weight: 600;
+    color: #2c2c2c;
+    padding: 0.5rem 1rem;
+    position: relative;
+}
+
+.description-notebook strong {
+    font-family: inherit;
+    font-weight: 700;
+    animation: rainbowCycle 10s linear infinite;
+}
+
+.description-notebook ul,
+.description-notebook ol {
+    font-family: inherit;
+    font-size: 1.5rem;
+    line-height: 2;
+    margin-bottom: 1rem;
+}
+
+.description-notebook li {
+    margin-bottom: 1.5rem;
 }

@@ -17,6 +17,51 @@
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/styles/main.css">
     <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100vw;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .mobile-warning {
+        display: none;
+        background: #ff6b6b;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+        border-bottom: 3px solid #000;
+      }
+
+      @media (max-width: 768px) {
+        .mobile-warning {
+          display: block;
+        }
+      }
+
+      .content-section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      .content-wrapper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
       .construction-zone {
         background: repeating-linear-gradient(
           45deg,
@@ -44,7 +89,7 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 9999;
+        z-index: 2;
       }
 
       .banana {
@@ -54,10 +99,23 @@
         filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
         will-change: transform;
         transform-origin: center;
+        cursor: pointer;
+        pointer-events: auto;
+        user-select: none;
+        padding: 15px;
+        margin: -15px;
+        background: rgba(255, 255, 255, 0.01);
+        border-radius: 50%;
+      }
+
+      .banana:hover {
+        background: rgba(255, 255, 255, 0.1);
       }
 
       .banana.small {
         font-size: 1.5rem;
+        padding: 12px;
+        margin: -12px;
       }
 
       .banana.medium {
@@ -66,6 +124,8 @@
 
       .banana.large {
         font-size: 3.5rem;
+        padding: 20px;
+        margin: -20px;
       }
 
       @keyframes fall {
@@ -106,6 +166,8 @@
       }
 
       .password-form {
+        position: relative;
+        z-index: 3;
         background: #000;
         color: #0f0;
         font-family: monospace;
@@ -126,7 +188,7 @@
         margin: 10px 0;
       }
 
-      .password-form button {
+      .password-form Pot {
         background: #0f0;
         color: #000;
         border: none;
@@ -154,10 +216,29 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
       }
+
+      .banana-split {
+        animation: split-banana 1s ease-out forwards;
+        pointer-events: none;
+      }
+
+      @keyframes split-banana {
+        0% { 
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        100% { 
+          transform: scale(0.3) rotate(360deg) translate(var(--split-x), var(--split-y));
+          opacity: 0;
+        }
+      }
     </style>
 </head>
 
-<body>
+<body class="page-background-color2"></body>>
+    <div class="mobile-warning">
+      🖥️ For the best experience, please view this site on a computer! 🖥️
+    </div>
     <!-- MAKE IT RAIN! -->
     <div class="banana-rain" id="bananaRain"></div>
 
@@ -195,7 +276,7 @@
                             <p>Bananas collected: <span id="bananaCount">0</span> 🍌</p>
                         </div>
                         
-                        <img src="/assets/images/under-construction.gif" alt="Under Construction" style="margin: 20px auto;">
+                        <img src="/assets/gifs/divide-construction.gif" alt="Under Construction" style="margin: 20px auto;">
                     </div>
                 </div>
             </div>
@@ -206,12 +287,53 @@
     <script type="module">
         import { setAuthenticated } from '/src/auth.js';
 
-        // Create falling bananas
+        let bananaCount = 0;
+        const bananaCountElement = document.getElementById('bananaCount');
+
+        function updateBananaCount(increment = 1) {
+            bananaCount += increment;
+            bananaCountElement.textContent = bananaCount;
+        }
+
+        function createSplitBanana(x, y, angle, size) {
+            const banana = document.createElement('div');
+            banana.className = 'banana banana-split ' + size;
+            banana.textContent = '🍌';
+            banana.style.left = x + 'px';
+            banana.style.top = y + 'px';
+            banana.style.setProperty('--split-x', (Math.cos(angle) * 100) + 'px');
+            banana.style.setProperty('--split-y', (Math.sin(angle) * 100) + 'px');
+            
+            document.getElementById('bananaRain').appendChild(banana);
+            
+            banana.addEventListener('animationend', () => {
+                banana.remove();
+            });
+        }
+
+        function splitBanana(banana, event) {
+            // Create 3 smaller split bananas
+            const rect = banana.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create split bananas in different directions
+            for (let i = 0; i < 3; i++) {
+                const angle = (i * Math.PI * 2 / 3) + Math.random() * 0.5;
+                createSplitBanana(centerX, centerY, angle, 'small');
+            }
+            
+            // Remove original banana
+            banana.remove();
+            
+            // Update counter
+            updateBananaCount(1);
+        }
+
         function createBanana() {
             const banana = document.createElement('div');
             banana.className = 'banana';
             
-            // Randomly select banana size
             const sizes = ['small', 'medium', 'large'];
             const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
             banana.classList.add(randomSize);
@@ -219,36 +341,32 @@
             banana.textContent = '🍌';
             banana.style.left = Math.random() * 100 + 'vw';
             
-            // Adjust animation duration based on size (larger bananas fall slower)
-            let baseDuration = Math.random() * 4 + 4; // 4-8 seconds base
+            let baseDuration = Math.random() * 3 + 5;
             switch(randomSize) {
                 case 'small':
-                    baseDuration *= 0.8; // 20% faster
+                    baseDuration *= 0.9;
                     break;
                 case 'large':
-                    baseDuration *= 1.2; // 20% slower
+                    baseDuration *= 1.1;
                     break;
             }
             banana.style.animationDuration = baseDuration + 's';
             
+            // Add click handler
+            banana.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                splitBanana(banana, e);
+            });
+            
             document.getElementById('bananaRain').appendChild(banana);
             
-            // Remove banana after animation
             banana.addEventListener('animationend', () => {
                 banana.remove();
-                updateBananaCount();
             });
         }
 
-        // Update banana counter
-        let bananaCount = 0;
-        function updateBananaCount() {
-            bananaCount++;
-            document.getElementById('bananaCount').textContent = bananaCount;
-        }
-
-        // Create bananas less frequently (every 800ms instead of 500ms)
-        setInterval(createBanana, 800);
+        setInterval(createBanana, 1000);
 
         // Password handling
         window.submitPassword = async () => {

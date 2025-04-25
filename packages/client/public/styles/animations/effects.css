@@ -58,7 +58,7 @@ Some notes for implementation:
 }
 
 .rainbow-cycle {
-    animation: rainbowCycle 3s linear infinite;
+    animation: rainbowCycle 10s linear infinite;
 }
 
 .scan-line {
@@ -191,8 +191,8 @@ Some notes for implementation:
     16% { color: #ff8000; }
     32% { color: #ffff00; }
     48% { color: #00ff00; }
-    64% { color: #0000ff; }
-    80% { color: #4b0082; }
+    64% { color: #ffff00; }
+    80% { color: #ff8000; }
     100% { color: #ff0000; }
 }
 

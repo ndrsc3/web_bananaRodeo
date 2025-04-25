@@ -11,56 +11,6 @@
     animation: blink 1s step-end infinite;
 }
 
-/* Under Construction Section */
-.under-construction {
-    text-align: center;
-    padding: 20px;
-    border: 3px double #000000;
-    background: repeating-linear-gradient(
-        45deg,
-        #FFFF00,
-        #FFFF00 10px,
-        #000000 10px,
-        #000000 20px
-    );
-}
-
-.under-construction-text {
-    background: #FFFFFF;
-    padding: 10px;
-    display: inline-block;
-    border: 1px solid #000000;
-    font-family: "Courier New", monospace;
-    font-weight: bold;
-}
-
-/* Classic Button Style */
-.web1-button {
-    background: #C0C0C0;
-    border-width: 2px;
-    border-style: outset;
-    border-color: #FFFFFF #808080 #808080 #FFFFFF;
-    padding: 2px 10px;
-    font-family: "MS Sans Serif", Arial, sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.web1-button:active {
-    border-style: inset;
-    border-color: #808080 #FFFFFF #FFFFFF #808080;
-}
-
-/* Text Effects */
-.web1-rainbow-text {
-    background: linear-gradient(to right, 
-        #FF0000, #FF7F00, #FFFF00, #00FF00, 
-        #0000FF, #4B0082, #8B00FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
-}
-
 /* Classic Divider */
 .web1-divider {
     height: 8px;
@@ -73,8 +23,15 @@
     );
     background-size: 200% 100%;
     margin: 20px 0;
-    animation: shimmer 2s linear infinite, shake 0.5s infinite;
+    animation: shimmer 2s linear infinite;
     border-top: 2px solid #FFD700;
     border-bottom: 2px solid #FFE135;
 }
 
+.star-divider {
+    text-align: center;
+    font-size: 24px;
+    color: #FFD700;
+    margin: 1rem 0;
+    text-shadow: 2px 2px 0 #000000;
+}

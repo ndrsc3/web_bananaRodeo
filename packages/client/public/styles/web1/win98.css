@@ -1,54 +1,70 @@
 /* Windows 98 Desktop Style */
 .win98-desktop {
-    background: #008080;
-    padding: 2rem;
-    border: 2px solid #c0c0c0;
+    min-height: 500px;
     position: relative;
-}
-
-.win98-taskbar {
-    background: #c0c0c0;
-    border-top: 2px solid #ffffff;
-    border-left: 2px solid #ffffff;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    padding: 4px;
-    position: relative;
-    margin-top: 1rem;
+    padding: 20px;
+    cursor: url('/assets/icons/bfly.gif'), auto;
 }
 
 .win98-icons {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 20px;
 }
 
 .win98-icon {
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 1px 1px 0 #000000;
-    cursor: pointer;
-    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-decoration: none;
-}
-
-.win98-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    transition: all 0.2s ease;
+    cursor: url('/assets/icons/bfly.gif'), auto;
 }
 
 .win98-icon img {
-    width: 48px;
-    height: 48px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
-    margin-bottom: 5px;
-    image-rendering: pixelated;
+    margin-bottom: 10px;
+    /* image-rendering: pixelated; */
+    /* background: rgba(255, 255, 255, 0.1); */
+    padding: 10px;
+    /* border: 2px solid rgba(255, 255, 255, 0.2); */
 }
 
 .win98-icon span {
     font-family: "MS Sans Serif", Arial, sans-serif;
-    font-size: 12px;
-    display: block;
+    font-size: 18px;
+    text-align: center;
+    max-width: 120px;
+    /* word-wrap: break-word; */
+}
+
+.win98-icon:hover {
+    transform: scale(1.05);
+}
+
+.win98-icon:active {
+    transform: scale(0.95);
+}
+
+.win98-taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
 }
 
 /* Windows 98 Hit Counter */
@@ -109,4 +125,19 @@
     color: #808080;
     text-shadow: 1px 1px #ffffff;
     cursor: default;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+
+    .win98-icons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .win98-icon img {
+        width: 100px;
+        height: 100px;
+    }
 }
