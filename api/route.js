@@ -1,4 +1,4 @@
-import { incrementHitCount } from './storage.js';
+import { incrementHitCount, getHitCount } from './storage.js';
 
 function log(message, ...args) {
   console.log(`[HitCounter:${new Date().toISOString()}] ${message}`, ...args);
@@ -16,6 +16,15 @@ export default async function handler(req, res) {
     
     log('Hit counter request for:', pathname);
     
+    // In development mode, only return the current count without incrementing
+    if (process.env.NODE_ENV === 'development') {
+      const count = await getHitCount(pathname);
+      log('Development mode - returning current count:', count);
+      res.setHeader('Content-Type', 'text/plain');
+      return res.status(200).send(count.toString());
+    }
+    
+    // In production, increment the counter
     const count = await incrementHitCount(pathname);
     log('New hit count:', count);
     

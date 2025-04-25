@@ -41,6 +41,27 @@ async function initPage(pageUrl) {
 }
 
 /**
+ * Get the current hit count for a page without incrementing
+ */
+export async function getHitCount(pageUrl) {
+  try {
+    if (!pageUrl) {
+      throw new Error('pageUrl is required');
+    }
+    
+    // Clean the pageUrl
+    const cleanPath = pageUrl.startsWith('/') ? pageUrl : `/${pageUrl}`;
+    
+    // Get page data
+    const pageData = await initPage(cleanPath);
+    return pageData.hits || 0;
+  } catch (error) {
+    log('Failed to get hit count:', error);
+    throw error;
+  }
+}
+
+/**
  * Increment hit counter for a page
  */
 export async function incrementHitCount(pageUrl) {
