@@ -303,7 +303,6 @@ marquee {
 .error-icon {
     width: 16px;
     height: 16px;
-    image-rendering: pixelated;
 }
 
 .has-error {

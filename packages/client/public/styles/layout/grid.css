@@ -13,6 +13,25 @@
     padding: 0 var(--site-padding);
 }
 
+/* Partner Grid Layout */
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Card Grid Container */
+.competition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* Grid Items */
 .grid-item {
     opacity: 1;

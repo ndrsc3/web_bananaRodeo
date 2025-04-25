@@ -67,7 +67,6 @@
     margin-left: 4px;
     width: 30px;
     height: 15px;
-    image-rendering: pixelated;
 }
 
 .construction-badge {
@@ -90,7 +89,6 @@
 .dancing-banana {
     width: 32px;
     height: 32px;
-    image-rendering: pixelated;
     animation: dance 0.5s steps(4) infinite;
 }
 
