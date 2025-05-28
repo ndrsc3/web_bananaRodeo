@@ -188,7 +188,7 @@
         margin: 10px 0;
       }
 
-      .password-form Pot {
+      .password-form button {
         background: #0f0;
         color: #000;
         border: none;
@@ -199,9 +199,7 @@
       }
 
       .password-form button:hover {
-        background: #000;
-        color: #0f0;
-        border: 1px solid #0f0;
+        opacity: 0.9;
       }
 
       .error-message {
@@ -367,6 +365,7 @@
         }
 
         setInterval(createBanana, 1000);
+        createBanana(); // Create first banana immediately
 
         // Password handling
         window.submitPassword = async () => {
