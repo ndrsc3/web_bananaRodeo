@@ -177,11 +177,20 @@ export function initializeGuestbook(): void {
                 // Reload first page of entries
                 loadEntries(1);
             } else {
+                console.error('[Guestbook] API Error:', result.error);
                 throw new Error(result.error || 'Failed to submit entry');
             }
         } catch (error) {
             console.error('[Guestbook] Submission error:', error);
-            alert('😢 Oops! Something went wrong. Please try again!');
+            // Log additional error details
+            if (error instanceof Error) {
+                console.error('[Guestbook] Error details:', {
+                    message: error.message,
+                    stack: error.stack,
+                    userAgent: navigator.userAgent
+                });
+            }
+            alert(`😢 Oops! Something went wrong: ${error instanceof Error ? error.message : 'Unknown error'}`);
         } finally {
             overlay.style.display = 'none';
         }
