@@ -1,5 +1,6 @@
 import { initializePageStats } from './page-stats.js';
 import { handleAuthRedirect } from './auth.js';
+import { initializeCursor } from './cursor.js';
 
 document.addEventListener('DOMContentLoaded', (): void => {
     // Check authentication first
@@ -7,4 +8,5 @@ document.addEventListener('DOMContentLoaded', (): void => {
     
     // Initialize features
     initializePageStats();
+    initializeCursor();
 }); 

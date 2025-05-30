@@ -41,4 +41,24 @@ export interface APIResponse<T> {
     success: boolean;
     data?: T;
     error?: string;
+}
+
+// Cursor Types
+export interface CursorTrail {
+    type: 'rainbow' | 'emoji' | 'none';
+    emoji?: string;
+    length: number;
+    spacing: number;
+    size: number;
+}
+
+export interface CursorConfig {
+    image?: string;
+    trail?: CursorTrail;
+}
+
+export interface CursorState {
+    x: number;
+    y: number;
+    trail: Array<{ x: number; y: number; timestamp: number }>;
 } 
