@@ -122,17 +122,17 @@
 }
 
 /* Navigation GIF Styles */
-.content-image {
+.gif-icon {
     transition: transform 0.3s ease;
 }
 
-.content-image:hover {
+.gif-icon:hover {
     transform: scale(1.1);
 }
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
-    .content-image {
+    .gif-icon {
         width: 25% !important; /* Override inline styles */
         min-width: 100px;
     }
