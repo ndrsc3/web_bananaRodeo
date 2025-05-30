@@ -53,4 +53,31 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+
+    .competition-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .card-western {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .card-western-image {
+        padding-top: 60%;
+    }
+
+    .card-western-title {
+        font-size: 1.5rem;
+    }
+
+    .card-western-description {
+        font-size: 1rem;
+    }
 } 

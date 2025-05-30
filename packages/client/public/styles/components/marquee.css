@@ -19,7 +19,7 @@
 
 /* Marquee Content */
 .marquee-content {
-
+    font-family: "Comic Sans MS", cursive;
 }
 
 /* Add this to create duplicate for seamless scroll */
@@ -42,6 +42,7 @@
     font-weight: 700;
     text-transform: uppercase;
     padding: 0 1rem;
+    font-family: "Comic Sans MS", cursive;
 }
 
 .marquee-icon {

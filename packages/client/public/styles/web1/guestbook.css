@@ -4,6 +4,7 @@
     padding: 1rem;
     border: 2px solid #000000;
     box-shadow: 5px 5px 0 #000000;
+    font-family: "Comic Sans MS", cursive;
 }
 
 .guestbook-entry {
@@ -262,7 +263,7 @@ marquee {
     transition: all 0.2s ease;
 }
 
-/* Responsive adjustments */
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
     .guestbook-container {
         margin: 1rem;
@@ -279,6 +280,15 @@ marquee {
         text-align: left;
         border-bottom: none;
         padding-bottom: 0;
+    }
+
+    /* Ensure consistent font on mobile */
+    .guestbook,
+    .guestbook-info,
+    .guestbook-message,
+    .guestbook-form label,
+    marquee {
+        font-family: "Comic Sans MS", cursive !important;
     }
 }
 
