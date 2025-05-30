@@ -1,4 +1,5 @@
 import { kv } from '@vercel/kv';
+import crypto from 'crypto';
 
 const GUESTBOOK_KEY = 'guestbook:entries';
 const MAX_ENTRIES = 100; // Limit total entries to prevent abuse
