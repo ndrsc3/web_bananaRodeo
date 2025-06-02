@@ -126,6 +126,61 @@
     cursor: default;
 }
 
+/* Windows 98 Window */
+.win98-window {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 1px 1px 0 black;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.win98-title-bar {
+    background: #000080;
+    background: linear-gradient(90deg, #000080, #1084d0);
+    padding: 3px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.win98-title {
+    color: white;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    text-shadow: 1px 1px #000000;
+    text-align: center;
+    flex: 1;
+}
+
+.win98-window-content {
+    padding: 12px;
+    background: #c0c0c0;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    color: #000000;
+}
+
+/* Windows 98 Input Elements */
+.win98-input,
+.win98-textarea,
+.win98-select {
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background: #ffffff;
+    padding: 3px 5px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+}
+
+.win98-input:focus,
+.win98-textarea:focus,
+.win98-select:focus {
+    outline: 1px dotted #000000;
+}
+
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
 
