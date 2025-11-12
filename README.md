@@ -1,38 +1,30 @@
 # Banana Rodeo Website
 
-A web1.0-inspired website built with modern technologies.
+A web1.0-inspired website built with modern technologies for The Banana Rodeo Science Fair in Reno, NV
 
 ## Project Structure
 
 ```
 website_bananaRodeo/
 ├── packages/
-│   ├── client/           # Frontend package
-│   │   ├── public/       # Static assets
-│   │   │   ├── css/     # Stylesheets
-│   │   │   ├── assets/  # Images, videos, etc.
-│   │   │   ├── pages/   # HTML pages
-│   │   │   └── templates/ # Shared HTML components
-│   │   └── src/
-│   │       ├── features/ # Feature-based components
-│   │       ├── core/     # Core utilities
-│   │       └── build.ts  # Build script
-│   ├── server/          # Backend package
-│   │   └── src/
-│   │       ├── routes/   # API routes
-│   │       └── services/ # Business logic
-│   └── shared/          # Shared package
+│   └── client/            # Frontend package
+│       ├── public/        # Static assets
+│       │   ├── css/       # Stylesheets
+│       │   ├── assets/    # Images, videos, etc.
+│       │   ├── pages/     # HTML pages
+│       │   └── templates/ # Shared HTML components
 │       └── src/
-│           ├── types/    # Shared TypeScript types
-│           └── constants/# Shared constants
-├── api/                  # Serverless API functions
-├── scripts/             # Build and utility scripts
-├── .vercel/             # Vercel build output
-├── package.json         # Root package.json
-├── vercel.json          # Vercel configuration
-├── sitemap.xml          # Site map for SEO
-└── robots.txt           # Robots file for SEO
-└── .env.local          # Local environment variables
+│           ├── features/  # Feature-based components
+│           ├── core/      # Core utilities
+│           └── build.ts   # Build script
+├── api/                   # Serverless API functions
+├── scripts/               # Build and utility scripts
+├── .vercel/               # Vercel build output
+├── package.json           # Root package.json
+├── vercel.json            # Vercel configuration
+├── sitemap.xml            # Site map for SEO
+└── robots.txt             # Robots file for SEO
+└── .env.local             # Local environment variables
 ```
 
 ## Build System

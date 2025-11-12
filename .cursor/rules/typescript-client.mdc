@@ -1,0 +1,9 @@
+---
+description: client side typecript/
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+
+client side typescript is located in packages/client/src

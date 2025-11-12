@@ -1,0 +1,11 @@
+---
+description: documentation
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+
+- Documentation is stored in ./docs
+
+- be precise & thoughtful. Outline steps and use clean markdown styling. 
