@@ -15,6 +15,14 @@
     background-repeat: repeat; */
 }
 
+.page-background-black {
+    background: black;
+    /* background-image: url('/assets/gifs/bananatrans.gif');
+    background-attachment: fixed;
+    background-size: 180px;
+    background-repeat: repeat; */
+}
+
 /* Section Layouts */
 .section-basic {
     background: var(--secondary-color);
