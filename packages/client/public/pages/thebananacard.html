@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>The Banana Card</title>
+    
+    <!-- Meta Tags -->
+    <meta property="og:site_name" content="Banana Rodeo">
+    <meta property="og:title" content="The Banana Card">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/icons/banana-rodeo-pin.01.png">
+    
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.css">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <style>
+      /* Terminal/BBS Cryptic Styling */
+      .terminal-box {
+        background: #000000;
+        border: 3px solid #00ff00;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        font-family: "Courier New", monospace;
+        color: #00ff00;
+        position: relative;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+      }
+      
+      .terminal-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 255, 0, 0.03),
+          rgba(0, 255, 0, 0.03) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        pointer-events: none;
+      }
+      
+      .terminal-title {
+        color: #00ff00;
+        text-shadow: 0 0 10px #00ff00;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+      
+      .terminal-text {
+        color: #00ff00;
+        line-height: 1.6;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      
+      .terminal-text p {
+        margin: 10px 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      
+      .secret-text {
+        font-family: "Courier New", monospace;
+        color: #00ff00;
+        background: #000000;
+        padding: 15px;
+        border: 2px dashed #00ff00;
+        margin: 15px 0;
+      }
+      
+      .typewriter-container {
+        position: relative;
+        min-height: 200px;
+      }
+      
+      .typewriter-text {
+        font-family: "Courier New", monospace;
+        color: #00ff00;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      
+      .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        background: #00ff00;
+        animation: blink-cursor 1s step-end infinite;
+        margin-left: 2px;
+      }
+      
+      @keyframes blink-cursor {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+      }
+      
+      .glitch-secret {
+        animation: glitch-secret 0.3s ease infinite;
+        text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+      }
+      
+      @keyframes glitch-secret {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+      }
+      
+      .reveal {
+        opacity: 0;
+        animation: fade-in-reveal 1s ease forwards;
+      }
+      
+      @keyframes fade-in-reveal {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .categories-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 20px 0;
+      }
+      
+      .categories-grid ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      
+      .categories-grid li {
+        padding: 5px 0;
+        border-bottom: 1px dotted #00ff00;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+      
+      .categories-grid li::before {
+        content: "> ";
+        color: #00ff00;
+      }
+      
+      .prize-list {
+        list-style: none;
+        padding-left: 0;
+      }
+      
+      .prize-list li {
+        padding: 8px 0;
+        border-bottom: 1px dashed #00ff00;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      
+      .prize-list li::before {
+        content: "$ ";
+        color: #00ff00;
+        font-weight: bold;
+      }
+      
+      .award-list {
+        list-style: none;
+        padding-left: 0;
+      }
+      
+      .award-list li {
+        padding: 8px 0;
+        border-bottom: 1px dotted #00ff00;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      
+      .award-list li::before {
+        content: "★ ";
+        color: #00ff00;
+      }
+      
+      .einstein-link {
+        text-align: center;
+        margin: 40px 0;
+      }
+      
+      .einstein-link img {
+        border: 3px solid #00ff00;
+        padding: 10px;
+        background: #000000;
+        transition: all 0.3s ease;
+      }
+      
+      .einstein-link img:hover {
+        box-shadow: 0 0 20px #00ff00;
+        transform: scale(1.05);
+      }
+      
+      .ascii-divider {
+        text-align: center;
+        color: #00ff00;
+        font-family: "Courier New", monospace;
+        margin: 30px 0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.2;
+      }
+      
+      .hero-secret {
+        text-align: center;
+        padding: 40px 20px;
+        background: #000000;
+        border: 4px solid #00ff00;
+        margin: 20px auto;
+        max-width: 900px;
+        box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+      }
+      
+      .hero-secret h1 {
+        font-family: "Courier New", monospace;
+        color: #00ff00;
+        text-shadow: 0 0 15px #00ff00;
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin: 20px 0;
+        letter-spacing: 4px;
+      }
+      
+      .hero-secret .date {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffff00;
+        text-shadow: 0 0 15px #ffff00;
+        margin: 15px 0;
+      }
+      
+      .hero-secret .prize,
+      .terminal-text .prize {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #ffff00;
+        text-shadow: 0 0 20px #ffff00;
+        margin: 20px 0;
+        text-align: center;
+      }
+      
+      @media (max-width: 768px) {
+        .categories-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .hero-secret h1 {
+          font-size: 2rem;
+        }
+        
+        .hero-secret .date {
+          font-size: 1.5rem;
+        }
+        
+        .terminal-box {
+          margin: 10px;
+          padding: 15px;
+        }
+        
+        .terminal-title {
+          font-size: 1.5rem;
+        }
+        
+        .terminal-text {
+          font-size: 1rem;
+        }
+        
+        .typewriter-text {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="page-background-black">
+
+    <!-- Hero Section -->
+    <section class="section-basic-trans">
+      <div class="hero-secret glitch-secret">
+        <h1>THE BANANA RODEO <br>SCIENCE FAIR</h1>
+        <div class="date">COMING JUNE 27TH, 2026<br>RENO, NV</div>
+      </div>
+    </section>
+
+    <!-- Description Section with Typewriter -->
+    <section class="section-basic-trans">
+      <div class="terminal-box reveal">
+        <div class="terminal-title">MISSION BRIEF</div>
+        <div class="typewriter-container">
+          <div id="typewriter-text" class="typewriter-text"></div>
+          <span class="cursor"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-basic-trans">
+      <div class="bananas" style="background: transparent; display: flex; justify-content: space-around; align-items: center; padding: 8px 0;">
+        <img src="/assets/gifs/DancingBanana.gif" alt="Dancing Banana" class="dancing-banana" style="width: 100px; height: 100px;">
+        <img src="/assets/gifs/DancingBanana.gif" alt="Dancing Banana" class="dancing-banana" style="width: 100px; height: 100px;">
+        <img src="/assets/gifs/DancingBanana.gif" alt="Dancing Banana" class="dancing-banana" style="width: 100px; height: 100px;">
+      </div>
+    </section>
+    
+    <!-- Prizes Section -->
+    <section class="section-basic-trans">
+      <div class="terminal-box reveal">
+        <div class="terminal-title">PRIZE POOL</div>
+        <div class="terminal-text">
+          <div class="prize">GRAND PRIZE: $300</div>
+
+          <ul class="prize-list">
+            <li>Gift Cards</li>
+            <li>Services & Goods from Local Businesses</li>
+            <li>Treats</li>
+            <li>Bugs</li>
+            <li>Bananas</li>
+            <li>Clout</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div style="width: 100%; display: flex; justify-content: center; margin: 10px 0;">
+      <img src="/assets/gifs/divide-aniworm.gif" alt="Worm Divider" style="max-width: 500px; width: 100%; height: auto;">
+    </div>
+
+    <!-- Categories Section -->
+    <section class="section-basic-trans">
+      <div class="terminal-box reveal">
+        <div class="terminal-title">SUGGESTED CATEGORIES</div>
+        <div class="terminal-text">
+          <p style="text-align: center; margin-bottom: 20px;">You don't need to fit neatly into a box.<br>Here's just a few categories to inspire your project!</p>
+          <p style="text-align: center; margin-bottom: 20px;">If it can be tested, measured, observed, built, or broken... it counts.</p>
+          <div class="categories-grid">
+            <ul>
+              <li>Renewable Energy & Power Generation</li>
+              <li>Sustainable Systems & Eco-Tech</li>
+              <li>Animal Biology</li>
+              <li>Behavioral Studies (yes, even fake ones)</li>
+              <li>Biochemistry / Molecular Biology</li>
+              <li>Chemistry</li>
+              <li>Cognitive Science</li>
+              <li>Agriculture & Permaculture</li>
+              <li>Electricity & Magnetism</li>
+              <li>Bubble Science</li>
+              <li>Curiosities of Slugs</li>
+            </ul>
+            <ul>
+              <li>Compost, Soil, and Mycology</li>
+              <li>Sound, Light & Vibration Experiments</li>
+              <li>Robotics & Machines of Questionable Use</li>
+              <li>Egg Science</li>
+              <li>Materials Science</li>
+              <li>Science of the party</li>
+              <li>Physics & Astronomy</li>
+              <li>Plant Biology</li>
+              <li>Product Science</li>
+              <li>Science of Dance</li>
+              <li>Crystal Charging</li>
+              <li>Fruit Physics & Banana Related Inventions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="width: 100%; display: flex; justify-content: center; margin: 1.5rem 0;">
+      <img src="/assets/gifs/think_Banana.gif" alt="Thinking Banana" style="max-width: 100px; width: 100%; height: auto;">
+    </div>
+
+
+    <!-- Awards Section -->
+    <section class="section-basic-trans">
+      <div class="terminal-box reveal">
+        <div class="terminal-title">AWARD CATEGORIES</div>
+        <div class="terminal-text">
+          <ul class="award-list">
+            <li>First Prize: Best in Show</li>
+            <li>Least use of Artificial Intelligence (AI) technology</li>
+            <li>3rd Prime Prize - What is this?</li>
+            <li>Most Creative</li>
+            <li>Most likely to be used at La Finka</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div style="display: flex; justify-content: center; gap: 2rem; margin: 2rem 0;">
+      <img src="/assets/gifs/popworm.gif" alt="Popworm 1" style="width: 64px; height: 64px;">
+      <img src="/assets/gifs/popworm.gif" alt="Popworm 2" style="width: 64px; height: 64px;">
+      <img src="/assets/gifs/popworm.gif" alt="Popworm 3" style="width: 64px; height: 64px;">
+    </div>
+
+    <!-- Sign Up Section -->
+    <section class="section-basic-trans">
+      <div class="terminal-box reveal">
+        <div class="terminal-title">READY TO SCIENCE?</div>
+        <div class="terminal-text" style="text-align: center;">
+          <p>Ready to show us what you've been building in your kitchen, garage, or brain?</p>
+          <p>It's quick and easy! </p>
+        </div>
+        <div class="einstein-link">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPE-epzMIMK6mfiBsdVilVA30wDCDDXJg33f-rhamVXk6tEA/viewform?usp=dialog">
+            <img src="/assets/gifs/einstein.gif" alt="Einstein - Sign Up" style="width: 200px; max-width: 80%;">
+          </a>
+          <p style="margin-top: 15px; color: #00ff00; font-size: 1.2rem; font-weight: bold;">CLICK EINSTEIN TO SUBMIT YOUR PROJECT!</p>
+        </div>
+        <div class="terminal-text" style="text-align: center;">
+          <p>We will follow up with you to confirm your submission.</p>
+        </div>
+      </div>
+    </section>
+
+    <div style="text-align: center; margin: 2rem 0;">
+      <img src="/assets/gifs/tree.gif" alt="Tree" style="max-width: 150px; width: 80%;">
+    </div>
+
+    <div data-cursor-config='{
+      "image": "/assets/icons/icon-bananas.png",
+      "trail": {
+        "type": "rainbow",
+        "length": 15,
+        "spacing": 8,
+        "size": 12
+      }
+    }'></div>
+
+    <script src="/src/main.js" type="module"></script>
+    
+    <script>
+      // Typewriter effect for description
+      const descriptionText = `THE BANANA RODEO SCIENCE FAIR IS WHERE CURIOSITY MEETS CREATIVITY—AND WHERE THE WILD IDEAS YOU'VE BEEN SAVING FOR "SOMEDAY" FINALLY GET THEIR MOMENT IN THE SUN.
+
+We believe science isn't limited to labs or textbooks. It's in backyard experiments, solar-powered art, DIY tech, fermentation, kitchen chemistry, and bizarre contraptions that (somehow) work.
+
+Whether you're building something beautiful, solving a real-world problem, or just asking a weird question no one else is asking—you belong here.
+
+This is an open invitation to showcase your curiosity, your research, your side project, or your almost-product that just needs a nudge.
+
+We aim to demystify science and inspire creativity in exploring sustainable practices to empower individuals from all walks of life to contribute to a greener future, fostering a culture of curiosity, collaboration, and innovation.
+
+Bring your obsessions! Bring your experiments! Let's make meaningful strides towards a more sustainable world.
+
+Let's science together!`;
+
+      function typeWriter(element, text, speed = 30) {
+        let i = 0;
+        element.textContent = '';
+        
+        function type() {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+          }
+        }
+        
+        // Start typing after a short delay
+        setTimeout(type, 500);
+      }
+
+      // Initialize typewriter effect when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        const typewriterElement = document.getElementById('typewriter-text');
+        if (typewriterElement) {
+          typeWriter(typewriterElement, descriptionText, 20);
+        }
+
+        // Stagger reveal animations for sections
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach((reveal, index) => {
+          setTimeout(() => {
+            reveal.style.opacity = '1';
+          }, 300 + (index * 200));
+        });
+      });
+    </script>
+    
+  </body>
+</html>
