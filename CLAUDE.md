@@ -94,6 +94,56 @@ Use `/ship` skill to walk through the validate → commit → push sequence.
 
 Branches also get Vercel preview deployments — useful for reviewing changes before merging.
 
+## Idea Pipeline
+
+Ideas flow through three stages before becoming code:
+
+```
+docs/explorations/   ← ideas at any stage (seed → explored)
+docs/plans/          ← implementation plans generated in Plan mode
+docs/TASKS.md        ← actionable tasks, with links to plans where applicable
+```
+
+### Explorations (`docs/explorations/`)
+
+Each idea has its own file. Ideas can sit at any stage indefinitely.
+
+| Status | Meaning |
+|---|---|
+| `seed` | Captured name/concept, may have a reference link |
+| `concept` | What it is, why it fits, key open questions |
+| `explored` | Rough UX, content notes, technical considerations |
+| `planned` | Ready to build — tasks filed, plan generated in `docs/plans/` |
+
+**Frontmatter template:**
+```markdown
+---
+status: seed
+tags: [page, feature, fx, easter-egg, content, game, audio, dx]
+---
+```
+
+Sections to fill in as the idea develops: `## Concept`, `## Key Questions`, `## Rough UX / Notes`, `## Implementation Notes`, `## References`.
+
+### Plans (`docs/plans/`)
+
+When an exploration is fully fleshed out, run Plan mode to generate a step-by-step implementation plan. Save the output to `docs/plans/<name>.md`. Add a minimal reference in `TASKS.md`:
+
+```
+- [ ] [FEATURE] Build X — see docs/plans/x.md
+```
+
+Details live in the plan, not the task.
+
+### Task Board (`docs/TASKS.md`)
+
+Three-tier board (P1 blockers / P2 next-up / P3 backlog).
+
+- Use `/backlog` at session start for a brief and task orientation
+- Update checkboxes: `[ ]` todo, `[~]` in-progress, `[x]` done
+- Move completed items to Done section
+- Tags: `[PAGE: name]`, `[FEATURE]`, `[FX]`, `[DX]`, `[EASTER]`, `[ANALYTICS-Pn]`
+
 ## Environment Variables
 
 Required in `.env.local` for local Vercel dev:
