@@ -5,124 +5,79 @@ A web1.0-inspired website built with modern technologies for The Banana Rodeo Sc
 ## Project Structure
 
 ```
-website_bananaRodeo/
-├── packages/
-│   └── client/            # Frontend package
-│       ├── public/        # Static assets
-│       │   ├── css/       # Stylesheets
-│       │   ├── assets/    # Images, videos, etc.
-│       │   ├── pages/     # HTML pages
-│       │   └── templates/ # Shared HTML components
-│       └── src/
-│           ├── features/  # Feature-based components
-│           ├── core/      # Core utilities
-│           └── build.ts   # Build script
-├── api/                   # Serverless API functions
-├── scripts/               # Build and utility scripts
-├── .vercel/               # Vercel build output
-├── package.json           # Root package.json
-├── vercel.json            # Vercel configuration
-├── sitemap.xml            # Site map for SEO
-└── robots.txt             # Robots file for SEO
-└── .env.local             # Local environment variables
+web_bananaRodeo/
+├── src/               # TypeScript source (bundled by Vite)
+├── pages/             # HTML entry points (template injection applied at build)
+├── public/            # Static assets copied verbatim to dist/
+│   ├── styles/        # CSS (base/, components/, layout/, animations/, web1/)
+│   ├── assets/        # Images, gifs, icons, video
+│   └── templates/     # Shared HTML fragments (header, footer, chat-marquee)
+├── api/               # Vercel serverless functions (TypeScript, CommonJS)
+├── scripts/           # Utility scripts (hash-password, reset-counters)
+├── dist/              # Build output (Vercel output directory, do not edit)
+├── index.html         # Root entry point (auth gate)
+├── vite.config.ts     # Vite config + HTML template injection plugin
+├── eslint.config.ts   # ESLint 9 flat config
+├── vercel.json        # Vercel configuration
+└── package.json
 ```
 
-## Build System
-
-The build process uses npm workspaces and outputs to:
-
-- **Client Assets**: `packages/client/dist/`
-- **API Functions**: `api/`
-
-### Build Commands
+## Commands
 
 ```bash
 # Install dependencies
 npm install
 
 # Development
-npm run watch        # Watch TypeScript and static assets
-npm run vercel-dev  # Start local dev server (separate terminal)
+npm run dev            # Vite dev server at localhost:5173
+npx vercel dev         # Local dev with Vercel serverless functions
 
-# Production build
-npm run build
+# Production
+npm run build          # Vite build → dist/
+npm run preview        # Serve dist/ locally
 
-# Clean build artifacts
-npm run clean
+# Code quality
+npm run lint           # ESLint
+npm run format         # Prettier
+
+# Utility scripts
+npm run hash-password  # Generate a hashed password
+npm run reset-counters # Reset all page hit counters
 ```
-
-### Build Process Details
-
-The build system consists of two main parts:
-
-1. **TypeScript Compilation** (`build:client`):
-   - Compiles client-side TypeScript
-   - Outputs to `packages/client/dist`
-
-2. **Static Asset Processing** (`build:static`):
-   - Processes HTML templates
-   - Copies and optimizes static assets
-   - Handles CSS bundling
-
-### Development Scripts
-
-- `watch:ts`: Watch and compile TypeScript
-- `watch:static`: Process static assets on change
-- `watch`: Run all watchers (TypeScript + static)
-- `vercel-dev`: Local development server
 
 ## Template System
 
-A simple yet powerful HTML templating system for consistent components:
-
-### Template Tags
+Pages in `pages/` use HTML comment placeholders replaced at build time by the Vite plugin in `vite.config.ts`:
 
 ```html
-<!-- HEADER -->     # Site header
-<!-- FOOTER -->     # Site footer
-<!-- CHAT_MARQUEE -->  # Scrolling chat
+<!-- HEADER -->       → public/templates/header.html
+<!-- FOOTER -->       → public/templates/footer.html
+<!-- CHAT-MARQUEE --> → public/templates/chat-marquee.html
 ```
-
-### Adding New Templates
-
-1. Create template in `packages/client/public/templates/`
-2. Update `templates.ts`:
-   - Add to `TemplateComponents` interface
-   - Add file reading to `getTemplates()`
-   - Add replacement pattern
 
 ## Development Setup
 
 1. Clone repository
-2. Install: `npm install`
-3. Copy `.env.example` to `.env.local`
-4. Start watchers: `npm run watch`
-5. Start dev server: `npm run vercel-dev`
+2. `npm install`
+3. Copy `.env.example` to `.env.local` and fill in KV credentials
+4. `npm run dev` — frontend with HMR
+5. `npx vercel dev` — frontend + API functions together
 
 ## Environment Variables
 
-Required variables in `.env.local`:
-- `VERCEL_KV_URL`: KV storage URL
-- `VERCEL_KV_REST_API_URL`: KV REST API URL
-- `VERCEL_KV_REST_API_TOKEN`: KV API token
-- `VERCEL_KV_REST_API_READ_ONLY_TOKEN`: KV read-only token
+Required in `.env.local` for local Vercel dev:
+- `VERCEL_KV_URL`
+- `VERCEL_KV_REST_API_URL`
+- `VERCEL_KV_REST_API_TOKEN`
+- `VERCEL_KV_REST_API_READ_ONLY_TOKEN`
 
-## 🛠️ Technology Stack
+## Technology Stack
 
-- **Frontend**: 
-  - Vanilla TypeScript
-  - HTML5 with custom templating
-  - Pure CSS3 (no preprocessors)
-  - Web1.0 aesthetic principles
-
-- **Backend**: 
-  - Vercel Serverless Functions
-  - TypeScript
-  - Vercel KV (Redis)
-
-- Inspired by my friends
-- Thanks to all contributors and early adopters
-- Thank you web1.0 for the inspiration
+- **Frontend**: Vanilla TypeScript, HTML5, CSS3, Web1.0 aesthetic
+- **Build**: Vite, ESLint 9, Prettier
+- **Backend**: Vercel Serverless Functions (TypeScript)
+- **Data**: Vercel KV (Redis via @upstash/redis)
+- **Hosting**: Vercel
 
 ## Author
 
