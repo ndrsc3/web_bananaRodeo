@@ -1,41 +1,19 @@
 {
-  "compilerOptions": {
-    // Language and Environment
-    "target": "ES2020",
-    "module": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    
-    // Modules
-    "moduleResolution": "bundler",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./packages/client/src/*"]
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ES2020",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "moduleResolution": "bundler",
+
+        // Type Checking
+        "strict": true,
+        "skipLibCheck": true,
+
+        // Interop
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true
     },
-    
-    // Emit
-    "declaration": true,
-    "sourceMap": false,
-    "outDir": "./dist",
-    
-    // Type Checking
-    "strict": true,
-    "skipLibCheck": true,
-    
-    // Interop
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    
-    // JavaScript Support
-    "allowJs": true,
-    "checkJs": false,
-    
-    // Project References
-    "composite": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
-  },
-  "files": [],
-  "references": [
-    { "path": "./packages/client" },
-  ]
+    "include": ["src/**/*", "vite.config.ts"],
+    "exclude": ["node_modules", "dist"]
 }

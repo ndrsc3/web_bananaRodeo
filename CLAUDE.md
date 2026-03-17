@@ -10,29 +10,38 @@ Website for **The Banana Rodeo Science Fair** in Reno, NV — a Web1.0-inspired 
 
 ```bash
 # Development
-npm run watch          # Concurrent TS compilation + static file watching
-npm run vercel-dev     # Local dev with Vercel serverless functions
+npm run dev            # Vite dev server with HMR at localhost:5173
+npx vercel dev         # Local dev with Vercel serverless functions
 
 # Production build
-npm run build          # Clean + compile TS + process static assets
+npm run build          # Vite build → dist/
 
-# Individual steps
-npm run build:client   # Compile TypeScript only
-npm run build:static   # Process/copy static assets only
-npm run clean          # Remove build artifacts
+# Preview built output
+npm run preview        # Serve dist/ locally with Vite preview
+
+# Lint / Format
+npm run lint           # ESLint on src/ api/ vite.config.ts
+npm run format         # Prettier --write on all source files
+
+# Scripts
+npm run hash-password  # Generate hashed password (tsx scripts/hash-password.ts)
+npm run reset-counters # Reset all hit counters (tsx scripts/reset-counters.ts)
 ```
 
 ## Architecture
 
-**Monorepo** (npm workspaces) with two main areas:
+**Flat structure** — no monorepo. All source at project root.
 
-### Frontend (`packages/client/`)
+### Frontend
+
 - **Vanilla TypeScript/HTML/CSS** — no framework
-- `src/` — TypeScript source compiled to `dist/src/`
-- `public/` — static assets copied to `dist/`
+- `src/` — TypeScript source (bundled by Vite)
+- `public/` — static assets copied verbatim to `dist/` (styles, images, gifs, templates)
+- `pages/` — HTML entry points, processed by Vite (template injection, TS bundling)
+- `index.html` — root entry point (password/auth gate)
 - `dist/` — Vercel output directory (do not edit directly)
 
-**Build pipeline:** `src/build.ts` copies `public/` assets to `dist/`, then processes HTML pages by injecting shared template fragments (header, footer, chat-marquee) from `public/templates/`. Template injection uses HTML comment placeholders.
+**Build pipeline:** Vite bundles TypeScript from `src/`, injects shared templates into HTML pages via a custom plugin in `vite.config.ts`, and copies static assets from `public/`.
 
 **Entry point:** `src/main.ts` — initializes auth check, page hit counter, and custom cursor on `DOMContentLoaded`.
 
@@ -45,38 +54,41 @@ npm run clean          # Remove build artifacts
 **CSS in `public/styles/`** organized by: `base/`, `components/`, `layout/`, `animations/`, `utils/`, `web1/`
 
 ### Backend (`api/`)
-Vercel serverless functions (Node.js 20.x, runtime `@vercel/node@3.1.0`):
-- `route.js` — hit counter: `GET /api/route?pathname=` increments Redis counter (skips increment in dev mode)
-- `guestbook.js` — `POST` adds entry, `GET` returns paginated entries (max 100, FIFO eviction)
-- `storage.js` — shared KV/Redis operations
-- `auth.js` — auth logic
+
+Vercel serverless functions (Node.js 20.x, TypeScript compiled by Vercel automatically):
+- `route.ts` — hit counter: `GET /api/route?pathname=` increments Redis counter (skips increment in dev mode)
+- `guestbook.ts` — `POST` adds entry, `GET` returns paginated entries (max 100, FIFO eviction)
+- `storage.ts` — shared KV/Redis operations
+- `auth.ts` — auth logic
+
+API files use CommonJS-compatible syntax (`import`/`export default`) — Vercel requires this.
 
 **Data store:** Vercel KV (Redis via `@upstash/redis`)
 - Page hits: key `page:{pathname}` → `{ hasHitCounter, hits, lastUpdated }`
 - Guestbook: Redis list at `guestbook:entries` → entry objects with id, name, message, bananaMemory, mood, timestamp
 
 ### Routing (`vercel.json`)
-- `/src/*.ts` → `api/serve-ts`
 - `/api/*` → serverless functions
-- Everything else → filesystem (static output in `packages/client/dist/`)
+- Everything else → filesystem (static output in `dist/`)
 
 ## HTML Template System
 
-Pages in `public/pages/` use HTML comment placeholders that are replaced at build time by `src/templates.ts`:
+Pages in `pages/` use HTML comment placeholders replaced at build time by the Vite plugin in `vite.config.ts`. Template fragments live in `public/templates/`.
 
-| Placeholder | Replaced with |
+| Placeholder | Fragment file |
 |---|---|
-| `<!-- HEADER -->` | `<header class="header">` + `templates/header.html` |
-| `<!-- FOOTER -->` | `<footer class="footer">` + `templates/footer.html` |
-| `<!-- CHAT-MARQUEE -->` | `templates/chat-marquee.html` (optional, not on every page) |
+| `<!-- HEADER -->` | `public/templates/header.html` |
+| `<!-- FOOTER -->` | `public/templates/footer.html` |
+| `<!-- CHAT-MARQUEE -->` | `public/templates/chat-marquee.html` (optional) |
 
-**To add a new page:** use `/new-page` skill. The bare minimum structure is in `public/pages/template.html`.
+**To add a new page:** use `/new-page` skill. Copy `pages/template.html` as a starting point.
 
 Key HTML conventions:
 - Body class is `page-background-color` or `page-background-color2` (darker)
 - `<h1 class="glitch">` for animated section titles
 - Content sections use `section-basic-trans` or `section-content-base section-content-win98` for the Windows 98 panel look
 - Page-specific CSS goes in `public/styles/components/`
+- Script tag: `<script type="module" src="/src/main.ts"></script>`
 
 ## Git Workflow
 
