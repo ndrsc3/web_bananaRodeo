@@ -71,6 +71,8 @@ Use this command when the user wants to add a new page to the site. The argument
 
 4. **Ask if the page needs a nav link** in the header template (`packages/client/public/templates/header.html`) and add it if so.
 
+5. **Offer to add tasks** — ask: "Want me to add placeholder tasks for [page name] to `docs/TASKS.md` under P3?" If yes, add 2–3 stub tasks tagged `[PAGE: name]`. If no, skip silently.
+
 ## Key conventions
 - Template placeholders (`<!-- HEADER -->`, `<!-- FOOTER -->`, `<!-- CHAT-MARQUEE -->`) are replaced at build time — leave them as-is in source
 - The `<!-- CHAT-MARQUEE -->` placeholder is optional — only include if the page needs it
