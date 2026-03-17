@@ -60,6 +60,40 @@ Vercel serverless functions (Node.js 20.x, runtime `@vercel/node@3.1.0`):
 - `/api/*` → serverless functions
 - Everything else → filesystem (static output in `packages/client/dist/`)
 
+## HTML Template System
+
+Pages in `public/pages/` use HTML comment placeholders that are replaced at build time by `src/templates.ts`:
+
+| Placeholder | Replaced with |
+|---|---|
+| `<!-- HEADER -->` | `<header class="header">` + `templates/header.html` |
+| `<!-- FOOTER -->` | `<footer class="footer">` + `templates/footer.html` |
+| `<!-- CHAT-MARQUEE -->` | `templates/chat-marquee.html` (optional, not on every page) |
+
+**To add a new page:** use `/new-page` skill. The bare minimum structure is in `public/pages/template.html`.
+
+Key HTML conventions:
+- Body class is `page-background-color` or `page-background-color2` (darker)
+- `<h1 class="glitch">` for animated section titles
+- Content sections use `section-basic-trans` or `section-content-base section-content-win98` for the Windows 98 panel look
+- Page-specific CSS goes in `public/styles/components/`
+
+## Git Workflow
+
+Feature branches → main → Vercel auto-deploys on push to main.
+
+```bash
+git checkout -b feature/my-change   # work in a branch
+# ... edit, build, validate ...
+git checkout main
+git merge feature/my-change
+git push origin main                 # triggers Vercel deploy
+```
+
+Use `/ship` skill to walk through the validate → commit → push sequence.
+
+Branches also get Vercel preview deployments — useful for reviewing changes before merging.
+
 ## Environment Variables
 
 Required in `.env.local` for local Vercel dev:
