@@ -18,7 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
         log('Hit counter request for:', pathname);
 
         // In development mode, only return the current count without incrementing
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'development') {
             const count = await getHitCount(pathname);
             log('Development mode - returning current count:', count);
             res.setHeader('Content-Type', 'text/plain');
