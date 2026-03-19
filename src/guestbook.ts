@@ -50,6 +50,15 @@ function validateForm(form: HTMLFormElement): boolean {
     return true;
 }
 
+function escapeHtml(str: string): string {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 /**
  * Format date in web 1.0 style
  */
@@ -86,20 +95,20 @@ function getMoodEmoji(mood: string): string {
  */
 function createEntryHTML(entry: GuestbookEntry): string {
     const emailLink = entry.email
-        ? `<a href="mailto:${entry.email}" class="win98-link">📧 ${entry.email}</a>`
+        ? `<a href="mailto:${escapeHtml(entry.email)}" class="win98-link">📧 ${escapeHtml(entry.email)}</a>`
         : '';
     const websiteLink = entry.website
-        ? `<a href="${entry.website}" target="_blank" class="win98-link">🌐 Visit my homepage</a>`
+        ? `<a href="${escapeHtml(entry.website)}" target="_blank" rel="noopener noreferrer" class="win98-link">🌐 Visit my homepage</a>`
         : '';
     const location = entry.location
-        ? `<span class="guestbook-location">📍 ${entry.location}</span>`
+        ? `<span class="guestbook-location">📍 ${escapeHtml(entry.location)}</span>`
         : '';
 
     return `
         <div class="guestbook-entry win98-window">
             <div class="guestbook-entry-title-bar">
                 <div class="guestbook-entry-title">
-                    <strong>${entry.name}</strong> ${getMoodEmoji(entry.mood)} - ${formatDate(entry.timestamp)}
+                    <strong>${escapeHtml(entry.name)}</strong> ${getMoodEmoji(entry.mood)} - ${formatDate(entry.timestamp)}
                 </div>
             </div>
             <div class="win98-window-content">
@@ -110,11 +119,11 @@ function createEntryHTML(entry: GuestbookEntry): string {
                     <div class="guestbook-message">
                         <div class="banana-memory">
                             <strong>🍌 Banana Memory:</strong>
-                            <p>${entry.bananaMemory}</p>
+                            <p>${escapeHtml(entry.bananaMemory)}</p>
                         </div>
                         <div class="message">
                             <strong>Message:</strong>
-                            <p>${entry.message}</p>
+                            <p>${escapeHtml(entry.message)}</p>
                         </div>
                     </div>
                 </div>
