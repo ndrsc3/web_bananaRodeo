@@ -1,9 +1,12 @@
 ---
-status: explored
+status: concept
 tags: [feature, page, dx]
 ---
 
 # Analytics & Interactive Features
+
+## The Question
+What if analytics weren't a dashboard for admins but a living, artistic artifact — something visitors encounter and participate in? What does community data look like when rendered in web1.0 aesthetics?
 
 A collection of ideas for adding fun, educational, and artistic analytics features to banana.rodeo while maintaining web1.0 aesthetics.
 

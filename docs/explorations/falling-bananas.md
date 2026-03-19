@@ -5,7 +5,8 @@ tags: [feature, fx, easter-egg]
 
 # Falling Bananas — Interaction Ideas
 
-Brainstorm for gamifying the homepage with interactive falling bananas.
+## The Question
+How much more engaging is a homepage when it has something to *do* — and what's the right level of game-ness before it becomes annoying or distracting from the actual event?
 
 ---
 

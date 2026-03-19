@@ -7,6 +7,9 @@ tags: [page, audio, event]
 
 An interactive page built around the real-world Banana Confessional booth — a physical confessional set up at the event where attendees record audio confessions. Years of recordings have been archived.
 
+## The Question
+Can we bring a physical, intimate event experience (the confessional booth) to the web in a way that preserves its strangeness — and what does it mean to archive absurd, personal audio in a community context?
+
 ## Concept
 
 Bring the confessional archive online in a fun, creative, web1.0-flavored experience. The site should feel like entering a confessional — intimate, slightly absurd, and distinctly Banana Rodeo. Visitors can listen to submitted confessions and potentially submit their own.

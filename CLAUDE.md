@@ -106,52 +106,83 @@ Use `/ship` skill to walk through the validate → commit → push sequence.
 
 Branches also get Vercel preview deployments — useful for reviewing changes before merging.
 
+## Decisions
+
+Architectural decisions (why we chose Vercel, Vanilla TS, Vite, etc.) are documented in `docs/decisions.md`. Check there before re-litigating tech choices.
+
+## Workflow
+
+The full workflow system — skills, agents, exploration pipeline, task board — is documented in `docs/claude-workflow.md`. That doc also identifies which files are generic (safe to copy to other projects) vs. project-specific.
+
 ## Idea Pipeline
 
-Ideas flow through three stages before becoming code:
+Development is driven by inquiry. Ideas start as questions, get explored until they're understood, then get planned and built.
 
 ```
-docs/explorations/   ← ideas at any stage (seed → explored)
-docs/plans/          ← implementation plans generated in Plan mode
-docs/TASKS.md        ← actionable tasks, with links to plans where applicable
+docs/explorations/   ← every idea, at any stage
+docs/plans/          ← detailed implementation plans (complex features only)
+docs/TASKS.md        ← actionable work queue
 ```
 
 ### Explorations (`docs/explorations/`)
 
-Each idea has its own file. Ideas can sit at any stage indefinitely.
+Each idea lives in its own file. Ideas can sit at any stage indefinitely — the goal is understanding, not velocity.
 
-| Status | Meaning |
+| Status | You can answer... |
 |---|---|
-| `seed` | Captured name/concept, may have a reference link |
-| `concept` | What it is, why it fits, key open questions |
-| `explored` | Rough UX, content notes, technical considerations |
-| `planned` | Ready to build — tasks filed, plan generated in `docs/plans/` |
+| `seed` | Name + question in 1–3 sentences |
+| `concept` | "What is it and why does it fit this project?" |
+| `explored` | Key questions resolved, rough UX sketched, feasibility assessed |
+| `planned` | Tasks filed in `TASKS.md`, `## Plan` section filled, ready to build |
+| `built` | All linked tasks done |
 
-**Frontmatter template:**
+**File format:**
 ```markdown
 ---
 status: seed
 tags: [page, feature, fx, easter-egg, content, game, audio, dx]
 ---
+
+# [Name]
+
+## The Question
+What are we trying to find out or answer?
+
+## Concept
+What is it? Why does it fit this project?
+
+## Key Questions
+Open questions to answer before building.
+
+## Rough UX / Notes
+
+## Implementation Notes
+
+## Plan
+(populate when status → planned; inline steps if simple, link to docs/plans/<name>.md if complex)
+
+## References
 ```
 
-Sections to fill in as the idea develops: `## Concept`, `## Key Questions`, `## Rough UX / Notes`, `## Implementation Notes`, `## References`.
+**Skills:**
+- `/idea` — capture a new idea from a meeting or conversation, create the exploration file
+- `/explore [name]` — run an inquiry session on an existing idea, advance it along the pipeline
 
 ### Plans (`docs/plans/`)
 
-When an exploration is fully fleshed out, run Plan mode to generate a step-by-step implementation plan. Save the output to `docs/plans/<name>.md`. Add a minimal reference in `TASKS.md`:
+For complex features requiring a detailed step-by-step plan (multi-file refactors, new API endpoints, schema changes). When a plan file exists, link it from the exploration's `## Plan` section and reference it in `TASKS.md`:
 
 ```
 - [ ] [FEATURE] Build X — see docs/plans/x.md
 ```
 
-Details live in the plan, not the task.
+Simple features don't need a separate plan file — use the `## Plan` section in the exploration directly.
 
 ### Task Board (`docs/TASKS.md`)
 
 Three-tier board (P1 blockers / P2 next-up / P3 backlog).
 
-- Use `/backlog` at session start for a brief and task orientation
+- Use `/backlog` at session start — shows tasks + surfaces incubating explorations
 - Update checkboxes: `[ ]` todo, `[~]` in-progress, `[x]` done
 - Move completed items to Done section
 - Tags: `[PAGE: name]`, `[FEATURE]`, `[FX]`, `[DX]`, `[EASTER]`, `[ANALYTICS-Pn]`
