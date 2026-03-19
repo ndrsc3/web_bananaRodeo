@@ -1,6 +1,6 @@
 # Claude Workflow — banana-rodeo
 
-Workflow version: v0.1 (2026-03)
+Workflow version: v0.2 (2026-03)
 Base: ndr-claude-workflow (pre-package)
 
 ## Overview
@@ -19,6 +19,7 @@ Core components: skills in `.claude/commands/`, agents in `.claude/agents/`, exp
 | `.claude/commands/explore.md` | Generic | Inquiry session on a named exploration |
 | `.claude/commands/idea.md` | Generic | Captures new idea → creates exploration file |
 | `.claude/commands/groom.md` | Generic | Pipeline health check; proposes stale-entry cleanup |
+| `.claude/commands/review.md` | **Custom** | Pre-merge review: build, lint, security + quality checklist |
 | `.claude/commands/ship.md` | **Custom** | Build → lint → commit → push; Vercel-specific |
 | `.claude/commands/new-page.md` | **Custom** | Scaffolds HTML page with Banana Rodeo structure |
 | `.claude/agents/backlog.md` | Generic | Research agent for backlog skill |
@@ -51,7 +52,8 @@ docs/
 These differ from what a generic workflow base would provide:
 
 - **`/new-page`** — scaffolds HTML using Banana Rodeo conventions: `page-background-color` body class, `glitch` h1, `section-content-win98` panels, Vite script tag, comment placeholders for shared templates
-- **`/ship`** — runs `npm run build` + `npm run lint` before committing; pushes to `main` which triggers Vercel auto-deploy
+- **`/review`** — pre-merge gate: build + lint (blocking), security checklist (XSS, secrets, API validation, auth coverage), code quality advisory items
+- **`/ship`** — runs `npm run build` + `npm run lint` before committing; reminds developer to run `/review` first; pushes to `main` which triggers Vercel auto-deploy
 - **TASKS.md tags** — includes `[ANALYTICS-Pn]` tier (P1/P2/P3 phased analytics rollout) not present in the generic base
 - **`docs/explorations/`** — all content is project-specific (banana-themed features, event-specific pages, etc.)
 - **`CLAUDE.md`** — documents Banana Rodeo architecture, HTML conventions, Vercel KV data schema, environment variables
@@ -82,3 +84,4 @@ When copying to a new project: replace all content in TASKS.md, decisions.md, an
 - **2026-03-17** — Added `/ship` and `/new-page` skills, `/backlog` skill
 - **2026-03-18** — Added backlog and explore agents, `/idea` and `/explore` skills
 - **2026-03-18** — Added `docs/decisions.md`, `docs/claude-workflow.md`, `/groom` skill (v0.1 baseline)
+- **2026-03-18** — Added `/review` skill; expanded CLAUDE.md git workflow with branch naming conventions and collaborator PR workflow (v0.2)

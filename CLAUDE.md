@@ -94,17 +94,47 @@ Key HTML conventions:
 
 Feature branches → main → Vercel auto-deploys on push to main.
 
+### Branch naming
+
+| Prefix | Use for |
+|---|---|
+| `feature/` | New functionality |
+| `fix/` | Bug fixes |
+| `chore/` | Tooling, deps, docs, refactors |
+
+Keep branch names short and lowercase: `feature/falling-bananas`, `fix/auth-redirect`, `chore/update-deps`.
+
+### Solo workflow
+
 ```bash
-git checkout -b feature/my-change   # work in a branch
+git checkout -b feature/my-change   # branch from main
 # ... edit, build, validate ...
+/review                              # run review skill before merging
 git checkout main
-git merge feature/my-change
+git merge feature/my-change --no-ff
 git push origin main                 # triggers Vercel deploy
 ```
 
-Use `/ship` skill to walk through the validate → commit → push sequence.
+### Collaborator workflow (when working with others)
 
-Branches also get Vercel preview deployments — useful for reviewing changes before merging.
+Same branching conventions. Instead of merging locally, push the branch and open a GitHub PR. The other person runs `/review` on the branch before approving. Merge via GitHub UI (merge commit, not squash — preserves history).
+
+```bash
+git checkout -b feature/my-change
+# ... edit ...
+git push origin feature/my-change   # opens a Vercel preview deployment
+# → open PR on GitHub, ask for review
+# → reviewer runs /review on the branch
+# → merge via GitHub once approved
+```
+
+### General rules
+- Always branch from an up-to-date main
+- Keep branches short-lived — days, not weeks
+- Run `/review` before any merge to main
+- Use `/ship` to handle the commit → merge → push sequence
+
+Branches get Vercel preview deployments automatically — share the preview URL for feedback before merging.
 
 ## Decisions
 
