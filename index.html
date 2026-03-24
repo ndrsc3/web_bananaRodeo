@@ -163,6 +163,7 @@
       }
 
       .marquee-container {
+        overflow: hidden;
         background: rgba(255, 255, 255, 0.9);
         padding: 10px;
         margin-bottom: 20px;
@@ -248,9 +249,9 @@
         <div class="content-wrapper">
             <div class="construction-zone">
                 <div class="marquee-container">
-                    <marquee scrollamount="10" style="font-size: 2rem;">
+                    <div class="marquee" style="font-size: 2rem;">
                         🍌 WELCOME TO THE BANANA ZONE 🍌 UNDER CONSTRUCTION 🚧 WATCH YOUR STEP! 🍌
-                    </marquee>
+                    </div>
                 </div>
                 
                 <div class="construction-content">
@@ -258,11 +259,13 @@
                     
                     <div class="description" style="text-align: center;">
                       <p style="font-size: 1.5rem;">We Need More Bananas!</p>
-                      <marquee direction="up" height="100px" scrollamount="2" style="text-align: center;">
-                          <p>Loading creativity...</p>
-                          <p>Peeling back the layers...</p>
-                          <p>Monkey business in progress...</p>
-                      </marquee>                        
+                      <div style="height: 100px; overflow: hidden; text-align: center;">
+                          <div class="marquee-vertical">
+                              <p>Loading creativity...</p>
+                              <p>Peeling back the layers...</p>
+                              <p>Monkey business in progress...</p>
+                          </div>
+                      </div>                        
                         <div class="password-form">
                             <form id="passwordForm" onsubmit="return false;">
                                 <label for="password">ENTER PASSWORD:</label><br>

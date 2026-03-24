@@ -38,9 +38,13 @@ Some notes for implementation:
 }
 
 .marquee {
+    display: inline-block;
     white-space: nowrap;
-    overflow: hidden;
-    animation: marquee 10s linear infinite;
+    animation: marquee 15s linear infinite;
+}
+
+.marquee-vertical {
+    animation: marquee-vertical 8s linear infinite;
 }
 
 .shimmer {
@@ -162,8 +166,13 @@ Some notes for implementation:
 
 /* Marquee Animation */
 @keyframes marquee {
-    from { transform: translateX(100%); }
+    from { transform: translateX(100vw); }
     to { transform: translateX(-100%); }
+}
+
+@keyframes marquee-vertical {
+    from { transform: translateY(100%); }
+    to { transform: translateY(-100%); }
 }
 
 @keyframes shimmer {
