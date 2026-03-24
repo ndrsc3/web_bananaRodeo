@@ -22,6 +22,8 @@ export async function initializePageStats(): Promise<void> {
     const statsElement = document.querySelector('.hit-count');
     if (!(statsElement instanceof HTMLElement)) return;
 
+    if (import.meta.env.DEV) return;
+
     try {
         const pageUrl = window.location.pathname;
         const count = await incrementHits(pageUrl);
