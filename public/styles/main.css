@@ -1,9 +1,14 @@
 /* Import Base Styles */
 @import 'base/variables.css';
 @import 'base/reset.css';
+
+/* Canonical Keyframes — must come before animation utility classes */
+@import 'animations/keyframes.css';
+
 @import 'base/typography.css';
 
 /* Import Layout */
+@import 'layout/page-backgrounds.css';
 @import 'layout/header.css';
 @import 'layout/footer.css';
 @import 'layout/page-stats.css';
@@ -19,15 +24,14 @@
 @import 'components/tables.css';
 
 /* Import Animations */
-@import 'animations/transitions.css';
 @import 'animations/effects.css';
+@import 'animations/transitions.css';
 
-/* Import Web 1.0 Styles */
-@import 'web1.css';
-@import 'web1/bbs.css';
-@import 'web1/guestbook.css';
-@import 'web1/win98.css';
+/* Import Themes */
+@import 'themes/web1.css';
+@import 'themes/bbs.css';
+@import 'themes/win98.css';
+@import 'themes/guestbook.css';
 
 /* Import Utilities */
 @import 'utils/helpers.css';
-

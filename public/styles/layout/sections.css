@@ -1,27 +1,5 @@
 /* Web 1.0 Section Layouts */
-/* Page Background Classes */
-.page-background-science {
-    background-image: url('/assets/gifs/bananatrans.gif');
-    background-attachment: fixed;
-    background-size: 180px;
-    background-repeat: repeat;
-}
-
-.page-background-color2 {
-    background: var(--secondary-color);
-    /* background-image: url('/assets/gifs/bananatrans.gif');
-    background-attachment: fixed;
-    background-size: 180px;
-    background-repeat: repeat; */
-}
-
-.page-background-black {
-    background: black;
-    /* background-image: url('/assets/gifs/bananatrans.gif');
-    background-attachment: fixed;
-    background-size: 180px;
-    background-repeat: repeat; */
-}
+/* Page background classes moved to layout/page-backgrounds.css */
 
 /* Section Layouts */
 .section-basic {

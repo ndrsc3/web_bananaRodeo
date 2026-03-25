@@ -1,0 +1,17 @@
+/* =============== PAGE BACKGROUNDS ================= */
+/* Body-level background themes. Applied as class on <body>. */
+
+.page-background-science {
+    background-image: url('/assets/gifs/bananatrans.gif');
+    background-attachment: fixed;
+    background-size: 180px;
+    background-repeat: repeat;
+}
+
+.page-background-color2 {
+    background: var(--secondary-color);
+}
+
+.page-background-black {
+    background: black;
+}

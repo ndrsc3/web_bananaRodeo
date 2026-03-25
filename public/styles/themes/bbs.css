@@ -73,8 +73,4 @@
     animation: typing 2s steps(20, end) infinite;
 }
 
-@keyframes typing {
-    0% { width: 0 }
-    50% { width: 100% }
-    100% { width: 0 }
-}
+/* typing @keyframes defined in animations/keyframes.css */

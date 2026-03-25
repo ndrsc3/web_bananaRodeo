@@ -89,11 +89,7 @@
     animation: blink 1s infinite;
 }
 
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}
+/* blink @keyframes defined in animations/keyframes.css */
 
 /* Guestbook Container */
 .guestbook-container {
@@ -320,11 +316,7 @@ marquee {
     background-color: #FFE1E1 !important;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
+/* shake @keyframes defined in animations/keyframes.css */
 
 /* Character Counter */
 .char-counter {
