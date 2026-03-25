@@ -1,0 +1,204 @@
+/* =============== KEYFRAMES ================= */
+/*
+  Canonical home for ALL @keyframes in the project.
+  Do not define @keyframes in other CSS files.
+  Animation utility classes live in effects.css.
+  Page-specific keyframes go here too (extracted from pages/).
+*/
+
+/* --- General --- */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+@keyframes flip {
+    0% { transform: rotateX(0); }
+    100% { transform: rotateX(360deg); }
+}
+
+/* --- Text Effects --- */
+
+@keyframes rainbowCycle {
+    0% { color: #ff0000; }
+    16% { color: #ff8000; }
+    32% { color: #ffff00; }
+    48% { color: #00ff00; }
+    64% { color: #ffff00; }
+    80% { color: #ff8000; }
+    100% { color: #ff0000; }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(-2px, 2px);
+        opacity: 0.9;
+    }
+    40% {
+        transform: translate(-2px, -2px);
+        opacity: 0.8;
+    }
+    60% {
+        transform: translate(2px, 2px);
+        opacity: 0.9;
+    }
+    80% {
+        transform: translate(2px, -2px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glitch-top {
+    0% { transform: translate(0); }
+    30% { transform: translate(5px, -5px); }
+    60% { transform: translate(-7px, 4px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitch-bottom {
+    0% { transform: translate(0); }
+    50% { transform: translate(-4px, 6px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* --- Scroll / Motion --- */
+
+@keyframes marquee {
+    from { transform: translateX(100vw); }
+    to { transform: translateX(-100%); }
+}
+
+@keyframes marquee-vertical {
+    from { transform: translateY(100%); }
+    to { transform: translateY(-100%); }
+}
+
+/* --- Background / Visual Effects --- */
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    33% { transform: scale(1); opacity: 1; }
+    66% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scanLine {
+    0% { background-position: 0 -100%; }
+    100% { background-position: 0 200%; }
+}
+
+@keyframes spotlight {
+    0%, 100% { background-position: -100% 0; }
+    50% { background-position: 200% 0; }
+}
+
+/* --- Terminal / BBS --- */
+
+@keyframes typing {
+    0% { width: 0 }
+    50% { width: 100% }
+    100% { width: 0 }
+}
+
+/* --- Page-specific: index.html --- */
+
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(720deg); }
+}
+
+@keyframes borderBlink {
+    0% { border-color: #ff6b6b; }
+    50% { border-color: #ffeb3b; }
+    100% { border-color: #ff6b6b; }
+}
+
+@keyframes split-banana {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.3) rotate(360deg) translate(var(--split-x), var(--split-y));
+        opacity: 0;
+    }
+}
+
+/* --- Page-specific: thebananacard.html --- */
+
+@keyframes blink-cursor {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes glitch-secret {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes fade-in-reveal {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

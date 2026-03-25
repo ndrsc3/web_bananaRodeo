@@ -35,4 +35,26 @@
     /* Animations */
     --animation-duration: 0.6s;
     --animation-timing: ease;
-} 
+
+    /* Terminal / BBS Theme */
+    --color-terminal-green: #00ff00;
+    --color-terminal-bg: #000000;
+    --color-terminal-glow: rgba(0, 255, 0, 0.3);
+
+    /* Win98 Palette */
+    --color-win98-silver: #c0c0c0;
+    --color-win98-dark: #808080;
+    --color-win98-titlebar: #000080;
+
+    /* Font Stacks */
+    --font-mono: "Courier New", "VT323", monospace;
+    --font-comic: "Comic Sans MS", cursive;
+    --font-win98: "MS Sans Serif", Arial, sans-serif;
+
+    /* Hard Shadows (Web1.0 staple) */
+    --shadow-hard: 5px 5px 0 #000000;
+    --shadow-hard-sm: 3px 3px 0 #000000;
+
+    /* Breakpoints (reference only — cannot be used in @media queries)
+       Mobile: 768px | Tablet: 1024px */
+}

@@ -118,12 +118,7 @@
     animation: blink 1s infinite;
 }
 
-/* Blink Animation */
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
+/* blink @keyframes defined in animations/keyframes.css */
 
 /* Partner Card */
 .partner-card {
