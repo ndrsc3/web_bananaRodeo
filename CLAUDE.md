@@ -10,8 +10,7 @@ Website for **The Banana Rodeo Science Fair** in Reno, NV — a Web1.0-inspired 
 
 ```bash
 # Development
-npm run dev            # Vite dev server with HMR at localhost:5173
-npx vercel dev         # Local dev with Vercel serverless functions
+npx vercel dev         # Local dev server with Vercel serverless functions (default)
 
 # Production build
 npm run build          # Vite build → dist/
@@ -45,13 +44,7 @@ npm run reset-counters # Reset all hit counters (tsx scripts/reset-counters.ts)
 
 **Entry point:** `src/main.ts` — initializes auth check, page hit counter, and custom cursor on `DOMContentLoaded`.
 
-**Feature modules in `src/`:**
-- `page-stats.ts` + `kv-client.ts` — hit counter (calls `/api/route`)
-- `guestbook.ts` — guestbook form submission and entry display
-- `cursor.ts` — custom cursor with trail effects
-- `auth.ts` — localStorage-based 24-hour session auth
-
-**CSS in `public/styles/`** organized by: `base/`, `components/`, `layout/`, `animations/`, `utils/`, `web1/`
+**CSS in `public/styles/`** organized by: `base/`, `layout/`, `components/`, `animations/`, `themes/`, `pages/`, `utils/` — all imported via `main.css`. See **CSS System** section below for conventions.
 
 ### Backend (`api/`)
 
@@ -87,8 +80,44 @@ Key HTML conventions:
 - Body class is `page-background-color` or `page-background-color2` (darker)
 - `<h1 class="glitch">` for animated section titles
 - Content sections use `section-basic-trans` or `section-content-base section-content-win98` for the Windows 98 panel look
-- Page-specific CSS goes in `public/styles/components/`
+- Page-specific CSS goes in `public/styles/pages/` and is linked directly from the HTML (not imported via `main.css`)
 - Script tag: `<script type="module" src="/src/main.ts"></script>`
+
+## CSS System
+
+The CSS is being built toward a **portable design token system** that can be extracted to other projects. A designer (Adobe suite) will eventually contribute — treat this as iterative groundwork.
+
+### Folder roles
+
+| Folder | Purpose |
+|---|---|
+| `base/` | Variables, reset, typography |
+| `layout/` | Header, footer, sections, grid, page backgrounds |
+| `components/` | Reusable elements: buttons, cards, images, marquee, tables |
+| `animations/` | Keyframes + effect/transition utility classes |
+| `themes/` | Whole visual paradigms: web1, bbs, win98, guestbook |
+| `pages/` | Standalone page overrides — linked directly from HTML, not in main.css |
+| `utils/` | Helpers: text-center, hidden, loading |
+
+### Standalone page stylesheets
+
+Pages with a completely different visual identity (leaderboard, thebananacard) use their **own stylesheet instead of main.css** — own `:root` variables, own `body` reset, own font import. Use this pattern for any new page that can't reasonably layer on top of main.css.
+
+### Prototype styles (`proto-*`)
+
+`pages/tests/style-test.html` is the **living style guide** — all new component and theme ideas are prototyped here first using the `proto-` prefix. When a prototype gets used on a real page, graduate it:
+- Reusable elements → `components/`
+- Whole visual paradigms → `themes/` or a standalone page stylesheet
+- The call is made at build time, not in advance
+
+### Variables
+
+`base/variables.css` is the source of truth for design tokens. Key stacks:
+- `--font-western: 'Rye', serif` — western aesthetic (requires `<link>` to Google Fonts)
+- `--font-handwritten: 'Architects Daughter', cursive` — handwritten style (requires `<link>`)
+- `--color-terminal-green`, `--color-win98-silver`, etc. — theme palette values
+
+**Hardcoding policy:** Hardcoding colors directly is acceptable for one-off themed contexts. When a hardcoded value appears in 3+ places, add it as a comment in the promotion-candidate block at the bottom of `variables.css`. Create a named variable only when the value is confirmed as a recurring token.
 
 ## Git Workflow
 
@@ -104,37 +133,9 @@ Feature branches → main → Vercel auto-deploys on push to main.
 
 Keep branch names short and lowercase: `feature/falling-bananas`, `fix/auth-redirect`, `chore/update-deps`.
 
-### Solo workflow
+Branch from main, run `/review` before merging, use `/ship` to handle commit → merge → push. Keep branches short-lived.
 
-```bash
-git checkout -b feature/my-change   # branch from main
-# ... edit, build, validate ...
-/review                              # run review skill before merging
-git checkout main
-git merge feature/my-change --no-ff
-git push origin main                 # triggers Vercel deploy
-```
-
-### Collaborator workflow (when working with others)
-
-Same branching conventions. Instead of merging locally, push the branch and open a GitHub PR. The other person runs `/review` on the branch before approving. Merge via GitHub UI (merge commit, not squash — preserves history).
-
-```bash
-git checkout -b feature/my-change
-# ... edit ...
-git push origin feature/my-change   # opens a Vercel preview deployment
-# → open PR on GitHub, ask for review
-# → reviewer runs /review on the branch
-# → merge via GitHub once approved
-```
-
-### General rules
-- Always branch from an up-to-date main
-- Keep branches short-lived — days, not weeks
-- Run `/review` before any merge to main
-- Use `/ship` to handle the commit → merge → push sequence
-
-Branches get Vercel preview deployments automatically — share the preview URL for feedback before merging.
+When working with collaborators, push the branch instead of merging locally and open a GitHub PR. Merge via GitHub UI (merge commit, not squash). Branches get Vercel preview deployments automatically.
 
 ## Decisions
 
@@ -156,66 +157,21 @@ docs/TASKS.md        ← actionable work queue
 
 ### Explorations (`docs/explorations/`)
 
-Each idea lives in its own file. Ideas can sit at any stage indefinitely — the goal is understanding, not velocity.
-
-| Status | You can answer... |
-|---|---|
-| `seed` | Name + question in 1–3 sentences |
-| `concept` | "What is it and why does it fit this project?" |
-| `explored` | Key questions resolved, rough UX sketched, feasibility assessed |
-| `planned` | Tasks filed in `TASKS.md`, `## Plan` section filled, ready to build |
-| `built` | All linked tasks done |
-
-**File format:**
-```markdown
----
-status: seed
-tags: [page, feature, fx, easter-egg, content, game, audio, dx]
----
-
-# [Name]
-
-## The Question
-What are we trying to find out or answer?
-
-## Concept
-What is it? Why does it fit this project?
-
-## Key Questions
-Open questions to answer before building.
-
-## Rough UX / Notes
-
-## Implementation Notes
-
-## Plan
-(populate when status → planned; inline steps if simple, link to docs/plans/<name>.md if complex)
-
-## References
-```
+Each idea lives in its own file at any stage (`seed` → `concept` → `explored` → `planned` → `built`). Full file format and stage definitions are in `docs/claude-workflow.md`.
 
 **Skills:**
-- `/idea` — capture a new idea from a meeting or conversation, create the exploration file
-- `/explore [name]` — run an inquiry session on an existing idea, advance it along the pipeline
+- `/idea` — capture a new idea, create the exploration file
+- `/explore [name]` — run an inquiry session on an existing idea
 
 ### Plans (`docs/plans/`)
 
-For complex features requiring a detailed step-by-step plan (multi-file refactors, new API endpoints, schema changes). When a plan file exists, link it from the exploration's `## Plan` section and reference it in `TASKS.md`:
+For complex features, save a step-by-step plan to `docs/plans/<name>.md` and link it from the exploration's `## Plan` section. Simple features can inline the plan in the exploration directly.
 
-```
-- [ ] [FEATURE] Build X — see docs/plans/x.md
-```
-
-Simple features don't need a separate plan file — use the `## Plan` section in the exploration directly.
+When a plan exists, add **one task** to `docs/TASKS.md` linking to it — not a breakdown of its steps. The plan is the source of truth for implementation detail; TASKS.md is a triage board.
 
 ### Task Board (`docs/TASKS.md`)
 
-Three-tier board (P1 blockers / P2 next-up / P3 backlog).
-
-- Use `/backlog` at session start — shows tasks + surfaces incubating explorations
-- Update checkboxes: `[ ]` todo, `[~]` in-progress, `[x]` done
-- Move completed items to Done section
-- Tags: `[PAGE: name]`, `[FEATURE]`, `[FX]`, `[DX]`, `[EASTER]`, `[ANALYTICS-Pn]`
+Three-tier board (P1 blockers / P2 next-up / P3 backlog). Use `/backlog` at session start. Checkboxes: `[ ]` todo, `[~]` in-progress, `[x]` done. Tags: `[PAGE: name]`, `[FEATURE]`, `[FX]`, `[DX]`, `[EASTER]`.
 
 ## Environment Variables
 

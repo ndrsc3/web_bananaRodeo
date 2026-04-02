@@ -160,6 +160,17 @@
 
 /* --- Page-specific: index.html --- */
 
+@keyframes burst-banana {
+  0%   { transform: translate(0, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate(var(--burst-x), var(--burst-y)) scale(0); opacity: 0; }
+}
+
+@keyframes counter-flash {
+  0%   { color: #FFD700; }
+  50%  { color: #fff; }
+  100% { color: #FFD700; }
+}
+
 @keyframes fall {
     0% { transform: translateY(-100vh) rotate(0deg); }
     100% { transform: translateY(100vh) rotate(720deg); }

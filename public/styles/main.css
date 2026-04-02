@@ -18,14 +18,12 @@
 /* Import Components */
 @import 'components/buttons.css';
 @import 'components/cards.css';
-@import 'components/icons.css';
 @import 'components/marquee.css';
 @import 'components/images.css';
 @import 'components/tables.css';
 
 /* Import Animations */
 @import 'animations/effects.css';
-@import 'animations/transitions.css';
 
 /* Import Themes */
 @import 'themes/web1.css';

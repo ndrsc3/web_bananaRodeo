@@ -66,7 +66,7 @@ Shared header/footer injected via `<!-- HEADER -->` / `<!-- FOOTER -->` comments
 
 ## CSS: No Framework
 
-All CSS hand-written, organized in `public/styles/` by category (`base/`, `components/`, `layout/`, `animations/`, `utils/`, `web1/`).
+All CSS hand-written, organized in `public/styles/` by category (`base/`, `layout/`, `components/`, `animations/`, `themes/`, `pages/`, `utils/`).
 
 **Why:** Web1.0 aesthetic requires custom CSS that a utility framework (Tailwind) or component framework (Bootstrap) would actively fight. The visual identity depends on explicit, idiosyncratic styling choices.
 

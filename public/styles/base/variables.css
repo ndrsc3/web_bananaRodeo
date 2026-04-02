@@ -50,6 +50,9 @@
     --font-mono: "Courier New", "VT323", monospace;
     --font-comic: "Comic Sans MS", cursive;
     --font-win98: "MS Sans Serif", Arial, sans-serif;
+    /* Web fonts — loaded via <link> in pages that use them */
+    --font-western: 'Rye', serif;
+    --font-handwritten: 'Architects Daughter', cursive;
 
     /* Hard Shadows (Web1.0 staple) */
     --shadow-hard: 5px 5px 0 #000000;
@@ -58,3 +61,11 @@
     /* Breakpoints (reference only — cannot be used in @media queries)
        Mobile: 768px | Tablet: 1024px */
 }
+
+/* ── PROMOTION CANDIDATES ─────────────────────────────────────────────────
+   Colors hardcoded in one-off contexts. When a value appears 3+ times,
+   add a comment here. Graduate to a named variable above when confirmed
+   as a recurring design token.
+   ──────────────────────────────────────────────────────────────────────── */
+/* #000080  navy     — win98 titlebar (var exists: --color-win98-titlebar), st-section-label, proto-aim titlebar */
+/* #c8952a  gold     — proto-award-badge border, proto-renaissance-frame */

@@ -10,7 +10,7 @@ Use this command when the user wants to add a new page to the site. The argument
    - Should it include the `<!-- CHAT-MARQUEE -->` template? (most pages don't, guestbook-adjacent pages do)
    - What body background class? Options are `page-background-color` or `page-background-color2` (darker)
 
-2. **Create the HTML file** at `packages/client/public/pages/<name>.html` using this exact structure:
+2. **Create the HTML file** at `pages/<name>.html` using this exact structure:
 
 ```html
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ Use this command when the user wants to add a new page to the site. The argument
 
     <!-- FOOTER -->
 
-    <script src="/src/main.js" type="module"></script>
+    <script type="module" src="/src/main.ts"></script>
 
   </body>
 </html>
@@ -69,12 +69,13 @@ Use this command when the user wants to add a new page to the site. The argument
 
 3. **Run the build** (`npm run build`) to confirm the template injection works and the page renders correctly.
 
-4. **Ask if the page needs a nav link** in the header template (`packages/client/public/templates/header.html`) and add it if so.
+4. **Ask if the page needs a nav link** in the header template (`public/templates/header.html`) and add it if so.
 
 5. **Offer to add tasks** — ask: "Want me to add placeholder tasks for [page name] to `docs/TASKS.md` under P3?" If yes, add 2–3 stub tasks tagged `[PAGE: name]`. If no, skip silently.
 
 ## Key conventions
 - Template placeholders (`<!-- HEADER -->`, `<!-- FOOTER -->`, `<!-- CHAT-MARQUEE -->`) are replaced at build time — leave them as-is in source
 - The `<!-- CHAT-MARQUEE -->` placeholder is optional — only include if the page needs it
-- All pages use `/styles/main.css` — page-specific styles go in `packages/client/public/styles/components/`
+- Page-specific styles go in `public/styles/pages/<name>.css` and are linked directly from the HTML (not imported via `main.css`)
+- Pages with a completely different visual identity (own color palette, fonts, body reset) use their **own standalone stylesheet instead of main.css** — see `leaderboard.html` as an example
 - The `glitch` class on `<h1>` applies the animated glitch effect used across the site
