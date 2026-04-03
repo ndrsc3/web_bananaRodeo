@@ -1,6 +1,6 @@
 import { defineConfig, Plugin } from 'vite';
-import { readFileSync, readdirSync } from 'fs';
-import { resolve, basename } from 'path';
+import { readFileSync, readdirSync, statSync } from 'fs';
+import { resolve, basename, relative } from 'path';
 
 function htmlTemplatePlugin(): Plugin {
     const templates: Record<string, string> = {};
@@ -30,11 +30,20 @@ function htmlTemplatePlugin(): Plugin {
 
 function getPageInputs(): Record<string, string> {
     const pagesDir = resolve(__dirname, 'pages');
-    return Object.fromEntries(
-        readdirSync(pagesDir)
-            .filter((f) => f.endsWith('.html'))
-            .map((f) => [`pages/${basename(f, '.html')}`, resolve(pagesDir, f)])
-    );
+    const entries: [string, string][] = [];
+    function scan(dir: string) {
+        for (const f of readdirSync(dir)) {
+            const abs = resolve(dir, f);
+            if (statSync(abs).isDirectory()) {
+                scan(abs);
+            } else if (f.endsWith('.html')) {
+                const rel = relative(pagesDir, abs).replace(/\.html$/, '');
+                entries.push([`pages/${rel}`, abs]);
+            }
+        }
+    }
+    scan(pagesDir);
+    return Object.fromEntries(entries);
 }
 
 export default defineConfig({
