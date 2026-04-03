@@ -28,7 +28,25 @@
       🖥️ For the best experience, please view this site on a computer! 🖥️
     </div>
     <!-- MAKE IT RAIN! -->
+    <!-- Audio toggle -->
+    <button id="audioToggle" class="audio-toggle">🔇 SOUND OFF</button>
+
+    <!-- Multiplier widget -->
+    <div id="multiplierWidget" class="multiplier-widget"></div>
+
+    <!-- Banana rain -->
     <div class="banana-rain" id="bananaRain"></div>
+
+    <!-- Leaderboard entry modal -->
+    <div id="lbModalOverlay" class="lb-modal-overlay">
+        <div class="lb-modal">
+            <h2>YOU MADE THE BOARD 🍌</h2>
+            <p>Score: <span id="modalScore"></span> bananas. Enter your name and motto.</p>
+            <input type="text" id="lbName" maxlength="30" placeholder="YOUR NAME">
+            <input type="text" id="lbPhrase" maxlength="80" placeholder="ONE-LINE MOTTO">
+            <button id="lbSubmitBtn">CLAIM YOUR SPOT</button>
+        </div>
+    </div>
 
     <section class="content-section">
         <div class="content-wrapper">
@@ -38,10 +56,10 @@
                         🍌 WELCOME TO THE BANANA ZONE 🍌 UNDER CONSTRUCTION 🚧 WATCH YOUR STEP! 🍌
                     </div>
                 </div>
-                
+
                 <div class="construction-content">
                     <h1 class="section-title blink-text" style="font-size: 3rem;text-align: center;">🚧 RESTRICTED AREA 🚧</h1>
-                    
+
                     <div class="description" style="text-align: center;">
                       <p style="font-size: 1.5rem;">We Need More Bananas!</p>
                       <div style="height: 100px; overflow: hidden; text-align: center;">
@@ -50,22 +68,31 @@
                               <p>Peeling back the layers...</p>
                               <p>Monkey business in progress...</p>
                           </div>
-                      </div>                        
+                      </div>
+
                         <div class="password-form">
                             <form id="passwordForm" onsubmit="return false;">
                                 <label for="password">ENTER PASSWORD:</label><br>
                                 <input type="password" id="password" name="password" required><br>
-                                <button type="submit" onclick="submitPassword()">SUBMIT</button>
+                                <button type="submit" id="passwordSubmitBtn">SUBMIT</button>
                                 <div id="errorMessage" class="error-message" style="display: none;">
                                     ACCESS DENIED
                                 </div>
                             </form>
                         </div>
 
-                        <div class="banana-counter">
-                            <p>Bananas collected: <span id="bananaCount">0</span> 🍌</p>
+                        <!-- Counter widget -->
+                        <div class="banana-counters">
+                            <div class="counter-panel">
+                                <div class="counter-label">YOUR BANANAS</div>
+                                <div class="counter-display" id="personalCount">000000</div>
+                            </div>
+                            <div class="counter-panel">
+                                <div class="counter-label">THE BUNCH HAS COLLECTED</div>
+                                <div class="counter-display" id="collectiveCount">000000</div>
+                            </div>
                         </div>
-                        
+
                         <img src="/assets/gifs/divide-construction.gif" alt="Under Construction" style="margin: 20px auto;">
                     </div>
                 </div>
@@ -73,116 +100,62 @@
         </div>
     </section>
 
-    <script src="/src/main.ts" type="module"></script>
+    <script type="module" src="/src/main.ts"></script>
     <script type="module">
         import { setAuthenticated } from '/src/auth.ts';
+        import { startRain } from '/src/banana-rain.ts';
+        import { initAudio } from '/src/banana-audio.ts';
+        import { initCounter, getPersonalCount, flushCounter } from '/src/banana-counter.ts';
 
-        let bananaCount = 0;
-        const bananaCountElement = document.getElementById('bananaCount');
+        // Boot banana experience
+        (async () => {
+            await initCounter();
+            initAudio();
+            startRain();
+        })();
 
-        function updateBananaCount(increment = 1) {
-            bananaCount += increment;
-            bananaCountElement.textContent = bananaCount;
-        }
+        // --- Password + leaderboard flow ---
 
-        function createSplitBanana(x, y, angle, size) {
-            const banana = document.createElement('div');
-            banana.className = 'banana banana-split ' + size;
-            banana.textContent = '🍌';
-            banana.style.left = x + 'px';
-            banana.style.top = y + 'px';
-            banana.style.setProperty('--split-x', (Math.cos(angle) * 100) + 'px');
-            banana.style.setProperty('--split-y', (Math.sin(angle) * 100) + 'px');
-            
-            document.getElementById('bananaRain').appendChild(banana);
-            
-            banana.addEventListener('animationend', () => {
-                banana.remove();
-            });
-        }
+        let pendingScore = 0;
 
-        function splitBanana(banana, event) {
-            // Create 3 smaller split bananas
-            const rect = banana.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // Create split bananas in different directions
-            for (let i = 0; i < 3; i++) {
-                const angle = (i * Math.PI * 2 / 3) + Math.random() * 0.5;
-                createSplitBanana(centerX, centerY, angle, 'small');
-            }
-            
-            // Remove original banana
-            banana.remove();
-            
-            // Update counter
-            updateBananaCount(1);
-        }
-
-        function createBanana() {
-            const banana = document.createElement('div');
-            banana.className = 'banana';
-            
-            const sizes = ['small', 'medium', 'large'];
-            const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-            banana.classList.add(randomSize);
-            
-            banana.textContent = '🍌';
-            banana.style.left = Math.random() * 100 + 'vw';
-            
-            let baseDuration = Math.random() * 3 + 5;
-            switch(randomSize) {
-                case 'small':
-                    baseDuration *= 0.9;
-                    break;
-                case 'large':
-                    baseDuration *= 1.1;
-                    break;
-            }
-            banana.style.animationDuration = baseDuration + 's';
-            
-            // Add click handler
-            banana.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                splitBanana(banana, e);
-            });
-            
-            document.getElementById('bananaRain').appendChild(banana);
-            
-            banana.addEventListener('animationend', () => {
-                banana.remove();
-            });
-        }
-
-        setInterval(createBanana, 1000);
-        createBanana(); // Create first banana immediately
-
-        // Password handling
-        window.submitPassword = async () => {
+        async function submitPassword() {
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
-            
+
             try {
                 const response = await fetch('/api/auth', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ password })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password }),
                 });
 
                 if (response.ok) {
-                    // Set auth state
                     setAuthenticated(true);
-                    
-                    // Get redirect URL from query params or default to home
+
                     const params = new URLSearchParams(window.location.search);
                     const redirectUrl = params.get('redirect') || '/pages/home.html';
-                    
-                    // Redirect to the target page
-                    window.location.href = decodeURIComponent(redirectUrl);
+
+                    // Flush banana session total to collective counter
+                    await flushCounter();
+
+                    const score = getPersonalCount();
+
+                    // Fetch current leaderboard to check qualification
+                    let entries = [];
+                    try {
+                        const lb = await fetch('/api/leaderboard');
+                        const data = await lb.json();
+                        entries = data.entries ?? [];
+                    } catch { /* best-effort */ }
+
+                    const qualifies = entries.length < 10 || score > entries[entries.length - 1].score;
+
+                    if (score > 0 && qualifies) {
+                        pendingScore = score;
+                        showLeaderboardModal(score, redirectUrl);
+                    } else {
+                        window.location.href = decodeURIComponent(redirectUrl);
+                    }
                 } else {
                     errorMessage.style.display = 'block';
                     document.getElementById('password').value = '';
@@ -191,14 +164,38 @@
                 console.error('Auth error:', error);
                 errorMessage.style.display = 'block';
             }
-        };
+        }
 
-        // Handle form submission with Enter key
-        document.getElementById('passwordForm').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                submitPassword();
-            }
+        function showLeaderboardModal(score, redirectUrl) {
+            document.getElementById('modalScore').textContent = score;
+            document.getElementById('lbModalOverlay').classList.add('active');
+            document.getElementById('lbName').focus();
+
+            document.getElementById('lbSubmitBtn').onclick = async () => {
+                const name = document.getElementById('lbName').value.trim();
+                const phrase = document.getElementById('lbPhrase').value.trim();
+                if (!name || !phrase) { alert('Name and motto are required.'); return; }
+
+                try {
+                    const res = await fetch('/api/leaderboard', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, phrase, score: pendingScore }),
+                    });
+                    const { rank } = await res.json();
+                    const dest = encodeURIComponent(decodeURIComponent(redirectUrl));
+                    window.location.href = `/pages/leaderboard.html?highlight=${rank}&redirect=${dest}`;
+                } catch {
+                    alert('Failed to submit. Redirecting...');
+                    window.location.href = decodeURIComponent(redirectUrl);
+                }
+            };
+        }
+
+        // Wire submit button and Enter key
+        document.getElementById('passwordSubmitBtn').addEventListener('click', submitPassword);
+        document.getElementById('passwordForm').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); submitPassword(); }
         });
     </script>
   </body>
