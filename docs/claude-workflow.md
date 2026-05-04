@@ -37,7 +37,7 @@ Core components: skills in `.claude/commands/`, agents in `.claude/agents/`, exp
 
 Explorations advance through stages (`seed` → `concept` → `explored` → `planned` → `built`). When an exploration reaches sufficient complexity to require a structured implementation plan, the process is:
 
-1. **Write a plan** to `docs/plans/<name>.md` — phased steps, new files, modified files, build order. The plan is the source of truth for *how* to build it.
+1. **Write a plan** to `docs/plans/<name>.md` — phased steps, new files, modified files, build order. The plan is the source of truth for *how* to build it. Do not save plans to `~/.claude-n/plans/` or any Claude-internal location — plans belong in the repo.
 2. **Link the plan** from the exploration's `## Plan` section and update its status to `planned`.
 3. **Add one task** to `docs/TASKS.md` that references the plan — not a breakdown of the plan's steps:
    ```

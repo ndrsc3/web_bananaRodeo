@@ -29,8 +29,7 @@ web_bananaRodeo/
 npm install
 
 # Development
-npm run dev            # Vite dev server at localhost:5173
-npx vercel dev         # Local dev with Vercel serverless functions
+npx vercel dev         # Local dev server with Vercel serverless functions
 
 # Production
 npm run build          # Vite build → dist/
@@ -60,8 +59,7 @@ Pages in `pages/` use HTML comment placeholders replaced at build time by the Vi
 1. Clone repository
 2. `npm install`
 3. Copy `.env.example` to `.env.local` and fill in KV credentials
-4. `npm run dev` — frontend with HMR
-5. `npx vercel dev` — frontend + API functions together
+4. `npx vercel dev` — frontend + API functions together
 
 ## Environment Variables
 
