@@ -1,0 +1,69 @@
+/* Champions 2025 — page-specific layout */
+
+.champion-hero {
+    max-width: 720px;
+    margin: 1.5rem auto 2.5rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.champion-hero img {
+    width: 100%;
+    height: auto;
+    border: 6px solid var(--color-win98-silver, #c0c0c0);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+    background: #000;
+}
+
+.champion-hero figcaption {
+    font-family: var(--font-western, 'Rye', serif);
+    font-size: 1.5rem;
+    margin-top: 0.75rem;
+    color: var(--light-accent);
+}
+
+.champion-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.champion-gallery figure {
+    margin: 0;
+    text-align: center;
+}
+
+.champion-gallery img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border: 4px solid var(--color-win98-silver, #c0c0c0);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+    background: #000;
+    transition: transform 0.3s ease;
+}
+
+.champion-gallery figure:hover img {
+    transform: scale(1.02);
+}
+
+.champion-gallery figcaption {
+    font-family: var(--font-western, 'Rye', serif);
+    font-size: 1.25rem;
+    margin-top: 0.6rem;
+    color: var(--light-accent);
+}
+
+@media (max-width: 768px) {
+    .champion-gallery {
+        gap: 1.25rem;
+        padding: 0 1rem;
+    }
+
+    .champion-gallery img {
+        height: 280px;
+    }
+}

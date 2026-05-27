@@ -61,6 +61,7 @@ a:hover {
     line-height: 1.8;
     font-weight: 500;
     margin-bottom: 1rem;
+    padding-left: 2rem;
 }
 
 .description li {
