@@ -121,7 +121,21 @@ Pages with a completely different visual identity (leaderboard, thebananacard) u
 
 ## Git Workflow
 
-Feature branches → main → Vercel auto-deploys on push to main.
+**Two-tier promotion — nothing reaches production except through validation:**
+
+```
+feature/X   (its own git worktree)
+   │  push + PR
+   ▼
+development  ← integration branch; validate on its Vercel preview deploy
+   │  fast-forward once validated
+   ▼
+main         ← production; auto-publishes to banana.rodeo on push
+```
+
+- **`main`** = production. Vercel auto-deploys it to banana.rodeo. **Never commit to `main` directly** — it only ever advances by fast-forward to a validated `development` tip.
+- **`development`** = integration / staging. All feature PRs land here; its preview deploy is where we validate before publishing. Branched from `main`, always ≥ `main`.
+- **`feature/*`** = one branch per unit of work, each in its **own worktree** (below). PR into `development`, never into `main`.
 
 ### Branch naming
 
@@ -133,9 +147,32 @@ Feature branches → main → Vercel auto-deploys on push to main.
 
 Keep branch names short and lowercase: `feature/falling-bananas`, `fix/auth-redirect`, `chore/update-deps`.
 
-Branch from main, run `/review` before merging, use `/ship` to handle commit → merge → push. Keep branches short-lived.
+### Parallel work with git worktrees
 
-When working with collaborators, push the branch instead of merging locally and open a GitHub PR. Merge via GitHub UI (merge commit, not squash). Branches get Vercel preview deployments automatically.
+Multiple Claude sessions (and the owner across machines) work this repo at once. **Never leave uncommitted work in a shared checkout** — a concurrent branch switch will stash or clobber it. Give every feature its own **worktree**: one folder per branch, all sharing one `.git`, working trees independent.
+
+```bash
+# from any checkout, with development up to date
+git worktree add -b feature/X ../web_bananaRodeo-X development   # new branch + folder
+cd ../web_bananaRodeo-X
+ln -s ../web_bananaRodeo/node_modules node_modules               # each worktree needs its own deps
+#   ^ symlink is fast but not matched by `.gitignore` (which has `node_modules/`, a dir);
+#     add `node_modules` to .git/info/exclude so it can't be committed. (Or just `npm install`.)
+# ...work, fetch-before-commit, push...
+git push -u origin feature/X        # Vercel builds a preview for the branch
+# open a PR into `development`. After it merges:
+git worktree remove ../web_bananaRodeo-X
+```
+
+`git worktree list` shows every tree; `git worktree prune` clears stale ones. `workSpace/` is gitignored by the parent underScore repo (except `.manifest`), so extra worktree folders don't pollute it. If you lose uncommitted work after a branch switch, check `git stash list` before assuming it's gone.
+
+### Commit & PR flow
+
+- **Fetch before every commit** (`git fetch`) — concurrent sessions/agents push here routinely. If behind, rebase your un-pushed commits onto the remote tip before pushing; surface conflicts, don't force-resolve.
+- Push the feature branch and open a **PR into `development`** (merge commit, not squash). Validate on the preview deploy. Run `/review` before merging. Keep branches short-lived.
+- **Promote to production:** once `development` is validated, fast-forward `main` to it:
+  `git checkout main && git merge --ff-only development && git push` → publishes to banana.rodeo.
+- Note: `/ship` and `/review` predate this two-tier model — `/ship` should target `development`, not `main`. Update those skills to match before relying on them.
 
 ## Decisions
 
