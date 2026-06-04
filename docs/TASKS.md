@@ -16,6 +16,7 @@ _(none)_
 
 - [x] [PAGE: photowall] Random image selection from pool — manifest-driven random subset (22) on a salon-hang wall + Rehang reshuffle + empty state. Add photos: drop into `_capture/images/web_bananaRodeo/photowall/`, run `python knowledge/tools/process-images.py workSpace/web_bananaRodeo` (underScore image pipeline)
 - [x] [PAGE: photowall] Picture frame layout + positioning — aspect-true JS masonry (no crop), realistic plaster wall, two switchable frame themes (mid-century wood / ornamental brass), hand-hung tilt + hover-straighten. Frame styles are graduation candidates → `components/` if reused elsewhere.
+- [x] [PAGE: mantle] v1 — live "digital frame" composited over the real La Finka mantle photo; JCPenney-shoot slideshow via the `mantle` pipeline target (contain on dark screen, crossfade, click-to-advance). Add photos: drop into `_capture/images/web_bananaRodeo/mantle/`, run pipeline. **Tune `--screen-*` vars in `mantle.css`** to align the frame to the painting. See docs/explorations/the-mantle.md
 - [ ] [PAGE: gbbits] Church music/ambient audio
 - [ ] [CURSOR] Custom banana cursor image asset
 - [ ] [CURSOR] Tiny bananas emoji trail
@@ -46,6 +47,12 @@ _(none)_
 ### Photo Wall — follow-ups
 - [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `CURSOR_PROPS` in `src/photowall.ts` with a tuned hotspot.
 - [ ] [PAGE: photowall] Refine rough cursor SVGs (cat-eye, cowboy hat, party hat, lips) — best-guess freehand shapes; tighten or commission cleaner art. Optionally render to PNG for guaranteed Safari support.
+
+### The Mantle — future versions
+- [ ] [PAGE: mantle] Fine-tune `--screen-*` frame coordinates against the real backdrop (v1 ships a best estimate)
+- [ ] [PAGE: mantle] v2 — stylized CSS / pixel-art recreation of the mantle scene (separate version)
+- [ ] [PAGE: mantle] [FX] "Living fire" in the firebox — explore web1.0 GIF / pixelated retro-game / photo-collage flames → docs/explorations/the-mantle.md
+- [ ] [PAGE: mantle] Consider nav link / interactive mantel objects (lava lamp, mask) later
 
 ### Falling Bananas — Auth Page Upgrade
 - [ ] [FEATURE] [FX] [EASTER] Implement falling bananas upgrade → `docs/plans/falling-bananas.md`

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>The Mantle - Banana Rodeo</title>
+
+    <!-- Meta Tags -->
+    <meta property="og:site_name" content="Banana Rodeo">
+    <meta property="og:title" content="The Mantle - Banana Rodeo">
+    <meta property="og:url" content="https://banana.rodeo/pages/mantle">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/icons/banana-rodeo-pin.01.png">
+
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/pages/mantle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body class="page-mantle">
+    <!-- HEADER -->
+
+    <!-- The Mantle -->
+    <section class="mantle-stage">
+        <div class="mantle-header">
+            <span class="mantle-title">The Mantle</span>
+        </div>
+
+        <div class="mantle-scene">
+            <img class="mantle-bg" src="/assets/mantle/backdrop/img-4872.webp"
+                 alt="The La Finka mantle — brick fireplace with a framed painting above">
+            <div id="mantle-frame" class="mantle-frame" aria-label="Live digital frame"></div>
+        </div>
+
+        <p class="mantle-caption">The mantle at La Finka — the painting above is a living frame. Click it to advance.</p>
+    </section>
+
+    <!-- FOOTER -->
+
+    <script src="/src/main.ts" type="module"></script>
+    <!-- Initialize the mantle digital frame -->
+    <script type="module">
+        import { initializeMantle } from '/src/mantle.ts';
+        document.addEventListener('DOMContentLoaded', initializeMantle);
+    </script>
+
+  </body>
+</html>

@@ -14,3 +14,24 @@ max_edge = 1600
 format   = "webp"
 quality  = 80
 manifest = true
+
+# The Mantle — JCPenney-shoot photos that play in the live "digital frame".
+[[target]]
+name     = "mantle"
+intake   = "web_bananaRodeo/mantle"
+output   = "public/assets/mantle"
+max_edge = 1400
+format   = "webp"
+quality  = 82
+manifest = true
+
+# The Mantle — one-off backdrop: the real La Finka mantle room photo (manifest
+# off; subdir so it's not part of the slideshow pool's manifest).
+[[target]]
+name     = "mantle-backdrop"
+intake   = "web_bananaRodeo/mantle-backdrop"
+output   = "public/assets/mantle/backdrop"
+max_edge = 1800
+format   = "webp"
+quality  = 85
+manifest = false

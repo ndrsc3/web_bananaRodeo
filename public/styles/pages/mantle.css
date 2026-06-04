@@ -1,0 +1,131 @@
+/* The Mantle — real La Finka mantle photo as backdrop, with a live "digital
+   frame" composited into the seascape painting above the mantel.
+   The frame position is expressed as % of the backdrop image (so it stays aligned
+   across viewport widths) — tune the --screen-* vars to nail it on the real photo. */
+
+.mantle-stage {
+    /* warm dark wood-room framing so the photo pops */
+    background:
+        linear-gradient(180deg, #2c2016 0%, #221913 60%, #1b130d 100%);
+    padding: 1.75rem clamp(0.5rem, 3vw, 2.5rem) 3rem;
+}
+
+/* ---- Page-level: header + footer share the warm room tone ---- */
+body.page-mantle {
+    --header-background: #2c2016;
+    --footer-background: #2c2016;
+    background: #221913;
+}
+
+/* Brass nameplate */
+.mantle-header {
+    text-align: center;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.mantle-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    line-height: 1;
+    color: #2c1d08;
+    padding: 0.4em 1.4em 0.2em;
+    border-radius: 9px;
+    background:
+        radial-gradient(circle at 13px 13px, #5e4112 0 2.4px, rgba(0, 0, 0, 0.25) 2.4px 3.8px, transparent 4.3px),
+        radial-gradient(circle at calc(100% - 13px) 13px, #5e4112 0 2.4px, rgba(0, 0, 0, 0.25) 2.4px 3.8px, transparent 4.3px),
+        radial-gradient(circle at 13px calc(100% - 13px), #5e4112 0 2.4px, rgba(0, 0, 0, 0.25) 2.4px 3.8px, transparent 4.3px),
+        radial-gradient(circle at calc(100% - 13px) calc(100% - 13px), #5e4112 0 2.4px, rgba(0, 0, 0, 0.25) 2.4px 3.8px, transparent 4.3px),
+        linear-gradient(160deg, #e7c878 0%, #c19a3e 42%, #9c7724 68%, #d8b75e 100%);
+    box-shadow:
+        inset 0 0 0 2px rgba(95, 65, 16, 0.75),
+        inset 0 2px 5px rgba(255, 245, 205, 0.6),
+        0 8px 18px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 0 rgba(255, 244, 200, 0.55), 0 -1px 1px rgba(0, 0, 0, 0.45);
+}
+
+/* ---- The scene: backdrop photo + overlaid digital frame ---- */
+.mantle-scene {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    line-height: 0;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6);
+}
+
+.mantle-bg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* The digital frame "screen" — positioned over the painting's canvas.
+   TUNE THESE to align with the real painting in the backdrop photo. */
+.mantle-frame {
+    --screen-left: 35.5%;
+    --screen-top: 20%;
+    --screen-width: 26%;
+    --screen-height: 15.5%;
+
+    position: absolute;
+    left: var(--screen-left);
+    top: var(--screen-top);
+    width: var(--screen-width);
+    height: var(--screen-height);
+    overflow: hidden;
+    cursor: pointer;
+    background: #0b0b0e; /* dark screen behind contained photos */
+    box-shadow:
+        inset 0 0 18px rgba(0, 0, 0, 0.85),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* faint glassy screen sheen so it reads as "digital" */
+.mantle-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(125deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 38%);
+}
+
+.mantle-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* whole photo visible, letterboxed on the dark screen */
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.mantle-photo.is-visible {
+    opacity: 1;
+}
+
+/* Empty state — no JCPenney photos processed yet */
+.mantle-frame.is-empty::before {
+    content: '🍌 digital frame — awaiting the JCPenney shoot';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 6%;
+    font-family: var(--font-handwritten, 'Architects Daughter', cursive);
+    font-size: clamp(0.6rem, 1.6vw, 1rem);
+    color: rgba(244, 238, 224, 0.55);
+}
+
+.mantle-caption {
+    text-align: center;
+    margin: 1.25rem auto 0;
+    max-width: 640px;
+    font-family: var(--font-handwritten, 'Architects Daughter', cursive);
+    font-size: 1.05rem;
+    color: #d8c6a8;
+    opacity: 0.85;
+}
