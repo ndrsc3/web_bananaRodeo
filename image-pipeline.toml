@@ -1,0 +1,16 @@
+# image-pipeline.toml — consumed by underScore knowledge/tools/process-images.py
+#
+#   originals → _capture/images/<intake>/   (drop raw camera files here)
+#   run:        python knowledge/tools/process-images.py workSpace/web_bananaRodeo
+#   result →    <output>/*.webp + manifest.json   (committed, deployed to Vercel)
+#
+# intake: path under underScore _capture/images/ ; output: path under this project root.
+
+[[target]]
+name     = "photowall"
+intake   = "web_bananaRodeo/photowall"
+output   = "public/assets/photowall"
+max_edge = 1600
+format   = "webp"
+quality  = 80
+manifest = true

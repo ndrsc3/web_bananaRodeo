@@ -16,32 +16,44 @@
     
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/pages/photowall.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <meta name="robots" content="noindex, nofollow">
 </head>
 
-<body class="page-background-color2">
+<body class="page-photowall">
     <!-- HEADER -->
 
-    <!-- Hero Section -->
-    <section class="section-basic-trans">
-        <h1 class="glitch text-center">Grandma's Wall of Bananas</h1>
+    <!-- Gallery Wall -->
+    <section class="photowall-stage">
+        <div class="photowall-header">
+            <span class="photowall-title">Yiayia's Wall of Bananas</span>
+        </div>
+
+        <div class="photowall-controls">
+            <button id="photowall-frame-toggle" type="button" class="pw-btn">🪵 Frames: Wood</button>
+            <button id="photowall-rehang" type="button" class="pw-btn">↻ Rehang the Wall</button>
+        </div>
+
+        <div class="photowall-cursorbar">
+            <span class="photowall-cursorbar-label">Try on a look 👓 — pick your cursor</span>
+            <div id="photowall-cursor-picker" class="photowall-cursor-picker"></div>
+        </div>
+
+        <div id="photowall-wall" class="photowall-wall theme-wood" aria-live="polite"></div>
+
+        <p id="photowall-empty" class="photowall-empty" hidden>
+            🍌 No bananas on the wall yet — check back soon.
+        </p>
     </section>
 
-    <!-- Content Section -->
-    <section class="section-basic-trans">
-        <table class="section-content-base section-content-win98">
-            <tr>
-                <td>
-                    <h1 class="section-title text-center">Template</h1>
-                    <p class="highlight-text text-center">
-                    <div class="web1-divider"></div>
-                    <div class="description">
-                        <p>Template</p>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </section>
+    <!-- Fullscreen lightbox -->
+    <div id="photowall-lightbox" class="pw-lightbox" hidden>
+        <button type="button" class="pw-lb-btn pw-lb-close" data-action="close" aria-label="Close (Esc)">✕</button>
+        <button type="button" class="pw-lb-btn pw-lb-prev" data-action="prev" aria-label="Previous">‹</button>
+        <img class="pw-lb-img" src="" alt="Enlarged photo from Yiayia's Wall of Bananas">
+        <button type="button" class="pw-lb-btn pw-lb-next" data-action="next" aria-label="Next">›</button>
+    </div>
 
     <!-- Button: Next GIFFY -->
     <!-- <div class="section-basic-trans text-center">
@@ -55,6 +67,11 @@
     <!-- FOOTER -->
 
     <script src="/src/main.ts" type="module"></script>
-    
+    <!-- Initialize photo wall -->
+    <script type="module">
+        import { initializePhotowall } from '/src/photowall.ts';
+        document.addEventListener('DOMContentLoaded', initializePhotowall);
+    </script>
+
   </body>
 </html>
