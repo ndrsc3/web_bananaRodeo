@@ -1,22 +1,23 @@
-# /review — Pre-merge code review
+# /review — Pre-PR code review
 
-Use this command before merging a branch to main. Run through each step in order. Build failures are blockers — stop and fix before proceeding. Security and quality findings are advisory — surface them clearly and let the developer decide.
+Use this command before opening a PR from a feature branch into `development` (two-tier flow: `feature/* → development → main`; see `CLAUDE.md` § Git Workflow). Run through each step in order. Build failures are blockers — stop and fix before proceeding. Security and quality findings are advisory — surface them clearly and let the developer decide.
 
 ## Steps
 
 ### 1. Confirm branch
-Check current branch. If already on `main`, stop and say: "You're on main — run `/review` from a feature branch before merging."
+Check current branch. If on `development` or `main`, stop and say: "You're on `development`/`main` — run `/review` from a feature branch before opening a PR."
 
 ```
 git branch --show-current
 ```
 
 ### 2. Show what's changing
-Summarize the diff so the developer knows the scope of the review.
+Summarize the diff against the PR base (`development`) so the developer knows the scope of the review.
 
 ```
-git diff main...HEAD --stat
-git log main..HEAD --oneline
+git fetch origin
+git diff origin/development...HEAD --stat
+git log origin/development..HEAD --oneline
 ```
 
 ### 3. Run build — BLOCKING
@@ -32,7 +33,7 @@ npm run lint
 If lint fails: **stop here**. Fix the errors before proceeding. Warnings are advisory — note them but don't block.
 
 ### 5. Security checklist
-Review the diff against main (`git diff main...HEAD`) and check each item. For each issue found, flag it clearly with the file and line number.
+Review the diff against the base (`git diff origin/development...HEAD`) and check each item. For each issue found, flag it clearly with the file and line number.
 
 - [ ] **XSS** — any user-supplied content inserted into the DOM? Must go through `escapeHtml()` or use `textContent`, not raw `innerHTML` interpolation
 - [ ] **Secrets** — no API keys, tokens, or passwords hardcoded or committed. Env vars belong in `.env.local` (gitignored), never in source
@@ -52,11 +53,11 @@ These are advisory — surface findings as suggestions, not blockers.
 
 **If any BLOCKING issue was found** (build, lint, security): state clearly what needs to be fixed and stop.
 
-**If only advisory findings**: list them with file:line references. Then say: "No blockers found. Advisory items above — address or note why you're skipping them. Ready to merge when you are."
+**If only advisory findings**: list them with file:line references. Then say: "No blockers found. Advisory items above — address or note why you're skipping them. Ready to open the PR when you are."
 
-**If clean**: say: "All checks passed. Ready to merge — run `/ship` to proceed."
+**If clean**: say: "All checks passed. Ready to PR into `development` — run `/ship` to push and open it."
 
 ## Notes
-- This is a pre-merge review, not a post-merge fix. Run it before `git checkout main`.
+- This is a pre-PR review, not a post-merge fix. Run it before opening the PR into `development`.
 - For security items, err on the side of flagging — better a false positive than a missed XSS.
 - If the diff is large (50+ files), focus security review on `api/`, `src/`, and any HTML files with user-facing content.

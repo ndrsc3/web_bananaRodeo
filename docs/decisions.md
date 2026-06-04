@@ -6,9 +6,9 @@ Each entry: the decision, **Why:** the constraint or reason, **Revisit when:** t
 
 ## Hosting: Vercel
 
-Serverless hosting with automatic deploys from `main`.
+Serverless hosting. **`main` auto-deploys to production** (banana.rodeo); **`development` and feature branches get preview deploys** — `development`'s preview is the staging/validation environment (see CLAUDE.md § Git Workflow for the two-tier promotion flow).
 
-**Why:** Zero ops for an event site — no server to maintain, no scaling to configure. Free tier covers expected traffic. Git push → deploy is the right DX for a small project.
+**Why:** Zero ops for an event site — no server to maintain, no scaling to configure. Free tier covers expected traffic. Git push → deploy is the right DX for a small project, and per-branch previews give us a staging tier for free.
 
 **Revisit when:** The site needs persistent background processes (e.g., WebSocket server, scheduled jobs that Vercel cron can't cover).
 
