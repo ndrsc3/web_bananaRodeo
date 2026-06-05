@@ -1,0 +1,363 @@
+/* Photo Wall — Yiayia's Wall of Bananas
+   A maximalist salon hang on a realistic plaster wall, with two switchable
+   frame themes (mid-century wood / ornamental brass) plus round & oval cameos.
+   Layout = JS aspect-true masonry (grid columns inline; row spans measured in
+   photowall.ts). GAP here must match GAP in photowall.ts (8px); grid-auto-rows
+   = ROW_UNIT (5px). */
+
+/* ---- Page-level: make header + footer share the plaster wall colour ----
+   header/footer backgrounds are driven by CSS variables, so we just override
+   them (scoped to this page's body class). The whole page reads as one wall. */
+body.page-photowall {
+    --header-background: #e1d5bc;
+    --footer-background: #e1d5bc;
+    background: #e1d5bc;
+}
+
+.photowall-stage {
+    /* Warm plaster wall — subtle top-down light, blends into the flat body colour */
+    background:
+        radial-gradient(150% 100% at 50% -15%, #efe7d5 0%, #e4d8c0 45%, #d8c9aa 100%);
+    box-shadow: inset 0 0 110px rgba(90, 70, 40, 0.22);
+    padding: 1.75rem clamp(0.5rem, 3vw, 2.5rem) 3rem;
+    margin: 0 auto;
+}
+
+/* ---- Engraved cursive nameplate / plaque ---- */
+.photowall-header {
+    text-align: center;
+    margin: 0.75rem 0 1.4rem;
+}
+
+.photowall-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    line-height: 1;
+    /* Great Vibes sits high with long descenders → extra top padding optically
+       centres the script within the plate. */
+    color: #2c1d08; /* dark engraving */
+    padding: 0.42em 1.5em 0.22em;
+    border-radius: 9px;
+    /* brass plate + four corner "screws" */
+    background:
+        radial-gradient(circle at 14px 14px, #5e4112 0 2.5px, rgba(0, 0, 0, 0.25) 2.5px 4px, transparent 4.5px),
+        radial-gradient(circle at calc(100% - 14px) 14px, #5e4112 0 2.5px, rgba(0, 0, 0, 0.25) 2.5px 4px, transparent 4.5px),
+        radial-gradient(circle at 14px calc(100% - 14px), #5e4112 0 2.5px, rgba(0, 0, 0, 0.25) 2.5px 4px, transparent 4.5px),
+        radial-gradient(circle at calc(100% - 14px) calc(100% - 14px), #5e4112 0 2.5px, rgba(0, 0, 0, 0.25) 2.5px 4px, transparent 4.5px),
+        linear-gradient(160deg, #e7c878 0%, #c19a3e 42%, #9c7724 68%, #d8b75e 100%);
+    box-shadow:
+        inset 0 0 0 2px rgba(95, 65, 16, 0.75),
+        inset 0 2px 5px rgba(255, 245, 205, 0.6),
+        inset 0 -3px 6px rgba(70, 45, 0, 0.4),
+        0 9px 20px rgba(40, 28, 0, 0.42);
+    /* letterpress / engraved text */
+    text-shadow:
+        0 1px 0 rgba(255, 244, 200, 0.55),
+        0 -1px 1px rgba(0, 0, 0, 0.45);
+}
+
+/* Controls — small museum-placard buttons */
+.photowall-controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.pw-btn {
+    font-family: var(--font-handwritten, 'Architects Daughter', cursive);
+    font-size: 1.05rem;
+    color: #3c2a14;
+    cursor: pointer;
+    padding: 0.5rem 1.1rem;
+    background: linear-gradient(#fbf6ea, #ece0c8);
+    border: 1px solid rgba(110, 80, 45, 0.45);
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(60, 40, 15, 0.22);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.pw-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 9px rgba(60, 40, 15, 0.28);
+}
+
+.pw-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(60, 40, 15, 0.3);
+}
+
+/* Prop-cursor picker — "try on a look" row */
+.photowall-cursorbar {
+    text-align: center;
+    margin: -0.25rem auto 1.6rem;
+}
+
+.photowall-cursorbar-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-handwritten, 'Architects Daughter', cursive);
+    font-size: 1.05rem;
+    color: #5a3d1e;
+}
+
+.photowall-cursor-picker {
+    display: grid;
+    grid-template-columns: repeat(5, auto); /* 10 props → two clean rows of 5 */
+    gap: 0.4rem;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.pw-prop {
+    width: 46px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background: #f5ecd7;
+    border: 1px solid rgba(110, 80, 45, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.pw-prop img {
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
+}
+
+.pw-prop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 9px rgba(60, 40, 15, 0.25);
+}
+
+.pw-prop.is-active {
+    background: #fff7e2;
+    border-color: #b8860b;
+    box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.45);
+}
+
+/* The wall grid — columns set inline by JS (repeat(N, 1fr)); rows measured */
+.photowall-wall {
+    display: grid;
+    grid-auto-rows: 5px; /* = ROW_UNIT in photowall.ts */
+    grid-auto-flow: row dense;
+    gap: 8px; /* = GAP in photowall.ts (tight) */
+    align-items: start;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* A hung frame — shared chrome; theme classes on the wall set wood/brass */
+.frame {
+    margin: 0;
+    position: relative;
+    /* Selectable photobooth-prop cursor (set by the picker via --frame-cursor);
+       defaults to the granny glasses, falls back to zoom-in where SVG cursors
+       aren't supported (e.g. some Safari versions). */
+    cursor: var(--frame-cursor, url('/assets/icons/cursors/granny-glasses.svg') 24 16), zoom-in;
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    background-clip: padding-box;
+    will-change: transform;
+}
+
+.frame img {
+    display: block;
+    width: 100%;
+    height: auto; /* rectangular frames keep true photo aspect — no cropping */
+    box-sizing: border-box;
+    border: 5px solid #f4eee0; /* cream mat */
+    background: #f4eee0;
+}
+
+/* Hover: straighten, lift, pop above neighbours */
+.frame:hover {
+    transform: rotate(0deg) scale(1.04);
+    z-index: 10;
+}
+
+/* ---- Theme: mid-century wood (rounded, smooth, with grain) ---- */
+.theme-wood .frame {
+    padding: 12px;
+    border-radius: 10px;
+    background:
+        /* grain streaks */
+        repeating-linear-gradient(
+            93deg,
+            rgba(60, 36, 14, 0.16) 0 2px,
+            rgba(255, 226, 188, 0.06) 2px 5px,
+            rgba(60, 36, 14, 0.10) 5px 8px
+        ),
+        /* base wood tone */
+        linear-gradient(135deg, #bf8d56 0%, #9c6736 45%, #ac7240 70%, #875530 100%);
+    box-shadow:
+        0 7px 15px rgba(40, 25, 10, 0.36),
+        inset 0 0 0 1px rgba(255, 240, 220, 0.18),
+        inset 0 0 8px rgba(45, 28, 12, 0.45);
+}
+
+.theme-wood .frame:hover {
+    box-shadow: 0 14px 26px rgba(40, 25, 10, 0.45);
+}
+
+/* ---- Theme: ornamental brass (gold, fluted edge) ---- */
+.theme-brass .frame {
+    padding: 14px;
+    border-radius: 4px;
+    background:
+        linear-gradient(135deg, #f7e9b0 0%, #caa23a 28%, #9a7320 52%, #e9d27e 78%, #b88a24 100%);
+    box-shadow:
+        0 8px 17px rgba(40, 30, 0, 0.42),
+        inset 0 0 0 1px rgba(120, 85, 12, 0.85),
+        inset 0 0 0 3px rgba(255, 246, 205, 0.45),
+        inset 0 0 11px rgba(70, 45, 0, 0.5);
+}
+
+/* Fluted/beaded ornamental ring just inside the gold (rectangular frames) */
+.theme-brass .frame::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 4px solid transparent;
+    border-image: repeating-linear-gradient(
+            45deg,
+            #5a3c0a 0 2px,
+            #efd884 2px 4px,
+            #9a7320 4px 6px
+        )
+        4;
+    pointer-events: none;
+}
+
+.theme-brass .frame:hover {
+    box-shadow: 0 15px 28px rgba(40, 30, 0, 0.5);
+}
+
+/* ---- Shape variants: round + oval cameos (intentional crop) ----
+   Same specificity as the theme rules, declared after them so these win. */
+.frame.shape-round,
+.frame.shape-round img {
+    border-radius: 50%;
+}
+
+.frame.shape-round img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.frame.shape-oval,
+.frame.shape-oval img {
+    border-radius: 50% / 50%;
+}
+
+.frame.shape-oval img {
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+}
+
+/* The square fluted ring doesn't fit a circle/oval — drop it for those */
+.frame.shape-round::after,
+.frame.shape-oval::after {
+    display: none;
+}
+
+/* Empty state (no photos processed yet) */
+.photowall-empty {
+    text-align: center;
+    margin: 3rem auto;
+    font-family: var(--font-handwritten, 'Architects Daughter', cursive);
+    font-size: 1.4rem;
+    color: #5a3d1e;
+}
+
+/* ---- Fullscreen lightbox ---- */
+body.pw-lb-open {
+    overflow: hidden; /* freeze the wall behind the overlay */
+}
+
+.pw-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3vmin;
+    background: rgba(18, 12, 5, 0.93);
+    cursor: zoom-out;
+}
+
+.pw-lightbox[hidden] {
+    display: none; /* override display:flex when the hidden attribute is set */
+}
+
+.pw-lb-img {
+    max-width: 92vw;
+    max-height: 92vh;
+    object-fit: contain;
+    border: 6px solid #f4eee0;
+    box-shadow: 0 12px 44px rgba(0, 0, 0, 0.6);
+    background: #000;
+    /* keep the chosen prop cursor active over the enlarged photo.
+       NOTE: a url() cursor list MUST end in a keyword, else the whole
+       declaration is invalid and the element inherits the backdrop's cursor. */
+    cursor: var(--frame-cursor, default), default;
+}
+
+.pw-lb-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f4eee0;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(244, 238, 224, 0.4);
+    border-radius: 999px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.12s ease, transform 0.12s ease;
+}
+
+.pw-lb-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.08);
+}
+
+.pw-lb-close {
+    top: 3vmin;
+    right: 3vmin;
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1.4rem;
+}
+
+.pw-lb-prev,
+.pw-lb-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 2.4rem;
+    padding-bottom: 0.18em; /* optical centre of the chevron glyph */
+}
+
+.pw-lb-prev:hover,
+.pw-lb-next:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.pw-lb-prev {
+    left: 2.5vmin;
+}
+
+.pw-lb-next {
+    right: 2.5vmin;
+}

@@ -2,7 +2,7 @@
 <!-- [ ] todo  [~] in-progress  [x] done -->
 <!-- P1=ship-blocker  P2=next-up  P3=someday -->
 
-_Last touched: 2026-03-31_
+_Last touched: 2026-06-03_
 
 ---
 
@@ -14,8 +14,8 @@ _(none)_
 
 ## P2 — Next Up
 
-- [~] [PAGE: photowall] Random image selection from pool
-- [ ] [PAGE: photowall] Picture frame layout + positioning
+- [x] [PAGE: photowall] Random image selection from pool — manifest-driven random subset (22) on a salon-hang wall + Rehang reshuffle + empty state. Add photos: drop into `_capture/images/web_bananaRodeo/photowall/`, run `python knowledge/tools/process-images.py workSpace/web_bananaRodeo` (underScore image pipeline)
+- [x] [PAGE: photowall] Picture frame layout + positioning — aspect-true JS masonry (no crop), realistic plaster wall, two switchable frame themes (mid-century wood / ornamental brass), hand-hung tilt + hover-straighten. Frame styles are graduation candidates → `components/` if reused elsewhere.
 - [ ] [PAGE: gbbits] Church music/ambient audio
 - [ ] [CURSOR] Custom banana cursor image asset
 - [ ] [CURSOR] Tiny bananas emoji trail
@@ -40,6 +40,12 @@ _(none)_
 - [ ] [PAGE: testimonials] Testimonials page
 - [ ] [PAGE: loading] Loading page with 1 Minute Parks iframe embed
 - [ ] [PAGE: banana-confessional] Audio confessional archive + experience — see docs/explorations/banana-confessional.md
+- [ ] [PAGE: bananifestation] Reflective intro + intention ritual UX (standalone page) — see docs/explorations/bananifestation.md
+- [ ] [PAGE: bananifestation] Quantum seed button → ceremonial number reveal (`getQuantumSeed()` abstraction + `crypto` fallback; source access pending)
+
+### Photo Wall — follow-ups
+- [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `CURSOR_PROPS` in `src/photowall.ts` with a tuned hotspot.
+- [ ] [PAGE: photowall] Refine rough cursor SVGs (cat-eye, cowboy hat, party hat, lips) — best-guess freehand shapes; tighten or commission cleaner art. Optionally render to PNG for guaranteed Safari support.
 
 ### Falling Bananas — Auth Page Upgrade
 - [ ] [FEATURE] [FX] [EASTER] Implement falling bananas upgrade → `docs/plans/falling-bananas.md`
