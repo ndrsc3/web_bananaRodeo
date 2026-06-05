@@ -64,6 +64,20 @@ API files use CommonJS-compatible syntax (`import`/`export default`) — Vercel 
 - `/api/*` → serverless functions
 - Everything else → filesystem (static output in `dist/`)
 
+## Media Imports
+
+**All imported media is organized by year.** Source media (photos, audio, video) lands in the capture tree grouped into year folders:
+
+```
+_capture/<type>/web_bananaRodeo/<collection>/<year>/
+  e.g. _capture/images/web_bananaRodeo/photowall/2025/
+       _capture/audio/web_bananaRodeo/confessions/2024/
+```
+
+- **Preserve original filenames** — source files keep their date/timestamped names (e.g. `20240628_143022.wav`). These are already anonymous (a timestamp identifies no person); do not rename them.
+- **Year stays source-side.** When a pipeline publishes media to the web, year/date may be stripped from the public output if the surface is meant to read as anonymous/undated — decide per page. The capture tree always retains the year for archival/curation.
+- Processing pipelines (`knowledge/tools/process-images.py` and analogues) read from these year folders.
+
 ## HTML Template System
 
 Pages in `pages/` use HTML comment placeholders replaced at build time by the Vite plugin in `vite.config.ts`. Template fragments live in `public/templates/`.

@@ -8,6 +8,9 @@ node_modules/
 packages/*/dist/
 dist/
 
+# Processed audio binaries (live in Vercel Blob for prod; manifest is tracked)
+public/audio/confessions/
+
 # TypeScript
 *.tsbuildinfo
 

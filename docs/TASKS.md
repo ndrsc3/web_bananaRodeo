@@ -39,7 +39,7 @@ _(none)_
 - [ ] [PAGE: banana-meditation] "We're Not Loading - This is a forced meditation" loading screen
 - [ ] [PAGE: testimonials] Testimonials page
 - [ ] [PAGE: loading] Loading page with 1 Minute Parks iframe embed
-- [ ] [PAGE: banana-confessional] Audio confessional archive + experience — see docs/explorations/banana-confessional.md
+- [~] [PAGE: banana-confessional] Celestial Uplink rig — **alpha + Phase 4 done** (HAM rig, freq dial/needle, bands, white noise, live S-meter; audio now on Vercel Blob, plays in prod). Remaining: entry trigger (last header dancing banana → /pages/confessional.html), Phase 5 polish. → `docs/plans/banana-confessional.md`
 - [ ] [PAGE: bananifestation] Reflective intro + intention ritual UX (standalone page) — see docs/explorations/bananifestation.md
 - [ ] [PAGE: bananifestation] Quantum seed button → ceremonial number reveal (`getQuantumSeed()` abstraction + `crypto` fallback; source access pending)
 

@@ -1,0 +1,411 @@
+/* ============================================================
+   Banana Confessional — "Celestial Uplink" booth stylesheet
+   Standalone identity (does not layer on main.css).
+
+   A wooden lattice parts (the channel opens) → a Hallicrafters-style
+   shortwave rig powers on, hails the Great Big Banana In The Sky,
+   fails, and intercepts the prayers others beam up to it.
+   ============================================================ */
+
+:root {
+    --booth-void: #0a0500;
+    --booth-bg: #1a0d00;
+    --wood-dark: #3d1f00;
+    --wood: #5c3200;
+    --wood-light: #8b4513;
+    --wood-hi: #cd853f;
+    --amber: #c8a96e;
+    --amber-bright: #f0c987;
+    --screen: #0d0d0d;
+    --panel: #2c2a26;       /* brushed-steel control panel */
+    --panel-hi: #4a4640;
+    --needle-red: #ff2e1f;
+    --signal: #ffd27a;
+    --font-serif: "Times New Roman", Georgia, serif;
+    --font-mono: "Courier New", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+.confessional-page {
+    background: radial-gradient(ellipse at center, #1a0d00 0%, var(--booth-void) 70%);
+    color: var(--amber);
+    font-family: var(--font-serif);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.booth {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+/* ============================================================
+   THE RIG
+   ============================================================ */
+.interior {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    filter: brightness(0.32);
+    transform: scale(1.04);
+    transition: filter 1.2s ease, transform 1.4s ease;
+}
+
+.rig {
+    position: relative;
+    width: min(560px, 92vw);
+    background: linear-gradient(180deg, #241200 0%, var(--booth-bg) 100%);
+    border: 9px solid var(--wood-dark);
+    border-radius: 10px;
+    box-shadow:
+        inset 0 0 44px rgba(0, 0, 0, 0.85),
+        4px 4px 0 #000,
+        0 0 0 2px var(--wood),
+        0 0 90px rgba(205, 133, 63, 0.16);
+    padding: 1.5rem 1.5rem 1.3rem;
+}
+
+.antenna {
+    position: absolute;
+    top: -64px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 64px;
+    background: linear-gradient(to top, var(--wood-hi), transparent);
+}
+.antenna__mast { position: absolute; inset: 0; }
+.antenna__pulse {
+    position: absolute;
+    top: -6px; left: 50%;
+    width: 10px; height: 10px;
+    margin-left: -5px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 10px var(--signal);
+    opacity: 0;
+}
+.booth[data-playing="true"] .antenna__pulse { animation: ping 2.4s ease-out infinite; }
+
+.rig__plate {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--wood-hi);
+    opacity: 0.85;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
+.rig__model { opacity: 0.6; letter-spacing: 1px; }
+
+/* ---- frequency dial display ---- */
+.dial-display {
+    display: flex;
+    gap: 0.8rem;
+    background: radial-gradient(ellipse at 60% 40%, #161512 0%, var(--screen) 100%);
+    border: 2px inset var(--wood);
+    border-radius: 5px;
+    padding: 0.7rem 0.8rem;
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+/* S-meter (arc + needle) */
+.smeter {
+    flex: 0 0 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+.smeter__arc {
+    position: relative;
+    width: 64px; height: 34px;
+    border-top-left-radius: 64px;
+    border-top-right-radius: 64px;
+    border: 1px solid rgba(200, 169, 110, 0.35);
+    border-bottom: none;
+    overflow: hidden;
+}
+.smeter__needle {
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 2px; height: 30px;
+    background: var(--needle-red);
+    transform-origin: bottom center;
+    transform: rotate(-52deg); /* rest; JS drives it from the live signal */
+    box-shadow: 0 0 4px rgba(255, 46, 31, 0.6);
+}
+.smeter__label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.6;
+}
+
+/* the tuning scale + sliding needle */
+.dial {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+.dial__scale {
+    position: relative;
+    flex: 1;
+    min-height: 46px;
+    border-radius: 3px;
+    background-color: #070707;
+    /* major + minor ticks */
+    background-image:
+        repeating-linear-gradient(90deg, rgba(200,169,110,0.55) 0 1px, transparent 1px 10px),
+        repeating-linear-gradient(90deg, rgba(200,169,110,0.25) 0 1px, transparent 1px 50px),
+        linear-gradient(180deg, rgba(200,169,110,0.08), transparent 40%);
+    background-position: 0 bottom, 0 bottom, 0 0;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+}
+.dial__needle {
+    position: absolute;
+    top: 0; bottom: 18px;
+    left: 75%;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--needle-red);
+    box-shadow: 0 0 6px 1px rgba(255, 46, 31, 0.8);
+    transition: left 0.6s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.dial__needle::after { /* pointer cap */
+    content: "";
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 8px; height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: var(--needle-red);
+    box-shadow: 0 0 6px rgba(255, 46, 31, 0.9);
+}
+.dial__readout {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--amber);
+    text-shadow: 0 0 6px rgba(200, 169, 110, 0.5);
+}
+.dial__sep { opacity: 0.5; }
+#band-label { color: var(--amber-bright); }
+
+.dial-status {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    color: var(--amber);
+    text-shadow: 0 0 6px rgba(200, 169, 110, 0.5);
+}
+
+/* ---- speaker grille ---- */
+.grille {
+    height: 24px;
+    margin: 0.9rem 0 0.3rem;
+    border-radius: 4px;
+    background-color: #160a00;
+    background-image: radial-gradient(circle, var(--wood) 1.4px, transparent 1.6px);
+    background-size: 9px 9px;
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.8);
+    opacity: 0.85;
+}
+
+/* ============================================================
+   Controls — brushed-steel panel: Band · Tuner · Level · Power
+   ============================================================ */
+.rig__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-top: 0.9rem;
+    padding: 0.8rem 0.6rem 0.5rem;
+    background: linear-gradient(180deg, var(--panel-hi), var(--panel));
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 2px 6px rgba(0,0,0,0.6);
+    /* hidden until the channel is open */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease 0.4s;
+}
+.booth[data-state="inside"] .rig__controls { opacity: 1; pointer-events: auto; }
+
+.control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+}
+.control__label {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #161310;
+    font-weight: bold;
+}
+
+/* generic knob */
+.knob, .band {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: block;
+}
+.knob__face, .band__knob {
+    display: block; /* spans are inline by default — needs block or width/height collapse */
+    position: relative;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 38% 30%, #e4dfd6, #4a4640 70%, #232019 100%);
+    box-shadow: 0 0 0 3px #1a1814, inset 0 2px 3px rgba(255,255,255,0.18);
+    transition: transform 0.45s cubic-bezier(0.45, 0, 0.2, 1);
+}
+.knob--lg .knob__face { width: 66px; height: 66px; }
+.band__knob { width: 48px; height: 48px; }
+
+/* fluted tick ring so it reads as a dial */
+.knob__face::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: repeating-conic-gradient(rgba(0,0,0,0.45) 0deg 4deg, transparent 4deg 18deg);
+    -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%);
+    mask: radial-gradient(circle, transparent 60%, #000 62%);
+}
+
+.knob__pointer, .band__pointer {
+    position: absolute;
+    top: 6px; left: 50%;
+    width: 3px; height: 17px;
+    margin-left: -1.5px;
+    background: #15120e;
+    border-radius: 2px;
+    z-index: 1;
+}
+.band__pointer { height: 13px; background: var(--needle-red); box-shadow: 0 0 4px rgba(255,46,31,0.6); }
+.knob:hover .knob__face,
+.band:hover .band__knob { box-shadow: 0 0 0 3px #1a1814, 0 0 12px rgba(240,201,135,0.4); }
+
+/* power toggle */
+.toggle { background: none; border: none; cursor: pointer; padding: 0; display: block; }
+.toggle__track {
+    width: 50px; height: 24px;
+    border-radius: 13px;
+    background: #1a1814;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+    display: flex; align-items: center; padding: 3px;
+    transition: background 0.3s ease;
+}
+.toggle__sw {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #d9d4cc, #4a4640 75%);
+    box-shadow: 0 1px 3px #000;
+    transition: transform 0.3s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.toggle[data-on="true"] .toggle__track {
+    background: #5c4a16;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.6), 0 0 10px rgba(255, 210, 122, 0.5);
+}
+.toggle[data-on="true"] .toggle__sw {
+    transform: translateX(26px);
+    background: radial-gradient(circle at 38% 32%, var(--signal), var(--wood-hi) 75%);
+}
+
+/* ---- power-off + dead-air states ---- */
+.rig[data-power="off"] .dial-display { filter: brightness(0.3) saturate(0.4); }
+.rig[data-power="off"] .grille { opacity: 0.5; }
+.booth[data-signal="dead"] .smeter__needle { transform: rotate(-52deg); }
+.booth[data-signal="dead"] .dial__needle { box-shadow: none; opacity: 0.4; }
+
+/* ============================================================
+   THRESHOLD — closed wooden lattice (two parting panels)
+   ============================================================ */
+.threshold { position: absolute; inset: 0; display: grid; place-items: center; }
+
+.lattice-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205,133,63,0.5) 0%, rgba(205,133,63,0.12) 35%, transparent 65%);
+    animation: breathe 5.5s ease-in-out infinite;
+    pointer-events: none;
+}
+.lattice {
+    position: absolute; top: 0;
+    width: 52%; height: 100%;
+    background-color: var(--wood-dark);
+    background-image:
+        repeating-linear-gradient(45deg,  var(--wood) 0 7px, transparent 7px 24px),
+        repeating-linear-gradient(-45deg, var(--wood) 0 7px, transparent 7px 24px),
+        linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.7);
+    transition: transform 1.15s cubic-bezier(0.7, 0, 0.2, 1);
+    will-change: transform;
+}
+.lattice--left  { left: 0;  border-right: 3px solid #000; }
+.lattice--right { right: 0; border-left: 3px solid #000; }
+
+.enter-prompt {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+    background: transparent; border: none;
+    color: var(--amber-bright);
+    font-family: var(--font-serif);
+    cursor: pointer;
+    text-shadow: 0 0 12px rgba(240,201,135,0.7), 0 2px 4px #000;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.enter-prompt__text { font-size: 2rem; letter-spacing: 4px; text-transform: uppercase; }
+.enter-prompt__hint {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; opacity: 0.6;
+}
+.enter-prompt:hover { transform: scale(1.03); }
+.enter-prompt:focus-visible { outline: 1px dashed var(--amber); outline-offset: 8px; }
+
+/* ---- reveal ---- */
+.booth[data-state="inside"] .lattice--left  { transform: translateX(-102%); }
+.booth[data-state="inside"] .lattice--right { transform: translateX(102%); }
+.booth[data-state="inside"] .lattice-glow   { opacity: 0; transition: opacity 1s ease; }
+.booth[data-state="inside"] .enter-prompt   { opacity: 0; transform: scale(0.9); pointer-events: none; }
+.booth[data-state="inside"] .interior       { filter: brightness(1); transform: scale(1); }
+.booth[data-state="inside"] .threshold      { pointer-events: none; }
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes breathe { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
+@keyframes blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@keyframes ping {
+    0%   { transform: scale(0.6); opacity: 0.9; }
+    70%  { transform: scale(2.4); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* ============================================================
+   Accessibility — respect reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .lattice-glow, .blink, .smeter__needle, .antenna__pulse { animation: none; }
+    .lattice { transition: transform 0.01s; }
+    .interior { transition: filter 0.3s ease; }
+    .dial__needle { transition: left 0.05s; }
+    .lattice-glow { opacity: 0.85; }
+}

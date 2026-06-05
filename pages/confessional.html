@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Celestial Uplink</title>
+
+    <!-- Unlisted easter-egg page — not indexed -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:site_name" content="Banana Rodeo">
+    <meta property="og:title" content="Celestial Uplink">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <!-- Standalone visual identity — does NOT load main.css -->
+    <link rel="stylesheet" href="/styles/pages/confessional.css">
+  </head>
+
+  <body class="confessional-page">
+    <main class="booth" data-state="closed">
+
+      <!-- The rig (revealed behind the lattice, then powered on) -->
+      <div class="interior" aria-hidden="true">
+        <div class="rig" data-booting="false" data-power="on">
+
+          <div class="antenna" aria-hidden="true">
+            <span class="antenna__mast"></span>
+            <span class="antenna__pulse"></span>
+          </div>
+
+          <div class="rig__plate">
+            <span>G.B.B.I.T.S. &middot; Celestial Uplink</span>
+            <span class="rig__model">Model GBB-83</span>
+          </div>
+
+          <!-- Frequency dial: S-meter + sliding needle over a band scale -->
+          <div class="dial-display">
+            <div class="smeter" aria-hidden="true">
+              <div class="smeter__arc"><span class="smeter__needle" id="smeter-needle"></span></div>
+              <span class="smeter__label">Signal</span>
+            </div>
+            <div class="dial">
+              <div class="dial__scale" aria-hidden="true"></div>
+              <div class="dial__needle" id="dial-needle"></div>
+              <div class="dial__readout">
+                <span id="freq">--.---</span> MHz <span class="dial__sep">&middot;</span>
+                <span id="band-label">2024</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="dial-status"><span id="rig-status">STANDBY</span><span class="blink">_</span></p>
+
+          <div class="grille" aria-hidden="true"></div>
+
+          <!-- Controls: Band selector · Tuner · Level · Power -->
+          <div class="rig__controls">
+            <div class="control">
+              <button class="band" id="band" type="button" aria-label="Band selector — year">
+                <span class="band__knob"><span class="band__pointer"></span></span>
+              </button>
+              <span class="control__label">Band — Year</span>
+            </div>
+            <div class="control">
+              <button class="knob knob--lg" id="tuner" type="button"
+                      aria-label="Tuner — retune to the next transmission">
+                <span class="knob__face"><span class="knob__pointer"></span></span>
+              </button>
+              <span class="control__label">Tuner</span>
+            </div>
+            <div class="control">
+              <button class="knob knob--lg" id="level" type="button" aria-label="Level — volume">
+                <span class="knob__face"><span class="knob__pointer"></span></span>
+              </button>
+              <span class="control__label">Level — Vol</span>
+            </div>
+            <div class="control">
+              <button class="toggle" id="power" type="button" data-on="true" aria-label="Power">
+                <span class="toggle__track"><span class="toggle__sw"></span></span>
+              </button>
+              <span class="control__label">Power</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Threshold: closed wooden lattice -->
+      <div class="threshold">
+        <div class="lattice-glow" aria-hidden="true"></div>
+        <div class="lattice lattice--left" aria-hidden="true"></div>
+        <div class="lattice lattice--right" aria-hidden="true"></div>
+        <button class="enter-prompt" id="enter-btn" type="button">
+          <span class="enter-prompt__text">Open the Channel</span>
+          <span class="enter-prompt__hint">initiate uplink to the G.B.B.I.T.S.</span>
+        </button>
+      </div>
+
+    </main>
+
+    <script type="module" src="/src/confessional.ts"></script>
+  </body>
+</html>

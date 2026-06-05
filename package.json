@@ -14,7 +14,8 @@
         "lint": "eslint src/ api/ vite.config.ts",
         "format": "prettier --write src/ api/ scripts/ vite.config.ts *.json",
         "hash-password": "tsx scripts/hash-password.ts",
-        "reset-counters": "tsx scripts/reset-counters.ts"
+        "reset-counters": "tsx scripts/reset-counters.ts",
+        "process-confessions": "tsx scripts/process-confessions.ts"
     },
     "keywords": [],
     "author": "",
@@ -35,6 +36,7 @@
     },
     "dependencies": {
         "@upstash/redis": "^1.34.6",
+        "@vercel/blob": "^2.4.0",
         "@vercel/kv": "^0.2.4"
     }
 }
