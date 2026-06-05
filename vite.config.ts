@@ -1,6 +1,6 @@
 import { defineConfig, Plugin } from 'vite';
 import { readFileSync, readdirSync, statSync } from 'fs';
-import { resolve, basename, relative } from 'path';
+import { resolve, relative } from 'path';
 
 function htmlTemplatePlugin(): Plugin {
     const templates: Record<string, string> = {};

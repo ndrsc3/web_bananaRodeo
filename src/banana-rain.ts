@@ -2,12 +2,17 @@ import { bananaHooks } from './banana-hooks.js';
 
 const GOLDEN_CHANCE = 1 / 30;
 const ROTTEN_CHANCE = 1 / 40;
-const SPAWN_INTERVAL_MS = 1000;
+// Spawn cadence accelerates the longer you linger: slow drizzle → downpour.
+const START_INTERVAL_MS = 1000; // ~1 banana/s at first
+const MIN_INTERVAL_MS = 150; // caps at ~6–7/s
+const RAMP_DURATION_MS = 90000; // reach max rate after ~90s on the page
+const MAX_ACTIVE = 60; // hard cap on concurrent bananas (perf guard)
 
 const activeBananas = new Set<HTMLElement>();
 let rainContainer: HTMLElement | null = null;
 let isReversed = false;
 let isShrunk = false;
+let rainStart = 0;
 
 // --- Particle helpers ---
 
@@ -108,6 +113,18 @@ function createBanana(): void {
   activeBananas.add(el);
 }
 
+// --- Spawn cadence (accelerates with time on page) ---
+
+function currentInterval(): number {
+  const t = Math.min(1, (Date.now() - rainStart) / RAMP_DURATION_MS);
+  return START_INTERVAL_MS - (START_INTERVAL_MS - MIN_INTERVAL_MS) * t;
+}
+
+function scheduleSpawn(): void {
+  if (activeBananas.size < MAX_ACTIVE) createBanana();
+  setTimeout(scheduleSpawn, currentInterval());
+}
+
 // --- Rain control ---
 
 export function startRain(containerId = 'bananaRain'): void {
@@ -151,6 +168,7 @@ export function startRain(containerId = 'bananaRain'): void {
     activeBananas.forEach((b) => b.classList.remove('banana-reverse'));
   });
 
+  rainStart = Date.now();
   createBanana();
-  setInterval(createBanana, SPAWN_INTERVAL_MS);
+  scheduleSpawn();
 }
