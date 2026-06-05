@@ -1,0 +1,228 @@
+/* =============== LEADERBOARD PAGE ================= */
+/* Pixel art / arcade style. Chunky, limited palette. */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --lb-yellow: #FFD700;
+    --lb-green: #39FF14;
+    --lb-black: #000000;
+    --lb-dark: #0a0a0a;
+    --lb-red: #FF3131;
+    --lb-font: 'Press Start 2P', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--lb-black);
+    color: var(--lb-yellow);
+    font-family: var(--lb-font);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* CRT scanline overlay */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 4px
+    );
+    z-index: 999;
+}
+
+/* --- Page wrapper --- */
+
+.lb-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Header --- */
+
+.lb-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.lb-title {
+    font-size: clamp(1rem, 4vw, 1.8rem);
+    color: var(--lb-yellow);
+    text-shadow:
+        4px 4px 0 #8B6914,
+        0 0 20px rgba(255,215,0,0.5);
+    line-height: 1.4;
+    margin: 0 0 12px;
+}
+
+.lb-banana-row {
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+.lb-subtitle {
+    font-size: 0.55rem;
+    color: var(--lb-green);
+    text-shadow: 0 0 6px var(--lb-green);
+    letter-spacing: 0.15em;
+}
+
+/* --- Divider --- */
+
+.lb-divider {
+    border: none;
+    border-top: 3px solid var(--lb-yellow);
+    box-shadow: 0 0 8px rgba(255,215,0,0.4);
+    margin: 24px 0;
+}
+
+/* --- Table --- */
+
+.lb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.5rem;
+    line-height: 1.8;
+}
+
+.lb-table th {
+    color: var(--lb-green);
+    text-shadow: 0 0 6px var(--lb-green);
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--lb-green);
+    letter-spacing: 0.1em;
+    font-size: 0.55rem;
+}
+
+.lb-table th:first-child,
+.lb-table td:first-child {
+    text-align: center;
+    width: 42px;
+}
+
+.lb-table th:nth-child(3),
+.lb-table td:nth-child(3) {
+    text-align: right;
+    width: 80px;
+}
+
+.lb-table td {
+    padding: 8px 8px;
+    border-bottom: 1px solid #222;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.lb-table td.rank {
+    color: var(--lb-yellow);
+    font-size: 0.9rem;
+}
+
+.lb-table td.score {
+    color: var(--lb-yellow);
+    text-shadow: 0 0 6px rgba(255,215,0,0.5);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.lb-name {
+    color: #fff;
+    font-size: 0.55rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.lb-phrase {
+    color: #888;
+    font-size: 0.55rem;
+    display: block;
+    word-break: break-word;
+}
+
+/* Highlighted new entry */
+.lb-table tr.lb-highlight td {
+    animation: lb-row-flash 0.6s infinite;
+    color: #000;
+    background: var(--lb-yellow);
+}
+
+.lb-table tr.lb-highlight td.score {
+    color: #000;
+    text-shadow: none;
+}
+
+.lb-table tr.lb-highlight .lb-name {
+    color: #000;
+}
+
+.lb-table tr.lb-highlight .lb-phrase {
+    color: #333;
+}
+
+@keyframes lb-row-flash {
+    0%, 100% { background: var(--lb-yellow); color: #000; }
+    50%       { background: #000; color: var(--lb-yellow); }
+}
+
+/* Empty state */
+.lb-empty {
+    text-align: center;
+    color: #444;
+    font-size: 0.55rem;
+    padding: 40px 0;
+    letter-spacing: 0.1em;
+}
+
+/* --- Footer --- */
+
+.lb-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.lb-enter-btn {
+    display: inline-block;
+    background: var(--lb-yellow);
+    color: #000;
+    font-family: var(--lb-font);
+    font-size: 0.7rem;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 #8B6914;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.lb-enter-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #8B6914;
+}
+
+.lb-countdown {
+    margin-top: 16px;
+    font-size: 0.45rem;
+    color: #555;
+    letter-spacing: 0.1em;
+}
+
+.lb-countdown span {
+    color: var(--lb-green);
+    text-shadow: 0 0 6px var(--lb-green);
+}

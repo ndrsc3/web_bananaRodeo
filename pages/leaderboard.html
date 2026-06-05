@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hall of Bananas — Banana Rodeo</title>
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+    <link rel="stylesheet" href="/styles/pages/leaderboard.css">
+</head>
+
+<body>
+    <div class="lb-page">
+        <header class="lb-header">
+            <div class="lb-banana-row">🍌🍌🍌🍌🍌</div>
+            <h1 class="lb-title">THE GREAT HALL OF NANERS</h1>
+            <p class="lb-subtitle">====== TOP COLLECTORS ======</p>
+        </header>
+
+        <hr class="lb-divider">
+
+        <table class="lb-table" id="leaderboardTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>NAME</th>
+                    <th style="font-size:2.2em; line-height:1.1">🍌</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <tr><td colspan="3" class="lb-empty">LOADING...</td></tr>
+            </tbody>
+        </table>
+
+        <hr class="lb-divider">
+
+        <footer class="lb-footer">
+            <a id="enterBtn" class="lb-enter-btn" href="/pages/home.html">ENTER THE RODEO →</a>
+            <p class="lb-countdown" id="countdown" style="display:none">
+                AUTO-REDIRECTING IN <span id="countdownNum">15</span>s
+            </p>
+        </footer>
+    </div>
+
+    <script type="module">
+        const params = new URLSearchParams(window.location.search);
+        const highlight = parseInt(params.get('highlight') || '0', 10);
+        const redirect = params.get('redirect') || '/pages/home.html';
+
+        // Wire enter button
+        const enterBtn = document.getElementById('enterBtn');
+        enterBtn.href = redirect;
+
+        // Load leaderboard
+        async function loadBoard() {
+            try {
+                const res = await fetch('/api/leaderboard');
+                const { entries } = await res.json();
+                renderBoard(entries);
+            } catch {
+                document.getElementById('leaderboardBody').innerHTML =
+                    '<tr><td colspan="3" class="lb-empty">UNABLE TO LOAD — BANANAS UNAVAILABLE</td></tr>';
+            }
+        }
+
+        function renderBoard(entries) {
+            const tbody = document.getElementById('leaderboardBody');
+            if (!entries || entries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="lb-empty">NO ENTRIES YET. BE THE FIRST.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map((e, i) => {
+                const rank = i + 1;
+                const isHighlight = rank === highlight;
+                const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+                return `
+                    <tr class="${isHighlight ? 'lb-highlight' : ''}">
+                        <td class="rank">${medal}</td>
+                        <td>
+                            <span class="lb-name">${escHtml(e.name)}</span>
+                            <span class="lb-phrase">"${escHtml(e.phrase)}"</span>
+                        </td>
+                        <td class="score">${e.score}</td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function escHtml(str) {
+            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        // Auto-redirect countdown (only when arriving from auth flow)
+        function startCountdown() {
+            if (!highlight) return;
+            const countdownEl = document.getElementById('countdown');
+            const numEl = document.getElementById('countdownNum');
+            countdownEl.style.display = 'block';
+            let t = 15;
+            const iv = setInterval(() => {
+                t--;
+                numEl.textContent = t;
+                if (t <= 0) {
+                    clearInterval(iv);
+                    window.location.href = redirect;
+                }
+            }, 1000);
+        }
+
+        loadBoard().then(startCountdown);
+    </script>
+</body>
+</html>
