@@ -40,6 +40,7 @@
     <!-- Leaderboard entry modal -->
     <div id="lbModalOverlay" class="lb-modal-overlay">
         <div class="lb-modal">
+            <button id="lbSkipBtn" class="lb-modal-close" type="button" aria-label="Skip — don't add your name to the board">&times;</button>
             <h2>YOU MADE THE BOARD 🍌</h2>
             <p>Score: <span id="modalScore"></span> bananas. Enter your name and motto.</p>
             <input type="text" id="lbName" maxlength="30" placeholder="YOUR NAME">
@@ -179,6 +180,14 @@
             document.getElementById('modalScore').textContent = score;
             document.getElementById('lbModalOverlay').classList.add('active');
             document.getElementById('lbName').focus();
+
+            // X / Escape → skip the board, head straight to the destination
+            // (the session's bananas are already flushed to the collective before this)
+            const skip = () => { window.location.href = decodeURIComponent(redirectUrl); };
+            document.getElementById('lbSkipBtn').onclick = skip;
+            document.addEventListener('keydown', function onEsc(e) {
+                if (e.key === 'Escape') { document.removeEventListener('keydown', onEsc); skip(); }
+            });
 
             document.getElementById('lbSubmitBtn').onclick = async () => {
                 const name = document.getElementById('lbName').value.trim();
