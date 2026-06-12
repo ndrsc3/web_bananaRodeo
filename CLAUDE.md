@@ -152,17 +152,25 @@ Keep branch names short and lowercase: `feature/falling-bananas`, `fix/auth-redi
 Multiple Claude sessions (and the owner across machines) work this repo at once. **Never leave uncommitted work in a shared checkout** — a concurrent branch switch will stash or clobber it. Give every feature its own **worktree**: one folder per branch, all sharing one `.git`, working trees independent.
 
 ```bash
-# from any checkout, with development up to date
+# fast path — branch + folder + node_modules symlink + .vercel copy in one step:
+scripts/new-worktree.sh X           # → feature/X in ../web_bananaRodeo-X, based on origin/development
+
+# manual equivalent:
 git worktree add -b feature/X ../web_bananaRodeo-X development   # new branch + folder
 cd ../web_bananaRodeo-X
 ln -s ../web_bananaRodeo/node_modules node_modules               # each worktree needs its own deps
 #   ^ symlink is fast but not matched by `.gitignore` (which has `node_modules/`, a dir);
 #     add `node_modules` to .git/info/exclude so it can't be committed. (Or just `npm install`.)
+cp -R ../web_bananaRodeo/.vercel .                               # project link + dev env — required for `npx vercel dev`
+#   ^ copy, don't symlink: vercel writes build cache into .vercel/, concurrent dev servers shouldn't share it
+
 # ...work, fetch-before-commit, push...
 git push -u origin feature/X        # Vercel builds a preview for the branch
 # open a PR into `development`. After it merges:
 git worktree remove ../web_bananaRodeo-X
 ```
+
+Running dev servers in two worktrees at once: give the second one its own port — `npx vercel dev --listen 3001`.
 
 `git worktree list` shows every tree; `git worktree prune` clears stale ones. `workSpace/` is gitignored by the parent underScore repo (except `.manifest`), so extra worktree folders don't pollute it. If you lose uncommitted work after a branch switch, check `git stash list` before assuming it's gone.
 
@@ -212,8 +220,12 @@ Three-tier board (P1 blockers / P2 next-up / P3 backlog). Use `/backlog` at sess
 
 ## Environment Variables
 
-Required in `.env.local` for local Vercel dev:
+KV credentials live in the Vercel project (dashboard), not in the repo — there is **no top-level `.env.local`**. The Vercel CLI materializes them at `.vercel/.env.development.local` once the directory is linked (`npx vercel link`, or copy `.vercel/` from the main checkout — see worktree setup above); `npx vercel dev` then picks them up automatically. Re-pull after dashboard changes with `npx vercel env pull`.
+
+Vars defined in the Vercel project:
 - `VERCEL_KV_URL`
 - `VERCEL_KV_REST_API_URL`
 - `VERCEL_KV_REST_API_TOKEN`
 - `VERCEL_KV_REST_API_READ_ONLY_TOKEN`
+
+`.vercel/` is gitignored, so fresh clones and new worktrees start unlinked — that's why `vercel dev` prompts to link until the directory is linked or copied.
