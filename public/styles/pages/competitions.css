@@ -1,0 +1,129 @@
+/* Competitions page — retired-event X, coming-soon banner, mystery event card.
+   Layers on top of main.css (card-western lives in components/cards.css). */
+
+/* --- Retired event: big X over the card --- */
+.card-retired {
+    overflow: hidden;
+}
+
+.card-retired .card-western-image img {
+    filter: sepia(60%) grayscale(50%);
+}
+
+.card-retired:hover .card-western-image img {
+    filter: sepia(60%) grayscale(50%);
+}
+
+.card-retired .card-western-title,
+.card-retired .card-western-description {
+    opacity: 0.55;
+}
+
+.retired-x {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.retired-x::before,
+.retired-x::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 26px;
+    background: #c0392b;
+    border: 3px solid #7b241c;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    opacity: 0.9;
+}
+
+.retired-x::before {
+    transform: translate(-50%, -50%) rotate(38deg);
+}
+
+.retired-x::after {
+    transform: translate(-50%, -50%) rotate(-38deg);
+}
+
+/* --- Coming-soon banner across the retired card --- */
+.coming-soon-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-7deg);
+    z-index: 4;
+    pointer-events: none;
+    background: #f4d03f;
+    color: #c0392b;
+    border: 4px dashed #c0392b;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.35);
+    font-family: 'Rye', cursive;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 12px 16px;
+    width: max-content;
+    white-space: nowrap;
+    animation: coming-soon-flash 1.2s step-end infinite;
+}
+
+.coming-soon-banner img {
+    width: 38px;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* step-end holds each state, then jumps — never blends the two colors
+   into the same midpoint (which would make the text invisible) */
+@keyframes coming-soon-flash {
+    0% { background: #f4d03f; color: #c0392b; border-color: #c0392b; }
+    50%, 100% { background: #c0392b; color: #f4d03f; border-color: #f4d03f; }
+}
+
+/* --- Mystery event card: giant ? --- */
+.mystery-image {
+    background: #2c1a0e;
+}
+
+.mystery-mark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rye', cursive;
+    font-size: 9rem;
+    color: #f4d03f;
+    text-shadow: 5px 5px 0 #8B4513;
+    animation: mystery-pulse 2s ease-in-out infinite;
+}
+
+@keyframes mystery-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .coming-soon-banner {
+        font-size: 0.8rem;
+        letter-spacing: 0;
+        padding: 8px 10px;
+    }
+
+    .coming-soon-banner img {
+        width: 22px;
+    }
+
+    /* narrow cards: one NEW gif is enough — the second clips at the card edge */
+    .coming-soon-banner img:last-child {
+        display: none;
+    }
+
+    .mystery-mark {
+        font-size: 7rem;
+    }
+}
