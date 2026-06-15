@@ -14,3 +14,12 @@ max_edge = 1600
 format   = "webp"
 quality  = 80
 manifest = true
+
+[[target]]
+name     = "sponsors-2026"
+intake   = "web_bananaRodeo/2026-Sponsors"
+output   = "public/assets/partners/2026"
+max_edge = 800
+format   = "webp"
+quality  = 85
+manifest = false
