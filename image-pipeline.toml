@@ -6,10 +6,34 @@
 #
 # intake: path under underScore _capture/images/ ; output: path under this project root.
 
+# Photowall — one target per event year so the wall can filter by year.
+# Each year's originals live in _capture/images/web_bananaRodeo/photowall/<year>/
+# and render to their own output folder + manifest.json. The frontend
+# (src/photowall.ts) reads /assets/photowall/<year>/manifest.json, defaulting
+# to the most recent year. Add a new [[target]] block per new event year.
+
 [[target]]
-name     = "photowall"
-intake   = "web_bananaRodeo/photowall"
-output   = "public/assets/photowall"
+name     = "photowall-2024"
+intake   = "web_bananaRodeo/photowall/2024"
+output   = "public/assets/photowall/2024"
+max_edge = 1600
+format   = "webp"
+quality  = 80
+manifest = true
+
+[[target]]
+name     = "photowall-2025"
+intake   = "web_bananaRodeo/photowall/2025"
+output   = "public/assets/photowall/2025"
+max_edge = 1600
+format   = "webp"
+quality  = 80
+manifest = true
+
+[[target]]
+name     = "photowall-2026"
+intake   = "web_bananaRodeo/photowall/2026"
+output   = "public/assets/photowall/2026"
 max_edge = 1600
 format   = "webp"
 quality  = 80
