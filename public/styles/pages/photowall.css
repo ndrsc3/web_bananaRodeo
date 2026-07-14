@@ -91,6 +91,31 @@ body.page-photowall {
     box-shadow: 0 1px 3px rgba(60, 40, 15, 0.3);
 }
 
+/* Year tabs — choose which rodeo's wall to view (default = newest).
+   Reuse .pw-btn chrome; .is-active gets the brass-plaque highlight. */
+.photowall-years {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.pw-year {
+    min-width: 4.5rem;
+    letter-spacing: 0.03em;
+}
+
+.pw-year.is-active {
+    background: linear-gradient(#fff7e2, #f0e2be);
+    border-color: #b8860b;
+    color: #2c1d08;
+    box-shadow:
+        0 0 0 2px rgba(184, 134, 11, 0.45),
+        inset 0 2px 4px rgba(120, 85, 12, 0.25);
+    transform: translateY(1px);
+}
+
 /* Prop-cursor picker — "try on a look" row */
 .photowall-cursorbar {
     text-align: center;
