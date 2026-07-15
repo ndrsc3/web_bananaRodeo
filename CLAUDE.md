@@ -119,6 +119,12 @@ Pages with a completely different visual identity (leaderboard, thebananacard) u
 
 **Hardcoding policy:** Hardcoding colors directly is acceptable for one-off themed contexts. When a hardcoded value appears in 3+ places, add it as a comment in the promotion-candidate block at the bottom of `variables.css`. Create a named variable only when the value is confirmed as a recurring token.
 
+## Image Pipeline & Photo Wall
+
+Site images (photo wall, sponsor logos) are **not committed by hand.** Raw camera files are dropped into the underScore `_capture/` intake and normalized to web-optimized WebP by `underScore/knowledge/tools/process-images.py`, driven by this repo's `image-pipeline.toml`. The photo wall (`/pages/photowall.html`) is organized **per event year** — each year is its own pipeline target rendering to `public/assets/photowall/<year>/` with its own `manifest.json`, and the frontend (`src/photowall.ts`) shows year tabs defaulting to the newest year.
+
+**Adding a new year of photos — or any image drop — follows a fixed runbook:** `docs/photowall-pipeline.md`. Read it before touching `image-pipeline.toml`, the `photowall/<year>/` assets, or `YEARS` in `photowall.ts`.
+
 ## Git Workflow
 
 **Two-tier promotion — nothing reaches production except through validation:**
@@ -180,6 +186,9 @@ Running dev servers in two worktrees at once: give the second one its own port �
 - Push the feature branch and open a **PR into `development`** (merge commit, not squash). Validate on the preview deploy. Run `/review` before merging. Keep branches short-lived.
 - **Promote to production:** once `development` is validated, fast-forward `main` to it:
   `git checkout main && git merge --ff-only development && git push` → publishes to banana.rodeo.
+- **After publishing — refresh long-lived worktrees so they don't silently drift behind `main`:**
+  - Remove the merged feature worktree + branch: `git worktree remove ../web_bananaRodeo-<name>`, then `git branch -d <branch>` and (if pushed) `git push origin --delete <branch>`.
+  - **Fast-forward the shared `web_bananaRodeo-dev` integration worktree** — it stays checked out on `development` and won't advance on its own: `cd ../web_bananaRodeo-dev && git pull --ff-only`. Skipping this is how it ends up "behind [N]" and the next session there starts from stale code.
 - Note: `/ship` and `/review` predate this two-tier model — `/ship` should target `development`, not `main`. Update those skills to match before relying on them.
 
 ## Decisions
