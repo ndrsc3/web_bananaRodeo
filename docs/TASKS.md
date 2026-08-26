@@ -2,7 +2,7 @@
 <!-- [ ] todo  [~] in-progress  [x] done -->
 <!-- P1=ship-blocker  P2=next-up  P3=someday -->
 
-_Last touched: 2026-06-03_
+_Last touched: 2026-08-23_
 
 ---
 
@@ -44,7 +44,13 @@ _(none)_
 - [ ] [PAGE: bananifestation] Quantum seed button → ceremonial number reveal (`getQuantumSeed()` abstraction + `crypto` fallback; source access pending)
 
 ### Photo Wall — follow-ups
-- [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `CURSOR_PROPS` in `src/photowall.ts` with a tuned hotspot.
+- [ ] [PAGE: photowall] [CURSOR] **Prop stamps — leave your mark on the photos** → `docs/explorations/photowall-stamps.md`. Two halves of one build: the prop cursor scales up with the enlarged photo, then clicking stamps it on, persistently, for everyone. Build in order:
+  - [x] **1. DOM prop-follower in the lightbox** — `src/prop-cursor.ts`: prop definitions (hotspot + intrinsic size) plus `createPropFollower()`, which hides the native cursor over one element and tracks the pointer with a scaled `<img>`. Wall thumbnails keep the native CSS cursor; the enlarged photo wears the follower, scaled to the photo's width. *Native `cursor: url()` can't do this: no scale knob, ~128px browser cap, and Safari SVG-cursor support is already suspect.* Bails to the native cursor on touch (no fine pointer).
+  - [ ] **2. Local stamps** — click to place, render from an in-memory array, no persistence. Anchor is `{year, file}` + normalized `x`/`y` (0..1) — never wall geometry, which reshuffles on every Rehang.
+  - [ ] **3. `api/stamps.ts`** — GET/POST `photowall:stamps:<year>:<file>` in the `api/guestbook.ts` KV idiom (list + cap + `ltrim`). Anonymous public write; the auth gate is client-side and is not a control.
+  - [ ] **4. Stamps on the wall thumbnails** — batch read (or fold counts into the manifest fetch) so the wall visibly accumulates.
+  - [ ] **Decide after step 2, not on paper:** stamp density/decay, per-visitor cap, undo-mine, per-year reset, mode toggle vs. click-to-stamp, mobile story.
+- [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `PROPS` in `src/prop-cursor.ts` with a tuned hotspot **and the SVG's own `width`/`height` as `w`/`h`** — the follower needs both to place the hotspot at any scale, and a wrong size skews the prop everywhere but 1×.
 - [ ] [PAGE: photowall] Refine rough cursor SVGs (cat-eye, cowboy hat, party hat, lips) — best-guess freehand shapes; tighten or commission cleaner art. Optionally render to PNG for guaranteed Safari support.
 
 ### Falling Bananas — Auth Page Upgrade
