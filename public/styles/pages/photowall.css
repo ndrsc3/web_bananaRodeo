@@ -331,10 +331,37 @@ body.pw-lb-open {
     border: 6px solid #f4eee0;
     box-shadow: 0 12px 44px rgba(0, 0, 0, 0.6);
     background: #000;
-    /* keep the chosen prop cursor active over the enlarged photo.
+    /* Keep the chosen prop cursor active over the enlarged photo.
        NOTE: a url() cursor list MUST end in a keyword, else the whole
-       declaration is invalid and the element inherits the backdrop's cursor. */
+       declaration is invalid and the element inherits the backdrop's cursor.
+       This is the fallback path: where a pointer is fine enough to follow,
+       prop-cursor.ts sets `cursor: none` inline here and wears the prop as a
+       real element instead — a native cursor can't be scaled to the photo. */
     cursor: var(--frame-cursor, default), default;
+}
+
+/* The worn prop, scaled to the enlarged photo (see src/prop-cursor.ts). Size and
+   position are set inline by the follower; everything cosmetic lives here. */
+.pw-prop-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2; /* over the photo and the nav buttons — it is the cursor */
+    pointer-events: none; /* never eat a click meant for the photo or a button */
+    opacity: 0;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
+    transition: opacity 0.12s ease;
+    will-change: transform;
+}
+
+.pw-prop-follower.is-visible {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pw-prop-follower {
+        transition: none;
+    }
 }
 
 .pw-lb-btn {
