@@ -31,8 +31,9 @@ Two moves that look like two features and are actually one build:
 
 | Piece | Where | Note |
 |---|---|---|
-| 10 prop cursors | `public/assets/icons/cursors/*.svg`, `CURSOR_PROPS` in `src/photowall.ts:34` | Each carries a tuned hotspot (`hx`,`hy`) |
-| Cursor picker | `setupCursorPicker()`, `src/photowall.ts` | Sets `--frame-cursor` on `<body>`, remembers choice in `localStorage` |
+| 10 prop cursors | `public/assets/icons/cursors/*.svg`, `PROPS` in `src/prop-cursor.ts` | Each carries a tuned hotspot (`hx`,`hy`) + the SVG's intrinsic size (`w`,`h`) |
+| Prop follower | `createPropFollower()`, `src/prop-cursor.ts` | **Built** — the scaled DOM prop over the enlarged photo; the stamp preview |
+| Cursor picker | `setupCursorPicker()`, `src/photowall.ts` | Sets `--frame-cursor` on `<body>`, remembers choice in `localStorage`, hands the prop to the follower |
 | Cursor CSS | `public/styles/pages/photowall.css:190` (frames), `:337` (lightbox) | Both read the same var — same size in both by construction |
 | Lightbox | `setupLightbox()`, `src/photowall.ts` | Click frame → enlarge; arrows/swipe/Esc |
 | Per-year pools | `manifest.json` per year, `{file,w,h}` | Stable photo identity: `{year, file}` |
@@ -69,7 +70,7 @@ Anchor to the **photo**, in the photo's own normalized space:
 ```ts
 interface Stamp {
     id: string;        // uuid
-    prop: string;      // CURSOR_PROPS id — 'tophat', 'granny-glasses', …
+    prop: string;      // PROPS id — 'tophat', 'granny-glasses', …
     x: number;         // 0..1, fraction of photo width
     y: number;         // 0..1, fraction of photo height
     scale: number;     // fraction of photo width the prop spans
@@ -126,21 +127,26 @@ size, in the lightbox and on a thumbnail, forever.
 
 ## Build order
 
-1. **DOM prop-follower in the lightbox** — hide native cursor, follow pointer at
-   photo scale. Ships the "enlarge the cursor" half on its own, no backend.
+1. ~~**DOM prop-follower in the lightbox**~~ — **shipped**, `src/prop-cursor.ts`.
+   Hides the native cursor over the enlarged photo and tracks the pointer with a
+   scaled `<img>`. Ships the "enlarge the cursor" half on its own, no backend —
+   and stamping's placement preview now exists.
 2. **Local stamps** — click to place, render from an in-memory array, no
-   persistence. Proves the anchoring math and the feel.
+   persistence. Proves the anchoring math and the feel. The follower already
+   knows the pointer position and the prop's rendered geometry; this step turns
+   that into a normalized `(x, y)` and pins a copy.
 3. **`api/stamps.ts`** — GET/POST on `photowall:stamps:<year>:<file>`, capped and
    rate-limited in the `api/guestbook.ts` idiom.
 4. **Thumbnails** — batch read, render stamps (or just counts) on the wall.
 
-Steps 1–2 are a sitting and answer most of the Key Questions by making them
+Step 2 is a sitting and answers most of the Key Questions by making them
 concrete. Don't decide density, decay, or moderation on paper — decide them
 after step 2, on a wall with fifty stamps on it.
 
 ## References
 
-- `src/photowall.ts` — `CURSOR_PROPS`, `setupCursorPicker()`, `setupLightbox()`
+- `src/prop-cursor.ts` — `PROPS`, `nativeCursor()`, `createPropFollower()` (step 1, built)
+- `src/photowall.ts` — `setupCursorPicker()`, `setupLightbox()`
 - `public/styles/pages/photowall.css` — `--frame-cursor` at :190 (frames), :337 (lightbox)
 - `api/guestbook.ts` — the KV list + cap idiom this would follow
 - `docs/photowall-pipeline.md` — how photos and manifests get to the wall

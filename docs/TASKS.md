@@ -50,7 +50,7 @@ _(none)_
   - [ ] **3. `api/stamps.ts`** — GET/POST `photowall:stamps:<year>:<file>` in the `api/guestbook.ts` KV idiom (list + cap + `ltrim`). Anonymous public write; the auth gate is client-side and is not a control.
   - [ ] **4. Stamps on the wall thumbnails** — batch read (or fold counts into the manifest fetch) so the wall visibly accumulates.
   - [ ] **Decide after step 2, not on paper:** stamp density/decay, per-visitor cap, undo-mine, per-year reset, mode toggle vs. click-to-stamp, mobile story.
-- [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `CURSOR_PROPS` in `src/photowall.ts` with a tuned hotspot.
+- [ ] [PAGE: photowall] [CURSOR] Design more photobooth prop cursors — **specifically a "banantennae"** (banana deely-bopper antennae headband). Current set lives in `public/assets/icons/cursors/` (hand-authored SVGs); add new props to `PROPS` in `src/prop-cursor.ts` with a tuned hotspot **and the SVG's own `width`/`height` as `w`/`h`** — the follower needs both to place the hotspot at any scale, and a wrong size skews the prop everywhere but 1×.
 - [ ] [PAGE: photowall] Refine rough cursor SVGs (cat-eye, cowboy hat, party hat, lips) — best-guess freehand shapes; tighten or commission cleaner art. Optionally render to PNG for guaranteed Safari support.
 
 ### Falling Bananas — Auth Page Upgrade

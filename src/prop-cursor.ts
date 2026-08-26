@@ -117,33 +117,72 @@ export function createPropFollower(target: HTMLElement, layer: HTMLElement): Pro
     const nativeCursorStyle = target.style.cursor;
     target.style.cursor = 'none';
 
-    const draw = (): void => {
+    // Split deliberately: place() runs on every pointer move and touches only
+    // `transform`, so the prop rides the compositor. resize() writes geometry
+    // and is called only when the scale or the prop itself actually changes —
+    // doing it per move would relayout and re-raster the drop-shadow each time.
+    const resize = (): void => {
         img.style.width = `${prop.w * scale}px`;
         img.style.height = `${prop.h * scale}px`;
+    };
+
+    const place = (): void => {
         // Hotspot is authored in the SVG's own pixels — as a fraction of the
         // prop's rendered size it lands on the pointer at any scale.
         img.style.transform = `translate3d(${x - prop.hx * scale}px, ${y - prop.hy * scale}px, 0)`;
+    };
+
+    const show = (px: number, py: number): void => {
+        x = px;
+        y = py;
+        img.classList.add('is-visible');
+        place();
+    };
+
+    const onLeave = (): void => img.classList.remove('is-visible');
+
+    // Where the pointer is right now, tracked document-wide — the target's own
+    // pointermove can't tell us, because the case we need it for is the one
+    // where the pointer never moves. Passive: we only ever read.
+    let lastX = 0;
+    let lastY = 0;
+    let pointerSeen = false;
+    const onDocMove = (e: PointerEvent): void => {
+        if (e.pointerType === 'touch') return;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        pointerSeen = true;
+    };
+
+    /** The target can appear *under* a stationary pointer — click a frame and
+     *  don't move, and no pointermove ever fires on the enlarged photo. Since
+     *  the native cursor is off, that would leave nothing at all under the hand.
+     *  So on every (re)measure, reveal the prop if the pointer is already over
+     *  the target. If it isn't, stay hidden: the backdrop has its own cursor. */
+    const revealIfUnderPointer = (): void => {
+        if (!pointerSeen) return;
+        const r = target.getBoundingClientRect();
+        const inside = lastX >= r.left && lastX <= r.right && lastY >= r.top && lastY <= r.bottom;
+        if (inside) show(lastX, lastY);
     };
 
     const measure = (): void => {
         const width = target.getBoundingClientRect().width;
         if (width <= 0) return; // hidden (display:none) — keep the last good scale
         scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, width / REFERENCE_WIDTH));
-        draw();
+        resize();
+        place();
+        revealIfUnderPointer();
     };
 
     const onMove = (e: PointerEvent): void => {
         if (e.pointerType === 'touch') return;
-        x = e.clientX;
-        y = e.clientY;
-        img.classList.add('is-visible');
-        draw();
+        show(e.clientX, e.clientY);
     };
-
-    const onLeave = (): void => img.classList.remove('is-visible');
 
     target.addEventListener('pointermove', onMove);
     target.addEventListener('pointerleave', onLeave);
+    document.addEventListener('pointermove', onDocMove, { passive: true });
 
     // The target resizes when the window does and when it swaps to a photo of a
     // different shape — both change the scale the prop should draw at.
@@ -155,7 +194,8 @@ export function createPropFollower(target: HTMLElement, layer: HTMLElement): Pro
         setProp(next: PropDef): void {
             prop = next;
             img.src = propSrc(next);
-            draw();
+            resize();
+            place();
         },
         refresh: measure,
         hide: onLeave,
@@ -163,6 +203,7 @@ export function createPropFollower(target: HTMLElement, layer: HTMLElement): Pro
             observer.disconnect();
             target.removeEventListener('pointermove', onMove);
             target.removeEventListener('pointerleave', onLeave);
+            document.removeEventListener('pointermove', onDocMove);
             target.style.cursor = nativeCursorStyle;
             img.remove();
         },
