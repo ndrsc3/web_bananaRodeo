@@ -28,6 +28,9 @@ _(none)_
 
 ## P3 — Backlog
 
+### Platform
+- [ ] [FEATURE] Migrate the site onto The Threshold (`@finka/threshold`, `workSpace/web_lafinka/packages/threshold/`) — after the simple La Finka site with the Threshold running lands (owner 261005)
+
 ### Sponsor Page (`/pages/sponsor-us`)
 - [ ] [PAGE: sponsor-us] Fill in real 2026 event details (date, venue, expected attendance)
 - [ ] [PAGE: sponsor-us] Add formal sponsorship tiers with dollar amounts
