@@ -32,6 +32,7 @@ _(none)_
 ## P3 — Backlog
 
 ### Platform
+- [ ] [DX] Migrate toolchain to the 261012 house stack on next touch — ESLint 9 (EOL) → oxlint type-aware, TS 7 strict baseline, pnpm, `pnpm check` gate. Steps: Web Kit v2.0 `VERSIONS.md` § Migrating a v1.0 project
 - [ ] [FEATURE] Migrate the site onto The Threshold (`@finka/threshold`, `workSpace/web_lafinka/packages/threshold/`) — after the simple La Finka site with the Threshold running lands (owner 261005)
 
 ### Sponsor Page (`/pages/sponsor-us`)
