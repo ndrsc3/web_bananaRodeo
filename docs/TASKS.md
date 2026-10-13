@@ -1,4 +1,7 @@
 # Banana Rodeo — Task Board
+
+Status: active
+
 <!-- [ ] todo  [~] in-progress  [x] done -->
 <!-- P1=ship-blocker  P2=next-up  P3=someday -->
 
