@@ -6,11 +6,11 @@
 # Usage: scripts/new-worktree.sh <branch-name> [base-ref]
 #   scripts/new-worktree.sh falling-bananas      → feature/falling-bananas
 #   scripts/new-worktree.sh fix/auth-redirect    → fix/auth-redirect
-#   base-ref defaults to origin/development
+#   base-ref defaults to origin/main
 set -euo pipefail
 
 NAME="${1:?usage: scripts/new-worktree.sh <branch-name> [base-ref]}"
-BASE="${2:-origin/development}"
+BASE="${2:-origin/main}"
 
 # Bare names get the feature/ prefix; full prefixed names pass through.
 case "$NAME" in
