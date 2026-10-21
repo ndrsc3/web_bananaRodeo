@@ -22,7 +22,7 @@ Then add their `<a class="partner-card">` block in `pages/sponsors-vendors.html`
 
 ## Adding a brand-new sponsor
 
-Drop the original into `_capture/images/web_bananaRodeo/2026-Sponsors/` (underScore), run the
+Drop the original into `_inbox/images/web_bananaRodeo/2026-Sponsors/` (underScore), run the
 image pipeline to optimize it into this year's folder, then add the card:
 
 ```bash

@@ -14,7 +14,7 @@ _(none)_
 
 ## P2 — Next Up
 
-- [x] [PAGE: photowall] Random image selection from pool — manifest-driven random subset (22) on a salon-hang wall + Rehang reshuffle + empty state. Add photos: drop into `_capture/images/web_bananaRodeo/photowall/`, run `python knowledge/tools/process-images.py workSpace/web_bananaRodeo` (underScore image pipeline)
+- [x] [PAGE: photowall] Random image selection from pool — manifest-driven random subset (22) on a salon-hang wall + Rehang reshuffle + empty state. Add photos: drop into `_inbox/images/web_bananaRodeo/photowall/`, run `python knowledge/tools/process-images.py workSpace/web_bananaRodeo` (underScore image pipeline)
 - [x] [PAGE: photowall] Picture frame layout + positioning — aspect-true JS masonry (no crop), realistic plaster wall, two switchable frame themes (mid-century wood / ornamental brass), hand-hung tilt + hover-straighten. Frame styles are graduation candidates → `components/` if reused elsewhere.
 - [ ] [PAGE: gbbits] Church music/ambient audio
 - [ ] [CURSOR] Custom banana cursor image asset
