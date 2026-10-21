@@ -93,10 +93,10 @@ sit at `public/assets/photowall/` root (years live in subfolders).
 ### 5. Ship it
 
 Commit (config + `photowall.ts` + the new `public/assets/photowall/<year>/`
-WebP & manifest), push the feature branch, open a **PR into `development`**,
-validate the year tabs on the preview deploy, then fast-forward `main`. Full
-flow — including the post-publish worktree refresh — is in **CLAUDE.md → Git
-Workflow**. Don't skip the `web_bananaRodeo-dev` fast-forward.
+WebP & manifest), push the feature branch, open a **PR into `main`**, and
+validate the year tabs on the PR's preview deploy before it merges. Full flow,
+including production verification and worktree cleanup, is in **CLAUDE.md → Git
+Workflow**.
 
 ### 6. Originals — drain or leave
 

@@ -133,21 +133,22 @@ Site images (photo wall, sponsor logos) are **not committed by hand.** Raw camer
 
 ## Git Workflow
 
-**Two-tier promotion — nothing reaches production except through validation:**
+**GitHub flow: every change is a short-lived branch and a PR into `main`. The PR's Vercel preview is the staging check.**
 
 ```
-feature/X   (its own git worktree)
-   │  push + PR
+feature/X   (its own worktree, branched from origin/main)
+   │  commit (the pre-commit hook runs `npm run check`), push, open a PR into main
    ▼
-development  ← integration branch; validate on its Vercel preview deploy
-   │  fast-forward once validated
+PR          ← CI `verify` + a Vercel preview; validate on the preview
+   │  owner approves, then merge (merge commit)
    ▼
-main         ← production; auto-publishes to banana.rodeo on push
+main        ← production; auto-publishes to banana.rodeo, then verify it
 ```
 
-- **`main`** = production. Vercel auto-deploys it to banana.rodeo. **Never commit to `main` directly** — it only ever advances by fast-forward to a validated `development` tip.
-- **`development`** = integration / staging. All feature PRs land here; its preview deploy is where we validate before publishing. Branched from `main`, always ≥ `main`.
-- **`feature/*`** = one branch per unit of work, each in its **own worktree** (below). PR into `development`, never into `main`.
+- **`main`** = production. A GitHub ruleset enforces it: changes arrive only by PR, CI `verify` must pass, the branch must be up to date with `main`, and `main` can't be force-pushed or deleted.
+- **`feature/*` / `fix/*` / `chore/*`** = one branch per unit of work, each in its **own worktree** (below). There is no long-lived integration branch. To test several features together, stack them on one branch and use its preview.
+- **Agents never merge without the owner's approval in chat.** Agent and owner share one GitHub account, so "reviewed" means that approval plus green CI.
+- **The main checkout (`../web_bananaRodeo`) stays on `main` and is never worked in.** It's the source of `node_modules` and `.vercel` for every worktree; refresh it with `git pull --ff-only` after merges.
 
 ### Branch naming
 
@@ -165,10 +166,11 @@ Multiple Claude sessions (and the owner across machines) work this repo at once.
 
 ```bash
 # fast path — branch + folder + node_modules symlink + .vercel copy in one step:
-scripts/new-worktree.sh X           # → feature/X in ../web_bananaRodeo-X, based on origin/development
+scripts/new-worktree.sh X           # → feature/X in ../web_bananaRodeo-X, based on origin/main
 
 # manual equivalent:
-git worktree add -b feature/X ../web_bananaRodeo-X development   # new branch + folder
+git fetch origin
+git worktree add -b feature/X ../web_bananaRodeo-X origin/main   # new branch + folder
 cd ../web_bananaRodeo-X
 ln -s ../web_bananaRodeo/node_modules node_modules               # each worktree needs its own deps
 #   ^ symlink is fast but not matched by `.gitignore` (which has `node_modules/`, a dir);
@@ -178,8 +180,8 @@ cp -R ../web_bananaRodeo/.vercel .                               # project link 
 
 # ...work, fetch-before-commit, push...
 git push -u origin feature/X        # Vercel builds a preview for the branch
-# open a PR into `development`. After it merges:
-git worktree remove ../web_bananaRodeo-X
+# open a PR into `main`. After it merges:
+git worktree remove ../web_bananaRodeo-X && git branch -d feature/X
 ```
 
 Running dev servers in two worktrees at once: give the second one its own port — `npx vercel dev --listen 3001`.
@@ -188,14 +190,16 @@ Running dev servers in two worktrees at once: give the second one its own port �
 
 ### Commit & PR flow
 
-- **Fetch before every commit** (`git fetch`) — concurrent sessions/agents push here routinely. If behind, rebase your un-pushed commits onto the remote tip before pushing; surface conflicts, don't force-resolve.
-- Push the feature branch and open a **PR into `development`** (merge commit, not squash). Validate on the preview deploy. Run `/review` before merging. Keep branches short-lived.
-- **Promote to production:** once `development` is validated, fast-forward `main` to it:
-  `git checkout main && git merge --ff-only development && git push` → publishes to banana.rodeo.
-- **After publishing — refresh long-lived worktrees so they don't silently drift behind `main`:**
-  - Remove the merged feature worktree + branch: `git worktree remove ../web_bananaRodeo-<name>`, then `git branch -d <branch>` and (if pushed) `git push origin --delete <branch>`.
-  - **Fast-forward the shared `web_bananaRodeo-dev` integration worktree** — it stays checked out on `development` and won't advance on its own: `cd ../web_bananaRodeo-dev && git pull --ff-only`. Skipping this is how it ends up "behind [N]" and the next session there starts from stale code.
-- Note: `/ship` and `/review` predate this two-tier model — `/ship` should target `development`, not `main`. Update those skills to match before relying on them.
+1. **Commit.** The pre-commit hook runs `npm run check`. Never bypass it with `--no-verify`.
+2. **Before pushing, `git fetch` and rebase onto `origin/main`** if it moved. Concurrent sessions merge here routinely. Surface conflicts; don't force-resolve.
+3. **Push and open a PR into `main`** (`/ship`). Run `/review` first. Keep branches short-lived: a PR open for days drifts.
+4. **CI `verify` and the Vercel preview run on the PR.** Check the change on the preview. Previews are behind Vercel login, so open them in a browser signed in to Vercel.
+5. **If GitHub says the branch is out of date** (another PR merged first): `gh pr update-branch <n>`, or rebase and push. CI reruns against the new `main`.
+6. **Owner approves in chat, then merge** with a merge commit: `gh pr merge <n> --merge`. GitHub deletes the remote branch.
+7. **Verify production:** the deploy finishes, `https://www.banana.rodeo` returns 200, and the GET APIs answer (`/api/banana-counter` returns `{"total":…}`).
+8. **Clean up:** remove the worktree and local branch, and `git -C ../web_bananaRodeo pull --ff-only`.
+
+**When a second developer joins:** the ruleset moves to 1 required approval, so each PR is approved by the other person (GitHub won't let an account approve its own PR), and a dev KV store goes in first, so previews stop writing to production data (`docs/TASKS.md`).
 
 ## Decisions
 
