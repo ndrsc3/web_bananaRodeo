@@ -24,7 +24,8 @@ class BananaHooks {
 
   off<E extends BananaEvent>(event: E, handler: Handler<E>): void {
     const hs = this.listeners[event] as Handler<E>[] | undefined;
-    if (hs) this.listeners[event] = hs.filter((h) => h !== handler) as typeof hs;
+    // New array, not an in-place splice, so an emit already iterating `hs` is unaffected.
+    if (hs) (this.listeners as Partial<Record<BananaEvent, unknown>>)[event] = hs.filter((h) => h !== handler);
   }
 
   emit<E extends BananaEvent>(event: E, data: BananaEventMap[E]): void {

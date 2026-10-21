@@ -19,6 +19,8 @@ _(none)_
 - [ ] [PAGE: gbbits] Church music/ambient audio
 - [ ] [CURSOR] Custom banana cursor image asset
 - [ ] [CURSOR] Tiny bananas emoji trail
+- [ ] [DX] Make `api/` type-clean, then add it to `tsconfig.json` `include` so `npm run check` typechecks it. Today it has 25 errors, all TS2322: handlers typed `void` that `return res.status(…)`. `smoke` already proves every function loads; this would catch type bugs too.
+- [ ] [DX] Before data-touching work: add a dev KV store, a second free Upstash database scoped to Development + Preview. Today every environment shares production KV (D4 in `_underScore/work/plans/active/261020-vercel-app-dev-process.md`).
 - [ ] [DX] Establish CSS variable naming convention before designer onboards (`--color-{role}`, `--font-family-{role}` pattern)
 
 ---

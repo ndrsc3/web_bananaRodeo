@@ -10,7 +10,13 @@ Website for **The Banana Rodeo Science Fair** in Reno, NV — a Web1.0-inspired 
 
 ```bash
 # Development
-npx vercel dev         # Local dev server with Vercel serverless functions (default)
+npm run dev:full       # Preflight (lockfile, Vercel link, env keys) then vercel dev — use this
+npm run dev:check      # Preflight only
+npx vercel dev         # Local dev server with Vercel serverless functions
+
+# The floor — CI and the pre-commit hook run exactly this
+npm run check          # typecheck (src/) + lint + test (node --test) + build + smoke
+npm run smoke          # Runtime-load gate: imports every api/ file under Node ESM
 
 # Production build
 npm run build          # Vite build → dist/
@@ -48,7 +54,7 @@ npm run reset-counters # Reset all hit counters (tsx scripts/reset-counters.ts)
 
 ### Backend (`api/`)
 
-Vercel serverless functions (Node.js 20.x, TypeScript compiled by Vercel automatically):
+Vercel serverless functions (Node.js 24.x — `.nvmrc`, `engines` and CI agree; TypeScript compiled by Vercel automatically, no runtime pin):
 - `route.ts` — hit counter: `GET /api/route?pathname=` increments Redis counter (skips increment in dev mode)
 - `guestbook.ts` — `POST` adds entry, `GET` returns paginated entries (max 100, FIFO eviction)
 - `storage.ts` — shared KV/Redis operations
@@ -231,10 +237,8 @@ Three-tier board (P1 blockers / P2 next-up / P3 backlog). Use `/backlog` at sess
 
 KV credentials live in the Vercel project (dashboard), not in the repo — there is **no top-level `.env.local`**. The Vercel CLI materializes them at `.vercel/.env.development.local` once the directory is linked (`npx vercel link`, or copy `.vercel/` from the main checkout — see worktree setup above); `npx vercel dev` then picks them up automatically. Re-pull after dashboard changes with `npx vercel env pull`.
 
-Vars defined in the Vercel project:
-- `VERCEL_KV_URL`
-- `VERCEL_KV_REST_API_URL`
-- `VERCEL_KV_REST_API_TOKEN`
-- `VERCEL_KV_REST_API_READ_ONLY_TOKEN`
+`.env.example` names the keys the code needs: `KV_REST_API_URL`, `KV_REST_API_TOKEN` (read by `@vercel/kv`) and `SITE_PASSWORD` (`api/auth.ts`). The project also holds `KV_URL`, `REDIS_URL`, `KV_REST_API_READ_ONLY_TOKEN` and `BLOB_*`.
+
+**There is no dev store.** The KV variables are the same in Production, Preview and Development, so `vercel dev` and every preview read and write production data. This is a deliberate choice for now (`_underScore/work/plans/active/261020-vercel-app-dev-process.md`, D4). Don't run data-writing tests here. When a change touches data, add a second free Upstash database for Development + Preview first.
 
 `.vercel/` is gitignored, so fresh clones and new worktrees start unlinked — that's why `vercel dev` prompts to link until the directory is linked or copied.
