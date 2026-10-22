@@ -4,7 +4,7 @@ How raw event photos become the year-tabbed photo wall on banana.rodeo. Follow
 this whenever a new batch of photos arrives or a new event year needs a wall.
 
 Site images are **never committed by hand.** Raw camera files (any format/size,
-including iPhone HEIC) are dropped into the underScore `_capture/` intake and
+including iPhone HEIC) are dropped into the underScore `_inbox/` intake and
 normalized to web-optimized WebP by a shared tool. Only the WebP + a
 `manifest.json` are committed and deployed.
 
@@ -12,12 +12,12 @@ normalized to web-optimized WebP by a shared tool. Only the WebP + a
 
 | Piece | Path | Role |
 |---|---|---|
-| Intake | `_capture/images/web_bananaRodeo/photowall/<year>/` *(underScore root)* | Drop raw originals here, one folder per event year |
+| Intake | `_inbox/images/web_bananaRodeo/photowall/<year>/` *(underScore root)* | Drop raw originals here, one folder per event year |
 | Tool | `knowledge/tools/process-images.py` *(underScore root)* | Auto-orients, resizes, converts to WebP, strips metadata, writes the manifest |
 | Config | `image-pipeline.toml` *(this repo root)* | One `[[target]]` per year: `photowall-<year>` |
 | Output | `public/assets/photowall/<year>/*.webp` + `manifest.json` | Committed, deployed to Vercel |
 | Frontend | `src/photowall.ts` — the `YEARS` array | Newest-first year tabs; opens on `YEARS[0]` |
-| Archive | `_library/images/web_bananaRodeo/photowall/<year>/` | Where originals go if you `--drain` |
+| Drained | `_inbox/images/_drained/web_bananaRodeo/photowall/<year>/` | Where originals go if you `--drain`; `/prune` deletes them after 90 days |
 
 The wall shows **one year at a time** — each year is a self-contained pool
 (output folder + manifest). The frontend fetches `/assets/photowall/<year>/manifest.json`
@@ -32,11 +32,11 @@ Do the work in a feature worktree per the repo's Git Workflow — not on `main`.
 
 ### 1. Land the originals in the right intake
 
-Photos often arrive misfiled (e.g. dumped under `_capture/audio/…` or a phone's
+Photos often arrive misfiled (e.g. dumped under `_inbox/audio/…` or a phone's
 export folder). Normalize them to the year's intake folder:
 
 ```
-_capture/images/web_bananaRodeo/photowall/<year>/
+_inbox/images/web_bananaRodeo/photowall/<year>/
 ```
 
 Mixed formats are fine — the tool reads HEIC/JPG/PNG/etc. and outputs WebP.
@@ -100,20 +100,22 @@ Workflow**.
 
 ### 6. Originals — drain or leave
 
-Once the change is validated/merged, archive the originals out of `_capture` so
+Once the change is validated/merged, drain the originals out of the intake so
 re-runs don't reprocess them and the intake stays clean:
 
 ```bash
 python3 knowledge/tools/process-images.py workSpace/web_bananaRodeo-<worktree> --target photowall-<year> --drain
 ```
 
-`--drain` moves the processed originals to `_library/images/web_bananaRodeo/photowall/<year>/`
-(subfolder layout preserved). **Leave them in `_capture` if you might re-run** —
-draining is a one-way move. This is a deliberate call each time, not automatic.
+`--drain` moves the processed originals to `_inbox/images/_drained/web_bananaRodeo/photowall/<year>/`
+(subfolder layout preserved), where underScore's `/prune` deletes them after 90
+days: the WebP output is the keeper. **Leave them in the intake if you might
+re-run**, and copy any original worth keeping somewhere permanent before it ages
+out. This is a deliberate call each time, not automatic.
 
 ## Notes & gotchas
 
-- **Run location matters.** The tool resolves `_capture/` and `_library/`
+- **Run location matters.** The tool resolves `_inbox/`
   relative to the *underScore* repo root, and the intake/output relative to the
   *project path* you pass. Run it from underScore root, point it at the worktree.
 - **Unsupported files are skipped, not converted** — the tool warns and moves on

@@ -127,7 +127,7 @@ Pages with a completely different visual identity (leaderboard, thebananacard) u
 
 ## Image Pipeline & Photo Wall
 
-Site images (photo wall, sponsor logos) are **not committed by hand.** Raw camera files are dropped into the underScore `_capture/` intake and normalized to web-optimized WebP by `underScore/knowledge/tools/process-images.py`, driven by this repo's `image-pipeline.toml`. The photo wall (`/pages/photowall.html`) is organized **per event year** — each year is its own pipeline target rendering to `public/assets/photowall/<year>/` with its own `manifest.json`, and the frontend (`src/photowall.ts`) shows year tabs defaulting to the newest year.
+Site images (photo wall, sponsor logos) are **not committed by hand.** Raw camera files are dropped into the underScore `_inbox/` intake and normalized to web-optimized WebP by `underScore/knowledge/tools/process-images.py`, driven by this repo's `image-pipeline.toml`. The photo wall (`/pages/photowall.html`) is organized **per event year** — each year is its own pipeline target rendering to `public/assets/photowall/<year>/` with its own `manifest.json`, and the frontend (`src/photowall.ts`) shows year tabs defaulting to the newest year.
 
 **Adding a new year of photos — or any image drop — follows a fixed runbook:** `docs/photowall-pipeline.md`. Read it before touching `image-pipeline.toml`, the `photowall/<year>/` assets, or `YEARS` in `photowall.ts`.
 

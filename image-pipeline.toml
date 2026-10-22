@@ -1,13 +1,13 @@
 # image-pipeline.toml — consumed by underScore knowledge/tools/process-images.py
 #
-#   originals → _capture/images/<intake>/   (drop raw camera files here)
+#   originals → _inbox/images/<intake>/   (drop raw camera files here)
 #   run:        python knowledge/tools/process-images.py workSpace/web_bananaRodeo
 #   result →    <output>/*.webp + manifest.json   (committed, deployed to Vercel)
 #
-# intake: path under underScore _capture/images/ ; output: path under this project root.
+# intake: path under underScore _inbox/images/ ; output: path under this project root.
 
 # Photowall — one target per event year so the wall can filter by year.
-# Each year's originals live in _capture/images/web_bananaRodeo/photowall/<year>/
+# Each year's originals live in _inbox/images/web_bananaRodeo/photowall/<year>/
 # and render to their own output folder + manifest.json. The frontend
 # (src/photowall.ts) reads /assets/photowall/<year>/manifest.json, defaulting
 # to the most recent year. Add a new [[target]] block per new event year.
