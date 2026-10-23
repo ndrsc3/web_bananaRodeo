@@ -57,11 +57,12 @@ npm run reset-counters # Reset all hit counters (tsx scripts/reset-counters.ts)
 Vercel serverless functions (Node.js 24.x — `.nvmrc`, `engines` and CI agree; TypeScript compiled by Vercel automatically, no runtime pin):
 - `route.ts` — hit counter: `GET /api/route?pathname=` increments Redis counter (skips increment in dev mode)
 - `guestbook.ts` — `POST` adds entry, `GET` returns paginated entries (max 100, FIFO eviction)
-- `storage.ts` — shared KV/Redis operations
 - `auth.ts` — auth logic
 - `keepalive.ts` — daily Vercel cron (`vercel.json` `crons`) that writes `keepalive:last`. Upstash archives a free database after a stretch with no commands, and an archived store 500s every KV route until restored by hand. If `CRON_SECRET` is set in the project, only Vercel's cron call is accepted.
 
 API files use CommonJS-compatible syntax (`import`/`export default`) — Vercel requires this.
+
+**`api/` holds handlers only:** every file there is a public endpoint, so a helper left there 500s on every call. Shared server code lives in `lib/` (`lib/storage.ts`: shared KV/Redis operations), imported as `../lib/storage.js`; Vercel bundles what a handler imports. `npm run smoke` fails any `api/` file without a default handler.
 
 **Data store:** Vercel KV (Redis via `@upstash/redis`)
 - Page hits: key `page:{pathname}` → `{ hasHitCounter, hits, lastUpdated }`

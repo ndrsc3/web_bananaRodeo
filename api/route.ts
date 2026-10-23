@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { incrementHitCount, getHitCount } from './storage.js';
+import { incrementHitCount, getHitCount } from '../lib/storage.js';
 
 function log(message: string, ...args: unknown[]): void {
     console.log(`[HitCounter:${new Date().toISOString()}] ${message}`, ...args);
