@@ -18,6 +18,7 @@ _(none)_
 ## P2 — Next Up
 
 - [x] [PAGE: photowall] Random image selection from pool — manifest-driven random subset (22) on a salon-hang wall + Rehang reshuffle + empty state. Add photos: drop into `_inbox/images/web_bananaRodeo/photowall/`, run `python knowledge/tools/process-images.py workSpace/web_bananaRodeo` (underScore image pipeline)
+  - Originals live in `_org/_LaFinka/Media/BananaRodeo/<year>/photowall/` (+ `mantle-JCP/`, `champion/`, `mantle-backdrop/`); sponsor logos in `_org/_LaFinka/Community/BananaRodeo/Brand/Sponsors-2026/`. The `image-pipeline.toml` target sets `intake_root = "_org/_LaFinka/Media"`, so `--drain` is refused there.
 - [x] [PAGE: photowall] Picture frame layout + positioning — aspect-true JS masonry (no crop), realistic plaster wall, two switchable frame themes (mid-century wood / ornamental brass), hand-hung tilt + hover-straighten. Frame styles are graduation candidates → `components/` if reused elsewhere.
 - [ ] [PAGE: gbbits] Church music/ambient audio
 - [ ] [CURSOR] Custom banana cursor image asset
