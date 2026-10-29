@@ -150,7 +150,8 @@ main        ← production; auto-publishes to banana.rodeo, then verify it
 - **`main`** = production. A GitHub ruleset enforces it: changes arrive only by PR, CI `verify` must pass, the branch must be up to date with `main`, and `main` can't be force-pushed or deleted.
 - **`feature/*` / `fix/*` / `chore/*`** = one branch per unit of work, each in its **own worktree** (below). There is no long-lived integration branch. To test several features together, stack them on one branch and use its preview.
 - **Agents never merge without the owner's approval in chat.** Agent and owner share one GitHub account, so "reviewed" means that approval plus green CI.
-- **The main checkout (`../web_bananaRodeo`) stays on `main` and is never worked in.** It's the source of `node_modules` and `.vercel` for every worktree; refresh it with `git pull --ff-only` after merges.
+- **Docs-only changes skip the PR.** A commit that touches only Markdown under `docs/` (task board, plans, explorations, decisions) or the root `README.md` / `CLAUDE.md` goes straight to `main`: in the main checkout, `git pull --ff-only`, edit, commit by pathspec (the hook still runs `check`), and the owner pushes. The ruleset's admin bypass allows it. Anything else takes a branch and a PR.
+- **The main checkout (`../web_bananaRodeo`) stays on `main`** and is worked in only for docs-only commits. It's the source of `node_modules` and `.vercel` for every worktree; refresh it with `git pull --ff-only` after merges.
 
 ### Branch naming
 
