@@ -22,6 +22,7 @@ _(none)_
 - [ ] [DX] Make `api/` type-clean, then add it to `tsconfig.json` `include` so `npm run check` typechecks it. Today it has 25 errors, all TS2322: handlers typed `void` that `return res.status(…)`. `smoke` already proves every function loads; this would catch type bugs too.
 - [ ] [DX] Before data-touching work: add a dev KV store, a second free Upstash database scoped to Development + Preview. Today every environment shares production KV (D4 in `_underScore/work/plans/active/261020-vercel-app-dev-process.md`).
 - [ ] [DX] Establish CSS variable naming convention before designer onboards (`--color-{role}`, `--font-family-{role}` pattern)
+- [ ] [FEATURE] Adopt The Threshold for the entry gate — `<web-threshold>` from `github:ndrsc3/web-threshold#v0.3.0` (contract in that repo's README; noesis.lafinka.space is a working example). Today's gate (`index.html` + `api/auth.ts`) checks `SITE_PASSWORD` on the server; keep that. Threshold's plain mode ships its codes to the browser, so either use the element as the input and send the typed value to `/api/auth`, or wait for its v0.4 encrypted tiers. Open: one password or several tiers.
 
 ---
 
