@@ -33,6 +33,7 @@ _(none)_
 ## P3 — Backlog
 
 ### Platform
+- [ ] [DX] Sort the parked stash — `git stash list` in the main checkout: "stale worktree 260504-260803…" (261104). Holds the only copy of July edits to `pages/sponsor-us.html` and `pages/thebananacard.html` and two unwritten explorations (`docs/explorations/playhtml.md`, `reviews-section.md`); the rest is already on `main`. Land each piece on its own branch, or drop it
 - [ ] [DX] Migrate toolchain to the 261012 house stack on next touch — ESLint 9 (EOL) → oxlint type-aware, TS 7 strict baseline, pnpm, `pnpm check` gate. Steps: Web Kit v2.0 `VERSIONS.md` § Migrating a v1.0 project
 - [ ] [FEATURE] Migrate the site onto The Threshold (`@finka/threshold`, `workSpace/web_lafinka/packages/threshold/`) — after the simple La Finka site with the Threshold running lands (owner 261005)
 
